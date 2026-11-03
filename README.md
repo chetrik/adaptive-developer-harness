@@ -2,7 +2,9 @@
 
 Передайте coding agent **свій PRD + посилання на цей репозиторій**. Агент підбере мінімально потрібні Skills, правила й перевірки, пояснить вибір і після вашого погодження встановить їх у проєкт.
 
-**Початок:** [BOOTSTRAP.md](BOOTSTRAP.md). До погодженого merge використовуйте [feat/deterministic-harness-mvp](https://github.com/chetrik/adaptive-developer-harness/tree/feat/deterministic-harness-mvp), а не main.
+**Почніть тут:** [інструкція для користувача українською](START_HERE_UA.md) — з готовим текстом для агента.
+
+Для coding agent: [BOOTSTRAP.md](BOOTSTRAP.md). Актуальна версія — у `main`: https://github.com/chetrik/adaptive-developer-harness .
 
 ## Що працює
 

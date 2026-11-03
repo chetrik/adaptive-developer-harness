@@ -1,6 +1,6 @@
 # PRD + repository URL → a working Developer Harness
 
-Give the coding agent your PRD and this repository URL. The agent handles the commands; you review the proposed changes and approve installation. Until main is updated, specify **feat/deterministic-harness-mvp**, not the default branch.
+Give the coding agent your PRD and this repository URL. The agent handles the commands; you review the proposed changes and approve installation. Use the default **main** branch and record its exact commit. User instructions in Ukrainian: [START_HERE_UA.md](START_HERE_UA.md).
 
 ## Agent procedure
 
