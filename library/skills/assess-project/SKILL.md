@@ -19,7 +19,7 @@ PRD or rough project description; optional existing repository; user preferences
 4. Identify risk triggers: secrets, real users, auth, customer data, regulated/sensitive categories, payments, external API, migrations, irreversible actions, public availability.
 5. Verify, do not assume, host support for network, subagents, Skills, hooks, permission gates, file writes and test execution.
 6. Ask only blocking questions not answerable from supplied materials. Explain why the answer matters, offer understandable options and recommend one with its trade-off. Resolve routine technical choices within the authorized scope; do not ask beginners to design the architecture or invent critical business requirements for them.
-7. Return `ProjectAssessment` summary with evidence, uncertainties, risk escalation, and next recommended action. Do not write to target repo or install anything.
+7. Return `ProjectAssessment` summary with evidence, uncertainties, risk escalation, and next recommended action. Do not write to target repo or install anything. Continue to the authorized generator plan/explain/preview steps without a separate approval of this assessment procedure. A component summary is provisional until the shared engine runs: do not cap Skill counts or choose entrypoint paths yourself. Include every relevant PRD acceptance requirement in the verification outline, not only suggested unit tests; distinguish planned checks from observed results.
 
 ## Stop conditions
 

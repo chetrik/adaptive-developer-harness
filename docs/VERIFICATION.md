@@ -1,5 +1,11 @@
 # Verification evidence — 2026-11-03
 
+## Bootstrap clarification after user-provided Claude trial
+
+The supplied transcript showed a prose proposal, not an executed generator plan or installation. BOOTSTRAP, the copyable Ukrainian prompt and generator-side assessment guidance now explicitly avoid redundant preparation approval, arbitrary Skill limits, handwritten entrypoint selection and omission of UI requirements. This changes guidance only: runtime, managed assets, engine/library hashes and migration contracts are unchanged.
+
+Validation: `python3 -m unittest discover -s tests -v` passed **136 tests** (29.257 s, exit 0); `python3 tools/validate_package.py` and `git diff --check` passed. No new native run was performed; a repeat Claude trial must verify actual adherence. No tests asserting prose wording were added.
+
 ## 0.5.1 lightweight workflow and guidance patch
 
 - `python3 -m unittest discover -s tests -v`: **136 tests passed**, exit 0 (30.560 s). Includes Codex/Cursor regressions and 4 new migration tests with Codex/Cursor/Claude subcases.
