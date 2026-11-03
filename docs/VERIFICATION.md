@@ -1,5 +1,11 @@
 # Verification evidence — 2026-11-03
 
+## Durable bootstrap artifacts after Claude trial
+
+BOOTSTRAP and the user/assessment guidance now specify persistent original PRD storage, separate retained plan runs, a durable shared recovery state-dir and the original reviewed generator checkout. Source copies require applicable write authorization and byte comparison; changed sources require regenerated plans. Installation permission is distinct from application work; native Skill invocation is distinct from manually following a file. Historical comparisons without retained artifacts remain unverified.
+
+`python3 -m unittest discover -s tests -v`: **136 passed**, exit 0 (31.925 s). Structural validation and `git diff --check` passed. Runtime, managed components and engine/library hashes are unchanged. These are agent instructions, not a new persistence mechanism; actual retention and adherence in native environments remain to be verified.
+
 ## Bootstrap clarification after user-provided Claude trial
 
 The supplied transcript showed a prose proposal, not an executed generator plan or installation. BOOTSTRAP, the copyable Ukrainian prompt and generator-side assessment guidance now explicitly avoid redundant preparation approval, arbitrary Skill limits, handwritten entrypoint selection and omission of UI requirements. This changes guidance only: runtime, managed assets, engine/library hashes and migration contracts are unchanged.

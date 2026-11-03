@@ -13,7 +13,7 @@ PRD or rough project description; optional existing repository; user preferences
 
 ## Procedure
 
-1. Summarize desired first version separately from future vision. Note what is directly supplied, inferred and unknown.
+1. Follow BOOTSTRAP.md’s durable PRD/storage procedure before producing the final assessment: preserve original bytes and provenance, use a stable source path, and retain prior plan artifacts. Temporary attachments are not persistent project context. Summarize desired first version separately from future vision. Note what is directly supplied, inferred and unknown.
 2. Determine greenfield/brownfield. If brownfield, read root manifests, existing agent instructions and test commands using only permitted read-only tools; do not recursively ingest the entire repository if metadata suffices.
 3. Record approximate project class, feature scope, surfaces, external interfaces, integrations, data and likely deployment. Consider the XS–XL feature scale as a heuristic, not a guaranteed estimate.
 4. Identify risk triggers: secrets, real users, auth, customer data, regulated/sensitive categories, payments, external API, migrations, irreversible actions, public availability.
