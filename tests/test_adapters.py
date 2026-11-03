@@ -37,7 +37,8 @@ class AdapterTests(unittest.TestCase):
             baseline=make_plan(a,tmp)
             a['host']['name']='cursor'; cursor=make_plan(a,tmp)
             self.assertEqual(baseline['decisions'],cursor['decisions'])
-            self.assertEqual(baseline['operations'],cursor['operations'])
+            self.assertEqual([o for o in baseline['operations'] if not o['path'].endswith('/manifest.json')],
+                             [o for o in cursor['operations'] if not o['path'].endswith('/manifest.json')])
 
     def test_explicit_executor_target_and_unknown_gate(self):
         with tempfile.TemporaryDirectory() as tmp:

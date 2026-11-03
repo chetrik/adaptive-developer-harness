@@ -1,0 +1,50 @@
+{
+  "source_revision": "566f98d",
+  "files": {
+    ".agents/skills/adh-verify/SKILL.md": [
+      "6f129e7c9aa6cc23fa56087125d0b58d17e634f106d1bbb764f0a985c6583313"
+    ],
+    ".adaptive-harness/validate.py": [
+      "db779415b6315c4a00104786400c0435668d391c63e86805a629fc0da10950f1"
+    ],
+    ".agents/skills/adh-implement/SKILL.md": [
+      "3a1425d5b6f7574d0528771bfd58a0e1128320d12bd258bfa2e9f342e871eeb3"
+    ],
+    ".adaptive-harness/templates/handoff.md": [
+      "1841ddef8e0e57e19c922cacf0b5258d82dea61ece295a585d212c5636f40215"
+    ],
+    ".adaptive-harness/templates/feature.md": [
+      "7acd75fd6defcd51b1101096dcb6c4853b04c0f7c1ee839452ecbe9dacfd45bf"
+    ],
+    ".adaptive-harness/templates/architecture.md": [
+      "7637901698fa2c94d42387405dfcd4c54a73f8047cb2585066d2a9c6b2cab218"
+    ],
+    ".adaptive-harness/templates/decision.md": [
+      "23256fb89a4bb7e3bc11414241d47eaafd500b63c923b83edeb039bb421b83b3"
+    ],
+    ".adaptive-harness/templates/ui-check.md": [
+      "a8d593443cda0d21c2f90b458e44f29c2d0cf9d37d1b66e726f0a658497c8214"
+    ],
+    ".agents/skills/adh-migration/SKILL.md": [
+      "1a0f6b0d897c50231419eac6114c4a3d1500006b1239a161b42d1a3c2254353a"
+    ],
+    ".adaptive-harness/templates/api-check.md": [
+      "a0f1450592d543a7d06ea26c2e71bf2e66810042c8860c54c63255dcef55a16a"
+    ],
+    ".codex/agents/adh-reviewer.toml": [
+      "4752cf7a8d4e833f40697a7c0d8d371df4514137e216401e786c773ee1da791a"
+    ],
+    ".agents/skills/adh-security/SKILL.md": [
+      "21d2018573da3d9b601ecd1817c0c3cc02f694a6b92cc3ccbbce2855b6aa9297"
+    ],
+    ".agents/skills/adh-release/SKILL.md": [
+      "f672234145a2eb7d9ab264a1cacf3cd41237376cf01f629b1d6571df9970389f"
+    ],
+    ".agents/skills/adh-reuse/SKILL.md": [
+      "6d2f70fc2f1f3bd04139ec6abfcd6ce1ac83da0defe9b0f5ef071127219a85b6"
+    ],
+    ".adaptive-harness/LICENSE": [
+      "1c97e5a6a81e9dd0088723b47cd201e8038680fbae4e22bf5a4dc24c7078c216"
+    ]
+  }
+}

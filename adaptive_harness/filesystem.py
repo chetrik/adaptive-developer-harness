@@ -53,11 +53,13 @@ def read_regular(path):
         os.close(fd)
 
 
-def snapshot(target):
+def snapshot(target, *, exclude_sessions=False):
     root = root_path(target)
     entries = []
     size = 0
     for base, dirs, files in os.walk(root, followlinks=False):
+        if exclude_sessions and Path(base)==root/'.adaptive-harness':
+            dirs[:]=[n for n in dirs if n!='sessions']
         dirs.sort(); files.sort()
         if '.git' in dirs:
             dirs.remove('.git')

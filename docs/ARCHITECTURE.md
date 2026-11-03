@@ -48,3 +48,17 @@ M0: 55 requirements / 49 acceptance scenarios structurally checked. M1: 16 selec
 ModelProvider is assessment metadata only in this increment. Future Ollama interprets PRD into the same validated assessment; it cannot change selection, approvals or filesystem policy. Existing schema_version 1.0 assessment fields remain compatible; the engine advances to 0.2.0 and requires adapter identity in new plans. Old plans must be regenerated and approved again.
 
 The agent reads PDF/DOCX/Markdown, preserving original bytes/hash and requirement locators; the engine validates reading metadata and gates incomplete binary-document intake. It does not claim to verify whether a reader understood every page. See BOOTSTRAP and CURSOR_MACOS_TEST for runtime evidence boundaries.
+
+## Session and update design history
+
+See [audit and minimal design](SESSION_UPDATE_PLAN.md). Extend the existing route into structured workflow recommendations; keep one selector and one Harness Plan. Add validated mutable session state outside component integrity hashes. Extend current-vs-desired planning with versioned inventories, module delta and typed delete operations; reuse preview, approval, journal and recovery. Migrations transform inventory/plan through an explicit tested registry, not a second filesystem executor.
+
+Audit limitation: existing managed AGENTS block edits can currently be replaced without a conflict blocker. Deselected files are not removed and can fall out of manifest tracking. Existing recovery handles interrupted create/patch, not verified cross-version migrations or successful-update revert. These gaps must be closed before claiming update management. This describes the pre-change audit; the implementation below supersedes these gaps.
+
+## Update implementation checkpoint (0.3.0)
+
+The same make_plan now reads a strict installed inventory via inventory.py. New manifest schema 2.0 stores versions/owners/component revisions and a managed-block hash. Explicit manifest-1-to-2 migration recognizes original 0.2.0 assets using catalog/legacy-component-hashes.json. Unknown revisions block. Obsolete files remain tracked by default; remove_obsolete adds exact deletion operations to the same approved plan and existing journalled Apply. No directories are recursively deleted. This supersedes the audit's two integrity gaps; tested evidence is in VERIFICATION.md.
+
+## Session implementation checkpoint (0.3.0)
+
+workflow.py is the single route function consumed by the common plan and renderers. XS/S use inline specifications; M and L/XL get recommended boundaries without mandatory chats. Every route has Verification criteria and risk-based checks. handoff.py validates agent-reported session records and compares a workspace fingerprint on resume. handoff-plan extends make_plan and uses the existing approval/Apply/journal; it refuses mixed Harness updates. Immutable session IDs eliminate a mutable latest pointer. Session data stays outside component inventory; normal plan freshness still covers those files. No session lifecycle API or automatic test execution is asserted.

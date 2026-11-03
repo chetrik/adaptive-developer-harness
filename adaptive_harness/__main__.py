@@ -16,7 +16,10 @@ def main(argv=None):
     sub=parser.add_subparsers(dest='command',required=True)
     p=sub.add_parser('bootstrap'); p.add_argument('--prd',required=True); p.add_argument('--url',required=True); p.add_argument('--target'); p.add_argument('--platform',default='codex',choices=('codex','cursor'))
     p=sub.add_parser('research'); p.add_argument('--url',required=True)
-    p=sub.add_parser('plan'); p.add_argument('--assessment',required=True); p.add_argument('--target',required=True)
+    p=sub.add_parser('plan'); p.add_argument('--assessment',required=True); p.add_argument('--target',required=True); p.add_argument('--remove-obsolete',action='store_true')
+    p=sub.add_parser('inventory'); p.add_argument('--target',required=True)
+    p=sub.add_parser('handoff-plan'); p.add_argument('--assessment',required=True); p.add_argument('--record',required=True); p.add_argument('--target',required=True)
+    p=sub.add_parser('resume'); p.add_argument('--target',required=True); p.add_argument('--session-id',required=True)
     p=sub.add_parser('explain'); p.add_argument('--plan',required=True)
     p=sub.add_parser('preview'); p.add_argument('--plan',required=True); p.add_argument('--target',required=True)
     p=sub.add_parser('approve'); p.add_argument('--plan',required=True); p.add_argument('--target',required=True); p.add_argument('--confirmation',required=True)
@@ -27,7 +30,14 @@ def main(argv=None):
     try:
         if args.command=='bootstrap': result=intake(args.prd,args.url,args.target,args.platform)
         elif args.command=='research': result=inspect_repository(args.url)
-        elif args.command=='plan': result=make_plan(read_json(args.assessment),args.target)
+        elif args.command=='plan': result=make_plan(read_json(args.assessment),args.target,remove_obsolete=args.remove_obsolete)
+        elif args.command=='handoff-plan': result=make_plan(read_json(args.assessment),args.target,handoff=read_json(args.record))
+        elif args.command=='resume':
+            from .handoff import resume
+            result=resume(args.target,args.session_id)
+        elif args.command=='inventory':
+            from .inventory import inspect_inventory
+            result=inspect_inventory(args.target)
         else:
             plan=read_json(args.plan)
             if args.command=='explain':
@@ -47,7 +57,7 @@ def main(argv=None):
             elif args.command=='recover': result=recover(plan,read_json(args.approval),args.target,args.state_dir)
             else: result=verify(plan,args.target)
         print(json.dumps(result,ensure_ascii=False,indent=2))
-        if result.get('status') in ('blocked','fail','needs-recovery'): return 2
+        if result.get('status') in ('blocked','fail','needs-recovery','stale'): return 2
         return 0
     except (HarnessError,OSError,ValueError,KeyError) as exc:
         print('Помилка: '+str(exc),file=sys.stderr); return 2

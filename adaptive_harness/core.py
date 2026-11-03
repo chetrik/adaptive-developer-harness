@@ -3,6 +3,8 @@ import json
 import yaml
 from pathlib import Path
 from .contracts import ROOT, VERSION, POLICY, HarnessError, canonical, digest, fingerprint, validate, fact_value, confirmed
+from .workflow import session_workflow
+from .inventory import load_inventory, path_owners, versions, components
 from .adapters import adapter_for, effective_assessment, plan_adapter
 from .filesystem import root_path, safe_path, read_regular, snapshot
 
@@ -54,7 +56,7 @@ def load_catalog():
     return catalog
 
 def engine_hash():
-    paths = list((ROOT/'adaptive_harness').glob('*.py')) + list((ROOT/'schemas').glob('*.json')) + [ROOT/'LICENSE']
+    paths = list((ROOT/'adaptive_harness').glob('*.py')) + list((ROOT/'schemas').glob('*.json')) + [ROOT/'LICENSE',ROOT/'catalog/legacy-component-hashes.json']
     return fingerprint({str(p.relative_to(ROOT)):digest(p.read_bytes()) for p in sorted(paths)})
 
 def library_hash():
@@ -175,6 +177,7 @@ def render(a, decisions, catalog):
             if path in files and files[path] != content:
                 raise HarnessError('Conflicting module output')
             files[path]=content; owners.setdefault(path,[]).append(m['id'])
+    workflow=session_workflow(a,decisions)
     summary='\n'.join('- '+d['id']+': '+d['reason'] for d in decisions if d['status']=='selected')
     block=f'''{BEGIN}
 # Adaptive Developer Harness
@@ -196,14 +199,23 @@ PRD source: {a['prd']['source']}
 Вона НЕ доводить успіх тестів застосунку. Знайди їх у README/manifests/CI і запиши реальний результат.
 Не називай inline review незалежним. Невиконана перевірка = not-verified.
 Skill-файли: .agents/skills/adh-*/SKILL.md; їх автоматичне виявлення перевіряй у поточному host.
+Маршрут роботи: {workflow['recommendation']}
+Specification → Implementation → Verification; новий чат не обов’язковий.
+Specification: узгодь вимоги й критерії приймання, перевір наявний код до реалізації.
+Verification: перевір приймальні критерії, релевантні тести, документацію та ризики; запиши фактичні результати.
+Для XS/S короткої специфікації в поточному чаті достатньо; не створюй зайвих документів.
+Для великих етапів перевір результат і передай стан перед наступним етапом.
 Передача контексту: .adaptive-harness/templates/handoff.md.
+Перед завершенням сесії/етапу підготуй структурований handoff і запиши через handoff-plan → preview → approval → apply генератора.
+При продовженні виконай resume для session_id; stale означає, що спочатку треба звірити фактичні файли.
+Погодження запису стану не є дозволом на наступні ризикові дії; автоматичне збереження при аварійному закритті чату не гарантується.
 {END}
 '''
     files['AGENTS.md']=block; owners['AGENTS.md']=['core.agent-entry']
     files['.adaptive-harness/LICENSE']=(ROOT/'LICENSE').read_text(); owners['.adaptive-harness/LICENSE']=['core.safety-baseline']
     return files,owners
 
-def make_plan(assessment, target):
+def make_plan(assessment, target, *, remove_obsolete=False, handoff=None):
     a=validate('project-assessment',assessment)
     # PRD source fields are evidence labels, never shell arguments or executable instructions.
     if any(x in a['project_name']+a['prd']['source'] for x in ('\n','\r',BEGIN,END)):
@@ -218,6 +230,22 @@ def make_plan(assessment, target):
     if any(d['id']=='quality.inline-review' and d['status']=='selected' for d in decisions):
         warnings.append('Незалежний субагент недоступний: огляд буде inline, не незалежним.')
     files,owners=render(a,decisions,catalog)
+    previous,inventory_blockers=load_inventory(root,catalog)
+    blockers+=inventory_blockers
+    desired_paths=set(files)
+    old_owners=previous.get('owners',{}) or {n:[mid for mid in path_owners(catalog)[n] if mid in previous.get('modules',[])] for n in previous.get('files',{})}
+    obsolete=sorted(set(previous.get('files',{}))-desired_paths)
+    deletes=[]
+    # Never silently bless edited installed files, even when a new renderer happens to match them.
+    for name,sha in previous.get('files',{}).items():
+        path=safe_path(root,name)
+        if not path.exists() or (name!='AGENTS.md' and digest(read_regular(path))!=sha):
+            blockers.append('Конфлікт зміненого або відсутнього компонента: '+name)
+    for name in obsolete:
+        path=safe_path(root,name)
+        if remove_obsolete:
+            if path.exists() and digest(read_regular(path))==previous['files'][name]:
+                deletes.append({'action':'delete','path':name,'before':previous['files'][name],'after':None,'content':'','modules':old_owners.get(name,[])})
     for name,content in list(files.items()):
         path=safe_path(root,name)
         if path.exists():
@@ -226,49 +254,82 @@ def make_plan(assessment, target):
                 if BEGIN in old or END in old:
                     if old.count(BEGIN)!=1 or old.count(END)!=1 or old.index(BEGIN)>old.index(END):
                         raise HarnessError('Malformed managed block')
+                    block=old[old.index(BEGIN):old.index(END)+len(END)]
+                    baseline=previous.get('managed_block_sha256')
+                    trusted=(digest(block)==baseline if baseline else previous.get('files',{}).get(name)==digest(old))
+                    if not trusted:
+                        blockers.append('Конфлікт: змінено або не підтверджено керований блок AGENTS.md.')
                     files[name]=old[:old.index(BEGIN)]+content.rstrip('\n')+old[old.index(END)+len(END):]
                 else:
+                    if name in previous.get('files',{}):blockers.append('Конфлікт: керований блок AGENTS.md видалено.')
                     files[name]=old+('' if old.endswith('\n\n') else '\n\n')+content
             elif old!=content:
                 # Only previously managed, unchanged files may be replaced.
-                previous=root/'.adaptive-harness/manifest.json'
-                known={}
-                if previous.exists():
-                    safe_path(root,'.adaptive-harness/manifest.json')
-                    try: known=json.loads(read_regular(previous))['files']
-                    except (ValueError,KeyError,TypeError): pass
-                if known.get(name)!=digest(old):
+                if previous.get('files',{}).get(name)!=digest(old):
                     blockers.append('Збережено змінений або чужий файл; потрібно узгодити конфлікт: '+name)
-    manifest={'schema_version':'1.0','modules':sorted(d['id'] for d in decisions if d['status']=='selected'),
+    manifest={'schema_version':'2.0','modules':sorted(d['id'] for d in decisions if d['status']=='selected'),
         'files':{n:digest(c) for n,c in sorted(files.items())},
         'provenance':{n:{'kind':'project-original','license':'MIT','copyright':'2026 chetrik','source_repository':'https://github.com/chetrik/adaptive-developer-harness','source_file':'adaptive_harness/core.py' if n=='AGENTS.md' else 'LICENSE' if n.endswith('/LICENSE') else 'library/target/'+_source(n),'source_fingerprint':engine_hash() if n=='AGENTS.md' else digest((ROOT/'LICENSE').read_bytes()) if n.endswith('/LICENSE') else digest((ROOT/'library/target'/_source(n)).read_bytes()),'scope':'generated block only; pre-existing text retains its own ownership' if n=='AGENTS.md' else 'complete generated file'} for n in sorted(files)},
         'application_tests':'not-verified','native_discovery':'not-verified'}
-    existing_manifest=safe_path(root,'.adaptive-harness/manifest.json')
-    if existing_manifest.exists():
-        try:
-            previous=json.loads(read_regular(existing_manifest))
-            if previous.get('schema_version')!='1.0' or not isinstance(previous.get('files'),dict) or not isinstance(previous.get('provenance'),dict):
-                blockers.append('Наявний manifest не належить підтримуваному Harness; не перезаписуємо.')
-        except (ValueError,TypeError,AttributeError):
-            blockers.append('Наявний manifest некоректний; не перезаписуємо.')
+    block=files['AGENTS.md'].split(BEGIN,1)[1].split(END,1)[0]
+    manifest['managed_block_sha256']=digest(BEGIN+block+END)
+    manifest['pending_removal']=obsolete if not remove_obsolete else []
+    for name in manifest['pending_removal']:
+        path=safe_path(root,name)
+        manifest['files'][name]=previous['files'][name]
+        manifest['provenance'][name]=previous['provenance'][name]
+        if not path.exists() or digest(read_regular(path))!=previous['files'][name]:
+            blockers.append('Конфлікт застарілого компонента; збережено в інвентарі: '+name)
+    if manifest['pending_removal']:
+        warnings.append('Застарілі файли залишаються в інвентарі pending removal; видалення не погоджено.')
+    selected=set(manifest['modules'])
+    manifest['owners']={n:sorted(owners[n]) for n in desired_paths}
+    for name in manifest['pending_removal']:manifest['owners'][name]=old_owners[name]
+    manifest['versions']=versions(catalog,plan_adapter(a))
+    tracked=selected|{mid for name in manifest['pending_removal'] for mid in old_owners[name]}
+    manifest['components']=components(tracked,manifest['owners'],manifest['files'],selected)
+    validate('manifest-v2',manifest)
+    old_components=previous.get('components',{})
+    old_modules=set(previous.get('modules',[]))|set(old_components)
+    update={'intent':'update' if previous else 'install','remove_obsolete':remove_obsolete,
+            'migration':'manifest-1-to-2' if previous.get('schema_version')=='1.0' else 'none',
+            'installed_versions':previous.get('versions',{'generator':'unknown','manifest':previous.get('schema_version','none')}),
+            'desired_versions':manifest['versions'],
+            'added':sorted(selected-old_modules),'removed':sorted(old_modules-selected),
+            'changed':sorted(mid for mid in selected&old_modules if old_components.get(mid,{}).get('revision')!=manifest['components'][mid]['revision']),
+            'pending_removal':manifest['pending_removal']}
     files['.adaptive-harness/manifest.json']=json.dumps(manifest,ensure_ascii=False,indent=2,sort_keys=True)+'\n'
     owners['.adaptive-harness/manifest.json']=['core.safety-baseline']
-    operations=[]
+    operations=list(deletes)
     for name,content in sorted(files.items()):
         path=safe_path(root,name)
         before=digest(read_regular(path)) if path.exists() else None
         if before==digest(content): continue
         operations.append({'action':'patch' if before else 'create','path':name,'before':before,'after':digest(content),'content':content,'modules':sorted(owners[name])})
+    if handoff is not None:
+        from .handoff import build_record, record_path
+        if operations or remove_obsolete or not previous:
+            blockers.append('Спочатку окремо погодьте й завершіть оновлення Harness; handoff фіксує стабільний стан.')
+        record=build_record(handoff,root)
+        name=record_path(handoff['session_id']);path=safe_path(root,name)
+        content=json.dumps(record,ensure_ascii=False,indent=2,sort_keys=True)+'\n'
+        before=digest(read_regular(path)) if path.exists() else None
+        # IDs are immutable checkpoints: an existing different record requires a new ID.
+        if before is not None and before!=digest(content):
+            blockers.append('Session ID вже існує з іншим станом; оберіть новий ID.')
+        files[name]=content
+        if before!=digest(content):operations.append({'action':'create','path':name,'before':before,'after':digest(content),'content':content,'modules':['core.handoff']})
+        update['intent']='handoff'
     if snapshot(root)!=before_snapshot:
         raise HarnessError('Target changed during planning')
-    plan={'schema_version':'1.0','adapter':plan_adapter(a),'engine_version':VERSION,'policy_version':POLICY,'catalog_sha256':fingerprint(catalog),
+    plan={'schema_version':'1.0','handoff':handoff,'update':update,'expected_absent':[op['path'] for op in deletes],'adapter':plan_adapter(a),'engine_version':VERSION,'policy_version':POLICY,'catalog_sha256':fingerprint(catalog),
         'library_sha256':library_hash(),'engine_sha256':engine_hash(),'assessment':a,'target':str(root),'target_snapshot':before_snapshot,
         'status':'blocked' if blockers else 'ready-for-approval','blockers':sorted(set(blockers)),'warnings':warnings,
-        'route':'quick' if a['feature_size'] in ('XS','S') else 'standard' if a['feature_size']=='M' else 'full','decisions':decisions,'operations':operations,'expected_files':{n:digest(c) for n,c in sorted(files.items())}}
+        'workflow':session_workflow(a,decisions),'route':session_workflow(a,decisions)['route'],'decisions':decisions,'operations':operations,'expected_files':{**manifest['files'],**{n:digest(c) for n,c in sorted(files.items())}}}
     plan['plan_id']=fingerprint(plan)
     return validate('plan-v1',plan)
 
-def check_plan(plan, target, *, fresh=True):
+def check_plan(plan, target, *, fresh=True, recovering=False):
     validate('plan-v1',plan)
     body={k:v for k,v in plan.items() if k!='plan_id'}
     if fingerprint(body)!=plan['plan_id']:
@@ -279,17 +340,20 @@ def check_plan(plan, target, *, fresh=True):
         raise HarnessError('Adapter changed; replan and approve again')
     if plan['engine_sha256']!=engine_hash() or plan['engine_version']!=VERSION or plan['policy_version']!=POLICY or plan['catalog_sha256']!=fingerprint(load_catalog()) or plan['library_sha256']!=library_hash():
         raise HarnessError('Engine, policy, catalog or library changed; replan')
-    if plan['status']!='ready-for-approval' or plan['blockers'] or check_assessment(plan['assessment']):
+    # Recovery restores the already approved journal; a changed/missing PRD must not strand backups.
+    if plan['status']!='ready-for-approval' or plan['blockers'] or (not recovering and check_assessment(plan['assessment'])):
         raise HarnessError('Plan is blocked')
     if fresh:
         if snapshot(target)!=plan['target_snapshot']:
             raise HarnessError('Target changed; preview and approval required again')
-        expected=make_plan(plan['assessment'],target)
+        expected=make_plan(plan['assessment'],target,remove_obsolete=plan['update']['remove_obsolete'],handoff=plan['handoff'])
         if expected!=plan:
             raise HarnessError('Plan differs from deterministic policy output')
     for op in plan['operations']:
         safe_path(root_path(target),op['path'])
-        if digest(op['content'])!=op['after']:
+        if op['action']=='delete':
+            if op['after'] is not None or op['content'] or op['before'] is None: raise HarnessError('Invalid deletion')
+        elif digest(op['content'])!=op['after']:
             raise HarnessError('Operation hash mismatch')
     return plan
 
@@ -299,6 +363,8 @@ def explain(plan):
            '## Готові рішення',plan['assessment']['reuse']['rationale'],'','## Що додамо']
     for d in plan['decisions']:
         if d['status']=='selected': lines.append('- '+labels.get(d['id'],d['id'])+': '+d['reason'])
+    lines+=['','## Організація роботи',plan['workflow']['recommendation'],plan['workflow']['fallback'],'Verification обов’язковий; окремий чат сам по собі не означає незалежний огляд.']
+    lines+=['','## Оновлення', 'Режим: '+plan['update']['intent'], 'Міграція: '+plan['update']['migration'], 'Додати модулі: '+', '.join(plan['update']['added']), 'Змінити модулі: '+', '.join(plan['update']['changed']), 'Більше не потрібні: '+', '.join(plan['update']['removed']), 'Очікують погодженого видалення: '+', '.join(plan['update']['pending_removal'])]
     lines+=['','## Що пропустимо']
     for d in plan['decisions']:
         if d['status']!='selected': lines.append('- '+labels.get(d['id'],d['id'])+': '+d['reason'])

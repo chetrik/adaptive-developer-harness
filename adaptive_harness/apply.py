@@ -78,6 +78,20 @@ def _atomic(root, name, content, expected, created, mode=0o644):
         os.close(fd)
 
 
+def _delete(root, name, expected):
+    """Delete one approved regular file through anchored descriptors, never a directory."""
+    safe_path(root,name)
+    fd,leaf=_parent(root,name)
+    try:
+        current=os.open(leaf,os.O_RDONLY|os.O_NOFOLLOW,dir_fd=fd)
+        with os.fdopen(current,'rb') as stream:
+            if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode) or digest(stream.read())!=expected:
+                raise HarnessError('File changed immediately before delete')
+        os.unlink(leaf,dir_fd=fd)
+        os.fsync(fd)
+    finally:os.close(fd)
+
+
 def _state_dir(state_dir, root):
     state=Path(os.path.abspath(state_dir))
     if state==root or root in state.parents:
@@ -154,11 +168,14 @@ def apply_plan(plan, approval, target, state_dir):
         _save(journal_path,journal)
         try:
             for op,item in zip(plan['operations'],journal['items']):
-                _atomic(root,op['path'],op['content'].encode(),op['before'],journal['directories'],item['mode'])
+                if op['action']=='delete': _delete(root,op['path'],op['before'])
+                else: _atomic(root,op['path'],op['content'].encode(),op['before'],journal['directories'],item['mode'])
                 _save(journal_path,journal)
             # Confirm every expected output before committing receipt.
             for op in plan['operations']:
-                if digest(read_regular(safe_path(root,op['path'])))!=op['after']:
+                output=safe_path(root,op['path'])
+                actual=digest(read_regular(output)) if output.exists() else None
+                if actual!=op['after']:
                     raise HarnessError('Output changed during Apply')
             receipt={'plan_id':plan['plan_id'],'plan_digest':fingerprint(plan),'post_snapshot':snapshot(root)}
             _save(receipt_path,receipt)
@@ -178,7 +195,7 @@ def apply_plan(plan, approval, target, state_dir):
 
 
 def _recover_locked(plan, approval, target, state_dir):
-    root=root_path(target); check_approval(plan,approval); check_plan(plan,root,fresh=False)
+    root=root_path(target); check_approval(plan,approval); check_plan(plan,root,fresh=False,recovering=True)
     state=_state_dir(state_dir,root)
     path=state/(plan['plan_id']+'.journal.json')
     journal=read_json(path)
@@ -225,5 +242,8 @@ def verify(plan, target):
         path=safe_path(root,name)
         good=path.exists() and digest(read_regular(path))==expected
         checks.append({'name':name,'status':'pass' if good else 'fail','detail':'Expected content hash matches' if good else 'Missing or changed output'})
+    for name in plan['expected_absent']:
+        good=not safe_path(root,name).exists()
+        checks.append({'name':name,'status':'pass' if good else 'fail','detail':'Expected absent after approved removal'})
     checks += [{'name':name,'status':'not-verified','detail':'Requires separate observed execution evidence'} for name in ('application-tests','native-skill-discovery','independent-review')]
     return validate('validation-report',{'schema_version':'1.0','status':'fail' if any(c['status']=='fail' for c in checks) else 'not-verified','checks':checks})

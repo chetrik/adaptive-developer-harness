@@ -39,3 +39,25 @@ Final structural validator: 31 required files, 55 requirement IDs and 49 accepta
 55 unittest methods passed on Linux (48 existing + 7 new); structural validation passed with 59 requirements / 53 acceptance scenarios. New tests cover four Cursor Apply scenarios, preservation/idempotency, same shared selector decisions, executor/target separation, unsupported discovery, adapter tampering and original document reading/hash gates. Codex regression tests pass.
 
 Native Cursor/macOS is NOT RUN. Official Cursor pages returned HTTP 403; only user-reported shared-Skills format is used. No third-party implementation/assets/dependencies were added. No native rules, Hooks or subagent configurations for Cursor are claimed. PDF/DOCX contract tests use synthetic bytes; they do not prove real parser/OCR behavior. The current increment does not rerun Codex native discovery; the earlier recorded baseline evidence remains scoped to its original run.
+
+## Session/update stage 1 checkpoint
+
+59 tests passed (55 baseline + 4 integrity cases). Managed AGENTS block edits block approval; edits outside the block are preserved. Deselected files retain hashes/provenance and pending_removal status, including repeated planning; edited obsolete files block changes. Structural validation passed. Removal/migration was not enabled at this checkpoint.
+
+## Session/update stage 2 checkpoint
+
+74 unittest methods passed; structural validation passed. Manifest 2.0 stores generator/policy/catalog/adapter versions, component content revisions, owners and pending removals. The unchanged selector feeds incremental update plans; --remove-obsolete previews deletion but grants no approval. The existing Apply/journal handles approved create/patch/delete and verifies absence. Tests cover pending→removal, edited/forged/unknown inventory rejection, repeat no-op, deletion interruption/recovery, rollback after later write failure, intervening user work, and real stored 0.2.0 output migrating from manifest 1.0. Native host behavior remains separately unverified.
+
+Legacy manifests lack version identity and a block baseline. Original assets are recognized by reviewed hashes; edited legacy AGENTS (including outside text changes) conservatively blocks until reconciled. Interrupted recovery still requires the reviewed engine and unchanged PRD used for the plan. No unattended download or arbitrary-version migration is implemented.
+
+## Session/update stage 3 checkpoint
+
+77 unittest methods passed; structural validation passed. workflow.py derives all five feature sizes into the same common plan/rendered guidance for Codex and Cursor. Tests cover phase order, optional chat boundaries, inline XS/S specification with no extra feature document, security checks for small risky tasks, and rejection of forged workflow output. This validates deterministic guidance, not automatic session creation or model compliance.
+
+## Session/update stage 4 and final verification
+
+Final suite: **90 unittest methods passed** on Linux, including all existing Codex/Cursor regression cases. Stage 4 first checkpoint passed 85 methods; final additions exercise real CLI checkpoint/resume, every deletion boundary, shared ownership, Codex→Cursor reconfiguration, and interrupted legacy migration recovery after PRD change. Structural validation: **63 requirements / 58 acceptance scenario IDs**, schema and local-link checks passed. These document counts are not claims that every broad scenario is fully satisfied.
+
+Session records use the same approval/Apply/journal, remain outside installed component hashes, reject invalid references/inconsistent reported test results, and detect workspace drift on resume. Explicit checkpoints only: no host close-event API or autonomous native session evaluation. Test commands in records are not executed by the recorder.
+
+Recovery improvement supersedes the stage 2 limitation about unchanged PRD: a changed/missing PRD no longer prevents rollback of the approved journal, but does prevent applying the stale plan. Recovery still uses the same reviewed engine. Successful-release downgrade/revert and unknown-version migrations are not implemented. The retained legacy fixture is original project output, not third-party material; no new dependency or external assets were introduced.

@@ -43,3 +43,7 @@ One selector/plan, separate executor, target and model provider. Implement Curso
 ## D-026 — Original-document provenance
 
 Agent readers handle PDF/DOCX/Markdown; bootstrap preserves original hash and records unread status. Complete reading metadata with source locators is required for PDF/DOCX final planning. No bundled PDF/DOCX parser, automatic OCR service upload or claim of comprehension. Engine 0.2.0 invalidates prior approvals and adds adapter identity to plans.
+
+## D-027 — Accepted session/update extension and revised delivery order
+
+User requested deterministic session guidance and Harness update management. Proposed: derive workflow from existing route, reuse core.handoff, add strict mutable session records, reconcile installed/desired inventory in the existing planner, and extend the same writer/journal for delete and verified migrations. No second selector, updater framework or unsupported chat API. See SESSION_UPDATE_PLAN.md for audit evidence and implementation gates. User approved integrity fixes first, then updates, workflow and handoff. Implemented in 0.3.0 through the existing planner/writer; current evidence is in VERIFICATION.md.

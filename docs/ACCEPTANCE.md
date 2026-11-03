@@ -108,3 +108,17 @@ Final local suite on 2026-11-03: **48 executable tests passed**. This number is 
 | AT-53 | Real Cursor/macOS: suite, discovery, actual Skill application, approved Apply, integrity, idempotency and application tests recorded separately; currently NOT RUN |
 
 Automated increment: tests/test_adapters.py. PDF/DOCX bytes in contract tests are synthetic, not reader interoperability evidence. Native rules/subagents, real document interpretation and macOS behavior remain unverified. Network-domain inventory is in PLATFORM_ACCESS.md; no permissions changed.
+
+## Session/update acceptance cases — bounded executable coverage
+
+| Scenario | Expected behavior |
+|---|---|
+| AT-54 | XS/S, M, L/XL deterministically map to documented phase/session recommendations; no mandatory new chat; same route across adapters; risk gates unchanged |
+| AT-55 | Explicit session close produces schema-valid state/decisions/files/tests/next task; resume flags stale references; missing evidence stays not-verified; abrupt exit makes no false final-record claim |
+| AT-56 | Reassessment compares installed/desired versions and module additions/changes/removals; unchanged files receive no writes; shared files remain owned |
+| AT-57 | Customized managed AGENTS/Skills and obsolete user-edited files survive update; conflicts block Apply; exact create/patch/delete preview and approval required |
+| AT-58 | Supported legacy migration and interrupted deletion recovery preserve user edits; unknown versions blocked; removed files verified absent; repeat update is no-op |
+
+Executable coverage: AT-54 test_workflow.py; AT-55 test_handoff.py; AT-56..58 test_updates.py plus existing Apply regression suite. Native model/session behavior remains NOT RUN. Universal successful-release revert is not claimed. Detailed design history: [SESSION_UPDATE_PLAN.md](SESSION_UPDATE_PLAN.md).
+
+Current final regression count for engine 0.3.0: **90 passing unittest methods**; details and stage counts in VERIFICATION.md. Native Codex/Cursor model behavior and Cursor/macOS remain outside this run.

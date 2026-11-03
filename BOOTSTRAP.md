@@ -45,3 +45,9 @@ Supported runtime for Apply: POSIX/Linux with directory file descriptors and adv
 PRDs may be Markdown, PDF or DOCX (up to 16 MiB at bootstrap). The agent uses an available reader/OCR, retains the original hash and page/section/table references in facts.sources and prd.reading, and marks incomplete reading explicitly. Bootstrap hashes bytes; it does not extract or understand document content. Do not demand manual conversion when a reader exists; do not upload private documents to a new external service without authorization. Unread/partial documents block final planning. Legacy Markdown assessments remain compatible.
 
 Supply execution_host and target_platform together, or use legacy host. Explicit profiles take precedence: executor capabilities determine file/code access; target capabilities and the versioned adapter determine renderable components. model_provider records interpretation provenance only; no Ollama/cloud API client is implemented yet. All selection and filesystem policy stays in shared Python code.
+
+## Existing Harness and session continuation
+
+Use `inventory` before updating an installed Harness; preserve unknown/edited components and resolve blockers rather than rewriting hashes. Normal plan keeps obsolete files pending; `plan --remove-obsolete` proposes exact deletions requiring approval. See [updates and sessions](docs/UPDATES_AND_SESSIONS.md).
+
+Apply the plan's deterministic Specification → Implementation → Verification route. At explicit session/large-stage completion prepare SessionHandoff, then handoff-plan → preview → actual approval → apply. On continuation run resume with the checkpoint ID; reconcile stale workspace before continuing. Tests in handoff are agent-reported evidence, not commands to run automatically or a new permission grant. Unexpected chat termination does not guarantee a final record.

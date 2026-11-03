@@ -31,3 +31,9 @@ HOST LIMITATIONS: ...
 ```
 
 Agent portability is a design target, not a claim that every host can interpret every tool-specific instruction. Keep the project truth in text/structured data and generate host-specific wrappers as needed.
+
+## Validated session records (0.3.0)
+
+[SESSION_UPDATE_PLAN.md](SESSION_UPDATE_PLAN.md) extends this existing handoff rather than introducing a second context system. Runtime installs guidance and provides handoff-plan/resume through the generator. Structured records add session/phase identity, specification and decision references, relevant file freshness, documentation impact, actual checks and the next task. Mutable session records must not be treated as immutable generated components or permission to repeat previous actions. Intentional completion checkpoints state; automatic capture of arbitrary chat termination is not supported.
+
+See [commands, schema example and limits](UPDATES_AND_SESSIONS.md). Session records use immutable IDs and the existing approved writer; no mutable latest pointer is needed.

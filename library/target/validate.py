@@ -14,7 +14,7 @@ def check(root):
         return ['Unsafe manifest path']
     try:
         manifest = json.loads(manifest_path.read_text())
-        if manifest['schema_version'] != '1.0' or not manifest['files']:
+        if manifest['schema_version'] not in ('1.0','2.0') or not manifest['files']:
             return ['Invalid manifest']
         for name, expected in manifest['files'].items():
             rel = Path(name)

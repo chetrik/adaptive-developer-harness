@@ -88,3 +88,12 @@ Final evidence: 48 runtime tests passed; structural validation passed; generated
 | `MP-02` | test_cursor_four_scenarios_apply_and_idempotency; test_cursor_unconfirmed_discovery_blocks; existing Codex suite | AT-51 | Experimental shared Skills tested; native rules/agents deferred |
 | `DOC-01` | bootstrap.py, schemas, core.py; test_bootstrap_original_formats_and_separate_profiles, test_binary_reading_and_original_change_gate | AT-52 | Provenance/gates tested; real readers agent-owned |
 | `MP-03` | CURSOR_MACOS_TEST.md, PLATFORM_ACCESS.md | AT-53 | Protocol documented; native macOS NOT RUN; no network permission changes |
+
+## Session/update requirements — runtime 0.3.0
+
+| Requirement | Planned code / existing foundation | Acceptance | Status |
+|---|---|---|---|
+| `SW-01` | core.make_plan route → common workflow contract; existing implement/verify Skills | AT-54 | Implemented: test_workflow.py; model compliance separately unverified |
+| `SW-02` | core.handoff template → SessionHandoff schema/checkpoint/resume | AT-55 | Implemented: test_handoff.py; explicit checkpoint only, no chat-close API |
+| `UP-01` | Existing selector/render/hash diff → version inventory and module reconciliation | AT-56 | Implemented: test_updates.py; revisions, pending removals, minimal diff |
+| `UP-02` | Existing preview/approval/journal → customization guard, delete/recovery/migration registry | AT-57, AT-58 | Implemented: integrity negatives, approved delete/recovery and manifest-1-to-2 fixtures; unknown versions blocked |

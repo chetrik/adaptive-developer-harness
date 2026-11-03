@@ -37,3 +37,7 @@ Runtime implementation: [architecture](docs/ARCHITECTURE.md). Requirements and e
 ## Attribution
 
 [Reference audit](docs/REFERENCE_AUDIT.md), [inspirations](INSPIRATIONS.md), [third-party notices](THIRD_PARTY_NOTICES.md). Target components in this MVP are original MIT-licensed files; no external framework is installed wholesale.
+
+## Updates and session continuity (0.3.0)
+
+The same deterministic engine now plans versioned Harness updates, protects managed AGENTS edits, keeps pending removals inventoried, and applies explicitly approved deletions with recovery. It recommends Specification/Implementation/Verification boundaries and records structured session checkpoints through the existing Plan/Apply path. See [agent-operated usage and limitations](docs/UPDATES_AND_SESSIONS.md). Native chat creation and arbitrary-version migrations are not implemented.
