@@ -1,13 +1,13 @@
 # Платформи та готовність до роботи — 0.5.0
 
-0.5.1 patch: clearer lightweight workflow, bounded task context and UI/test guidance. Platform formats and support boundaries below are unchanged. Existing 0.5.0 assets update through inventory/preview/approval/recovery; managed-file conflicts block. No new native invocation evidence is claimed.
+0.5.1 patch: clearer lightweight workflow, bounded task context and UI/test guidance. Platform formats and support boundaries below are unchanged. Existing 0.5.0 assets update through inventory/preview/approval/recovery; managed-file conflicts block. Native evidence from the subsequent owner-reported Claude/macOS trial is recorded below and in VERIFICATION.md.
 
 Один Selection Engine, один Harness Plan, один Apply. Поточні результати нижче розрізняють створення файлів, нативне виявлення та фактичну роботу агента.
 
 | Середовище | Що реалізовано | Що ще потребує підтвердження |
 |---|---|---|
 | Codex | AGENTS.md, .agents/skills, conditional reviewer, install/update/recovery | Новий native probe у цьому середовищі завершується read-only filesystem; раніше discovery підтверджено, новий model turn не виконано |
-| Claude Code | CLAUDE.md entry, .claude/skills, read-only .claude/agents/adh-reviewer.md; спільний Plan/Apply | Формати підтверджено офіційними GitHub-прикладами; Claude CLI 2.1.317 doctor пройшов у generated project; invocation Skills/reviewer потребує sign-in і не виконаний |
+| Claude Code | CLAUDE.md entry, .claude/skills, read-only .claude/agents/adh-reviewer.md; спільний Plan/Apply. За реальним тестом власниці на macOS: встановлення, цілісність, discovery обох Skills і нативний виклик adh-verify пройшли | Виклик adh-implement, реалізація/тести застосунку й reviewer ще не перевірені. Деталі: [native trial](VERIFICATION.md#claude-code-macos-native-test-2026-11-03) |
 | Cursor | Спільні .agents/skills, .cursor/rules/adh.mdc, readonly .cursor/agents/adh-reviewer.md | Офіційні формати й автоматизовані install/update тести підтверджено; native invocation на macOS не виконаний |
 | Antigravity | AGENTS.md, .agents/skills, always_on .agents/rules/adh.md, reviewer із view_file/grep_search | Офіційні формати й автоматизовані тести підтверджено; native invocation не виконаний |
 | Lovable | Project Instructions, AGENTS.md, вибрані Workspace Skills, окремі import ZIP, порівняння інструкцій, code handoff | Формат імпорту підтверджено документацією; потрібен owner/admin для фактичного імпорту та task test у workspace |
