@@ -122,3 +122,16 @@ Automated increment: tests/test_adapters.py. PDF/DOCX bytes in contract tests ar
 Executable coverage: AT-54 test_workflow.py; AT-55 test_handoff.py; AT-56..58 test_updates.py plus existing Apply regression suite. Native model/session behavior remains NOT RUN. Universal successful-release revert is not claimed. Detailed design history: [SESSION_UPDATE_PLAN.md](history/SESSION_UPDATE_PLAN.md).
 
 Current final regression count for engine 0.3.0: **90 passing unittest methods**; details and stage counts in VERIFICATION.md. Native Codex/Cursor model behavior and Cursor/macOS remain outside this run.
+
+## Engineering Gates 0.4.0
+
+| Scenario | Expected behavior |
+|---|---|
+| AT-59 | XS/S inline cycle; complex incomplete AC, critical questions and missing risk criteria block |
+| AT-60 | Unapproved/stale spec blocks Implementation; arbitrary receipts never prove readiness; statuses distinguish missing evidence |
+| AT-61 | Relevant context has observed bounded delivery and fresh source hash; protected paths and excessive payloads rejected |
+| AT-62 | Observed RED → changed code → current GREEN; changed expectations/fixtures and stale results rejected; crash/skip/timeout/empty run not-verified |
+| AT-63 | Exact 0.3.0 migration preserves edits, interruption/recovery/retry/no-op; original engine recovers its unfinished operation before upgrade |
+| AT-64 | Common Plan/Apply/handoff and CLI support gates for Codex/Cursor; install approval cannot become task/execution approval |
+
+Executable evidence: test_engineering_gates.py and test_engine_migration.py plus unchanged adapter/regression suites. Native host interception and semantic comprehension remain unverified. See [ENGINEERING_GATES.md](ENGINEERING_GATES.md).

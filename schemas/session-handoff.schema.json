@@ -141,6 +141,84 @@
     },
     "evidence_source": {
       "const": "agent-reported; commands not executed by recorder"
+    },
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "pass",
+            "blocked",
+            "not-verified"
+          ]
+        },
+        "allowed": {
+          "type": "boolean"
+        },
+        "transition": {
+          "enum": [
+            "implementation",
+            "verification",
+            "complete"
+          ]
+        },
+        "task_id": {
+          "type": "string"
+        },
+        "task_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "workflow_route": {
+          "enum": [
+            "quick",
+            "standard",
+            "full"
+          ]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "pass",
+                  "blocked",
+                  "not-verified",
+                  "not-applicable"
+                ]
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "status",
+              "reason"
+            ]
+          }
+        },
+        "scope": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "allowed",
+        "transition",
+        "task_id",
+        "task_sha256",
+        "workflow_route",
+        "checks",
+        "scope"
+      ]
     }
   },
   "required": [

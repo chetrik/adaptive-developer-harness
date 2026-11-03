@@ -42,3 +42,7 @@ Approved revised order: integrity fixes → Harness Update Management → Sessio
 Stages 2 and 3 implemented: incremental versioned updates/migration/deletion/recovery (74-test checkpoint), then structured session workflow (77-test checkpoint). Native Cursor/macOS evidence is still pending; unit counts do not change that gate.
 
 Stage 4 implemented: structured immutable handoff through the same Plan/Apply, resume freshness checks, CLI and interruption tests. Shared-core stage delivery is complete within the documented limits; native Cursor/macOS and model behavior remain separate gates. Usage: [UPDATES_AND_SESSIONS.md](UPDATES_AND_SESSIONS.md). Future work: additional explicitly tested release migrations and native session integration only where supported.
+
+## Engineering Gates — approved 0.4.0 increment
+
+Implemented in sequence: exact 0.3.0 compatibility registry/recovery regression; strict spec/context/readiness contracts; observed unittest RED/GREEN; shared Plan/handoff/managed Skill integration. Automated evidence is recorded in VERIFICATION.md. Remaining: native host gate hooks, verified PDF/DOCX reader receipts, other test runners/CI attestations, authenticated host approval events, independent security review. No second SDD pipeline or universal agent interception. [Operational guide](ENGINEERING_GATES.md).

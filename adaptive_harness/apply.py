@@ -147,6 +147,13 @@ def apply_plan(plan, approval, target, state_dir):
         os.close(lock);raise HarnessError('Unsafe lock file')
     try:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        # A migration must not overtake unfinished work from an earlier engine.
+        journals=list(state.glob('*.journal.json'))
+        if len(journals)>1000:raise HarnessError('Too many recovery journals; inspect state directory')
+        for journal_file in journals:
+            pending=read_json(journal_file)
+            if pending.get('target')==str(root) and pending.get('status') in ('writing','needs-recovery') and pending.get('plan_id')!=plan['plan_id']:
+                raise HarnessError('Unfinished prior operation: recover with its original reviewed engine and plan first')
         receipt_path=state/(plan['plan_id']+'.receipt.json')
         journal_path=state/(plan['plan_id']+'.journal.json')
         if receipt_path.exists():

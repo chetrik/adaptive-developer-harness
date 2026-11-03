@@ -49,4 +49,4 @@ def resume(target, session_id):
     stale=record['workspace_snapshot']!=snapshot(root,exclude_sessions=True)
     return {'status':'stale' if stale else 'current','record':record,
             'next':'Стан змінився: перечитай фактичні файли, узгодь розбіжності й запиши новий checkpoint.' if stale else 'Прочитай рішення, ризики й наступну задачу; цей запис не надає нових дозволів.',
-            'limitations':'Evidence is agent-reported, not proof of test execution. Git metadata and other session records are excluded from freshness.'}
+            'limitations':'Handoff narrative is agent-reported. Stored readiness is historical: rerun gate using original evidence receipts before transitioning. Git metadata and other session records are excluded from freshness.'}

@@ -75,3 +75,21 @@ Cleanup retains all runtime sources, schemas (including fingerprinted historical
 - catalog fingerprint unchanged: `28c34539578ebf6d5311aecdc2a3fdbf94c620f6371afc7f9a57f76ec0b91b59`.
 
 Tracked structure after cleanup: **101 files total: 92 active/development/compatibility files and 9 historical files under docs/history/** (including its index). Eight files moved into history; two duplicate documents were merged and their old paths removed. This is a navigation cleanup, not a smaller runtime or new release of component formats. Existing valid 0.3.0 plans retain their fingerprint compatibility; target/PRD freshness conditions still apply. Unknown engine versions remain unsupported. Native Cursor/macOS behavior was not evaluated by this cleanup.
+
+## Engineering Gates stage 1 checkpoint
+
+Existing 92 regression tests passed; four additional 0.3.0 migration tests passed. Preserved exact original output and component hashes. Explicit 0.3.0 → 0.4.0 transition retains manifest 2.0. Tests cover customization conflicts, stale plans, migration interruption/recovery/retry, and actual recovery with pinned original 63dc1bd code from local Git. New Apply refuses to overtake unfinished journals in the supplied state directory; callers must reuse the original state directory and retain the reviewed old checkout.
+
+## Engineering Gates stage 2 checkpoint
+
+108 tests passed, including 12 initial gate/evidence cases; structural validation passed. Shared evaluator enforces spec completeness, approval identity, context delivery/freshness and stage readiness. Host-owned HMAC receipts distinguish actual bounded reader/test observations from arbitrary JSON. A real synthetic unittest assertion failed before the fix and passed after it; changed expectations, fabricated receipts, old code results, skips/import errors/timeouts/empty suites were rejected or not-verified. Local receipts are not protection against a malicious owner of the host/key; observed delivery is not comprehension.
+
+## Engineering Gates 0.4.0 final verification
+
+Stage 3/4 integrated gate, CLI and handoff checks passed: 18 engineering tests. Full regression: **115 unittest methods passed** (92 baseline + 18 gates/evidence + 5 version migration tests). Five migration methods also passed after extending pinned 0.3.0 execution to interruption AFTER a real file write, in addition to the pre-write journal interruption. Structural validation: **35 required paths, 67 requirements, 64 acceptance IDs**, all local Markdown links and schemas valid. These are automated Linux results; no new native Cursor/macOS or Codex model/hook enforcement run is claimed.
+
+Confirmed: inline XS/S, incomplete complex specification rejection, stale/forged/missing evidence, bounded/protected context, initial RED and current GREEN, changed expectations and undeclared fixture rejection, no execution from spec consent alone, crash/skip/empty suite/timeout/output limits, shared Plan/handoff integration for both adapters. All existing Codex/Cursor, updates, deletion, recovery and boundary tests pass. Migration recognizes frozen 0.3.0 assets, rejects user edits/unknown versions/stale plans, recovers/retries interrupted updates, rejects unfinished old journals and recovers with the actual original engine. Unchanged replan produces zero operations.
+
+Changed managed output: generated AGENTS block and existing feature/implement/verify/handoff assets, plus manifest metadata. No new third-party dependencies or imported implementation; only original project output is retained as migration fixture. Changed/new-file credential-pattern scan found no matches; no files exceed 1 MiB. This bounded scan is not independent security or legal certification.
+
+Engine fingerprint is intentionally changed to `6bff53fe34225ab0ddc2287fed15bc8017ccdc35d283ed2ef294c163b5fb13cf`; library fingerprint is `06b5c8675173cf239f8d7135c7d0a062f6af41c38a3d539ee8039de2be5f8500`. Old plans require their original reviewed engine for recovery; new updates require a fresh approved plan. Manifest remains 2.0. The full trust boundary and remaining runner/native-reader limits are documented in [ENGINEERING_GATES.md](ENGINEERING_GATES.md).

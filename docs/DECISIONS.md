@@ -47,3 +47,9 @@ Agent readers handle PDF/DOCX/Markdown; bootstrap preserves original hash and re
 ## D-027 — Accepted session/update extension and revised delivery order
 
 User requested deterministic session guidance and Harness update management. Proposed: derive workflow from existing route, reuse core.handoff, add strict mutable session records, reconcile installed/desired inventory in the existing planner, and extend the same writer/journal for delete and verified migrations. No second selector, updater framework or unsupported chat API. See history/SESSION_UPDATE_PLAN.md for audit evidence and implementation gates. User approved integrity fixes first, then updates, workflow and handoff. Implemented in 0.3.0 through the existing planner/writer; current evidence is in VERIFICATION.md.
+
+## ADR: Engineering Gates 0.4.0 (accepted by user)
+
+Extend the existing workflow, Plan, Skills and Apply. Formal readiness uses content identity and observed execution, not agent-written verdicts. An explicit existing task instruction can satisfy spec authorization; execution privileges remain host-owned. Use original lightweight mechanisms inspired by spec-driven engineering practices; no genkovich/sdd code, assets, dependencies or second framework copied/installed.
+
+Approved controlled engine/component transition from 0.3.0 preserves manifest 2.0 and old-engine recovery. Frozen original output plus pinned old checkout tests protect that boundary. Host-owned HMAC detects receipt modification, not hostile same-user execution. Details: [ENGINEERING_GATES.md](ENGINEERING_GATES.md).

@@ -1,6 +1,6 @@
 # Оновлення Harness і продовження робочих сесій
 
-Runtime: 0.3.0. Технічні команди виконує coding agent; користувач переглядає наслідки й погоджує точні зміни. Усі записи використовують один Harness Plan і чинний Apply. Немає автоматичного створення чатів, завантаження нових версій чи встановлення сторонніх компонентів.
+Runtime: 0.4.0 (сумісність із 0.3.0 через контрольоване оновлення). Технічні команди виконує coding agent; користувач переглядає наслідки й погоджує точні зміни. Усі записи використовують один Harness Plan і чинний Apply. Немає автоматичного створення чатів, завантаження нових версій чи встановлення сторонніх компонентів.
 
 ## Оновлення наявного Harness
 
@@ -72,3 +72,5 @@ For changed behavior, examine the PRD/brief, current-target architecture, featur
 
 
 The JSON handoff above is the runtime contract. Keep product intent and decision references in project files rather than copying a full PRD or transcript into every session record.
+
+Engineering Gates in 0.4.0 extend the same route and handoff with optional computed readiness. Old handoff records remain readable. Historical reports must be refreshed before transitions; narrative completion is still agent-reported. [Gate and migration guide](ENGINEERING_GATES.md).

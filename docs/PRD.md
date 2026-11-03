@@ -138,3 +138,12 @@ Order: shared interface → Cursor → real macOS test → Claude Code → Antig
 - **[UP-02]** Preserve user customization, including managed AGENTS edits; show exact update diff and require approval. Verify writes/deletions, support safe recovery and only explicitly tested version migrations; unknown histories block, rather than triggering blind replacement.
 
 These extend GN-08 and SE-02. Detailed audit, minimal contracts and implementation order: [Session/update proposal](history/SESSION_UPDATE_PLAN.md). Runtime implements deterministic recommendations, validated handoff, inventory/conflict checks, approved deletion and the explicit manifest-1-to-2 migration. Human/agent behavior and native hosts require separate evidence; see UPDATES_AND_SESSIONS.md.
+
+## Engineering Gates (approved, engine 0.4.0)
+
+- **[EG-01] Spec quality.** Validate goal/scope, testable AC, risk-dependent error/edge/NFR coverage and unresolved critical questions; XS/S inline without mandatory documents.
+- **[EG-02] Stage readiness.** Compute pass/blocked/not-verified/not-applicable from fresh source/approval/execution evidence; separate install, task and risky execution permission. No universal host enforcement claim.
+- **[EG-03] Bounded context.** Deliver bounded relevant sources with hashes/locators, verify critical freshness and handoff, distinguish delivered bytes from model comprehension.
+- **[EG-04] Bugfix evidence.** Observe RED on approved baseline and GREEN on changed current code, preserve tests/fixtures/config expectations, review documentation impact; unreproduced defects stay not-verified.
+
+Implementation and explicit limits: [ENGINEERING_GATES.md](ENGINEERING_GATES.md). Migration retains the shared writer and manifest format; modified managed assets require approved minimal update.

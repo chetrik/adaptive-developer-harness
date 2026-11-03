@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "adaptive-developer-harness"
-version = "0.3.0"
+version = "0.4.0"
 description = "Repository-driven deterministic Developer Harness generator"
 requires-python = ">=3.11"
 dependencies = ["jsonschema==4.26.0", "PyYAML==6.0.3"]

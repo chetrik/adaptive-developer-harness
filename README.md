@@ -43,3 +43,7 @@ Runtime implementation: [architecture](docs/ARCHITECTURE.md). Requirements and e
 The same deterministic engine now plans versioned Harness updates, protects managed AGENTS edits, keeps pending removals inventoried, and applies explicitly approved deletions with recovery. It recommends Specification/Implementation/Verification boundaries and records structured session checkpoints through the existing Plan/Apply path. See [agent-operated usage and limitations](docs/UPDATES_AND_SESSIONS.md). Native chat creation and arbitrary-version migrations are not implemented.
 
 Repository navigation: BOOTSTRAP.md is the user workflow; AGENTS.md is for contributors. [Historical design material](docs/history/README.md) is not part of generated projects. Migration contracts and legacy fixtures remain supported inputs, not cleanup targets.
+
+## Engineering Gates (0.4.0)
+
+Spec quality, stage readiness, bounded context receipts and observed unittest RED → GREEN extend the existing workflow. See [agent guide and explicit limits](docs/ENGINEERING_GATES.md), including controlled migration from 0.3.0.

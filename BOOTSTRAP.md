@@ -51,3 +51,5 @@ Supply execution_host and target_platform together, or use legacy host. Explicit
 Use `inventory` before updating an installed Harness; preserve unknown/edited components and resolve blockers rather than rewriting hashes. Normal plan keeps obsolete files pending; `plan --remove-obsolete` proposes exact deletions requiring approval. See [updates and sessions](docs/UPDATES_AND_SESSIONS.md).
 
 Apply the plan's deterministic Specification → Implementation → Verification route. At explicit session/large-stage completion prepare SessionHandoff, then handoff-plan → preview → actual approval → apply. On continuation run resume with the checkpoint ID; reconcile stale workspace before continuing. Tests in handoff are agent-reported evidence, not commands to run automatically or a new permission grant. Unexpected chat termination does not guarantee a final record.
+
+Task implementation after installation follows [Engineering Gates](docs/ENGINEERING_GATES.md). Keep install approval, task approval and execution permissions separate; the agent operates the technical steps.

@@ -97,3 +97,12 @@ Final evidence: 48 runtime tests passed; structural validation passed; generated
 | `SW-02` | core.handoff template → SessionHandoff schema/checkpoint/resume | AT-55 | Implemented: test_handoff.py; explicit checkpoint only, no chat-close API |
 | `UP-01` | Existing selector/render/hash diff → version inventory and module reconciliation | AT-56 | Implemented: test_updates.py; revisions, pending removals, minimal diff |
 | `UP-02` | Existing preview/approval/journal → customization guard, delete/recovery/migration registry | AT-57, AT-58 | Implemented: integrity negatives, approved delete/recovery and manifest-1-to-2 fixtures; unknown versions blocked |
+
+## Engineering Gates 0.4.0
+
+| Requirement | Scope | Design | Acceptance | Source | Implementation | Evidence | Status |
+|---|---|---|---|---|---|---|---|
+| `EG-01` | Spec quality proportional to task | ENGINEERING_GATES.md | AT-59 | User-approved engineering gates | gates.py | test_engineering_gates.py | Verified formal structure; semantic review agent/user-owned |
+| `EG-02` | Formal stage readiness and separate permissions | ENGINEERING_GATES.md | AT-60, AT-63, AT-64 | User-approved engineering gates | gates.py, core.py, inventory.py | test_engineering_gates.py, test_engine_migration.py | Automated; no universal host enforcement |
+| `EG-03` | Bounded verified context | ENGINEERING_GATES.md | AT-61 | User-approved engineering gates | evidence.py | test_engineering_gates.py | UTF-8 delivery; native binary receipts pending |
+| `EG-04` | RED/GREEN tied to current code | ENGINEERING_GATES.md | AT-62 | User-approved engineering gates | verification.py, verification_runner.py | test_engineering_gates.py | Observed unittest; other runners pending |

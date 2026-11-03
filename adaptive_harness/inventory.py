@@ -27,7 +27,8 @@ def load_inventory(root, catalog):
         ids={m['id'] for m in catalog['modules']}
         if not set(old['modules'])<=ids:raise HarnessError('Unknown installed module')
         for name in old['files']:safe_path(root,name)
-        legacy=read_json(ROOT/'catalog/legacy-component-hashes.json')['files']
+        registry=read_json(ROOT/'catalog/legacy-component-hashes.json')
+        legacy=registry['files']
         if old['schema_version']=='1.0':
             # Legacy manifests have no trustworthy component version. Recognize exact original assets.
             for name,sha in old['files'].items():
@@ -35,7 +36,7 @@ def load_inventory(root, catalog):
                     raise HarnessError('Unrecognized legacy component: '+name)
         else:
             v=old['versions']
-            if v['generator']!=VERSION or v['policy']!=POLICY or v['catalog']!=catalog['catalog_version']:
+            if v['generator'] not in ('0.3.0',VERSION) or v['policy']!=POLICY or v['catalog']!=catalog['catalog_version']:
                 raise HarnessError('Unsupported installed versions; migration required')
             from .adapters import ADAPTERS
             adapter=ADAPTERS.get(v['adapter'])
@@ -46,7 +47,9 @@ def load_inventory(root, catalog):
             for name,sha in old['files'].items():
                 if name=='AGENTS.md':continue
                 source=ROOT/'LICENSE' if name=='.adaptive-harness/LICENSE' else ROOT/'library/target'/_source(name)
-                if sha not in [digest(source.read_bytes()),*legacy.get(name,[])]:
+                supported=[digest(source.read_bytes()),*legacy.get(name,[]),registry['releases']['0.3.0']['files'].get(name)]
+                if v['generator']=='0.3.0': supported=[registry['releases']['0.3.0']['files'].get(name),*legacy.get(name,[])]
+                if sha not in supported:
                     raise HarnessError('Unrecognized installed component revision: '+name)
             for name,owners in old['owners'].items():
                 if not owners or not set(owners)<=set(allowed[name]):raise HarnessError('Invalid component ownership')

@@ -62,3 +62,9 @@ The same make_plan now reads a strict installed inventory via inventory.py. New 
 ## Session implementation checkpoint (0.3.0)
 
 workflow.py is the single route function consumed by the common plan and renderers. XS/S use inline specifications; M and L/XL get recommended boundaries without mandatory chats. Every route has Verification criteria and risk-based checks. handoff.py validates agent-reported session records and compares a workspace fingerprint on resume. handoff-plan extends make_plan and uses the existing approval/Apply/journal; it refuses mixed Harness updates. Immutable session IDs eliminate a mutable latest pointer. Session data stays outside component inventory; normal plan freshness still covers those files. No session lifecycle API or automatic test execution is asserted.
+
+## Engineering Gates: shared extension in 0.4.0
+
+`gates.evaluate` consumes the existing selection/workflow route plus strict task contract. It computes readiness; it does not select/install modules or create a second lifecycle. Optional engineering request/readiness extends the single Plan and existing handoff. `evidence.py` provides bounded reader and external host-owned receipts; `verification.py` observes a fixed unittest runner and binds evidence to current workspace/code/test inputs. Receipts use the existing external state write helper, never a second target Apply. The original Apply/journal owns all target component and handoff mutations.
+
+Task spec approval and test execution authorization are separate from install approval. Receipt integrity is not user identity authentication; the host remains the authority. Historical handoff readiness cannot substitute for current evaluation. Formats, threat boundary, commands and version transition: [ENGINEERING_GATES.md](ENGINEERING_GATES.md).

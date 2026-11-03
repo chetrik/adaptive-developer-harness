@@ -205,6 +205,9 @@ Specification: узгодь вимоги й критерії приймання,
 Verification: перевір приймальні критерії, релевантні тести, документацію та ризики; запиши фактичні результати.
 Для XS/S короткої специфікації в поточному чаті достатньо; не створюй зайвих документів.
 Для великих етапів перевір результат і передай стан перед наступним етапом.
+Engineering Gates: перед Implementation перевір spec approval, критичний context і `gate --transition implementation`; перед verified complete — актуальні observed test receipts.
+Погодження встановлення Harness, специфікації та ризикових операцій є різними межами дозволів. Уже наданий точний дозвіл можна використати без повторного запитання.
+Для відтворюваного bugfix потрібні RED → виправлення → GREEN без підлаштування очікувань тесту. Непідтверджений запуск = not-verified.
 Передача контексту: .adaptive-harness/templates/handoff.md.
 Перед завершенням сесії/етапу підготуй структурований handoff і запиши через handoff-plan → preview → approval → apply генератора.
 При продовженні виконай resume для session_id; stale означає, що спочатку треба звірити фактичні файли.
@@ -215,8 +218,13 @@ Verification: перевір приймальні критерії, релева
     files['.adaptive-harness/LICENSE']=(ROOT/'LICENSE').read_text(); owners['.adaptive-harness/LICENSE']=['core.safety-baseline']
     return files,owners
 
-def make_plan(assessment, target, *, remove_obsolete=False, handoff=None):
+def make_plan(assessment, target, *, remove_obsolete=False, handoff=None, engineering=None):
     a=validate('project-assessment',assessment)
+    readiness=None
+    if engineering is not None:
+        validate('engineering-request',engineering)
+        from .gates import evaluate
+        readiness=evaluate(a,engineering['task'],target,engineering['state_dir'],transition=engineering['transition'],receipts=engineering['receipts'])
     # PRD source fields are evidence labels, never shell arguments or executable instructions.
     if any(x in a['project_name']+a['prd']['source'] for x in ('\n','\r',BEGIN,END)):
         raise HarnessError('Multiline or reserved project label')
@@ -292,7 +300,7 @@ def make_plan(assessment, target, *, remove_obsolete=False, handoff=None):
     old_components=previous.get('components',{})
     old_modules=set(previous.get('modules',[]))|set(old_components)
     update={'intent':'update' if previous else 'install','remove_obsolete':remove_obsolete,
-            'migration':'manifest-1-to-2' if previous.get('schema_version')=='1.0' else 'none',
+            'migration':'manifest-1-to-2' if previous.get('schema_version')=='1.0' else 'engine-0.3-to-0.4' if previous.get('versions',{}).get('generator')=='0.3.0' else 'none',
             'installed_versions':previous.get('versions',{'generator':'unknown','manifest':previous.get('schema_version','none')}),
             'desired_versions':manifest['versions'],
             'added':sorted(selected-old_modules),'removed':sorted(old_modules-selected),
@@ -311,6 +319,7 @@ def make_plan(assessment, target, *, remove_obsolete=False, handoff=None):
         if operations or remove_obsolete or not previous:
             blockers.append('Спочатку окремо погодьте й завершіть оновлення Harness; handoff фіксує стабільний стан.')
         record=build_record(handoff,root)
+        if readiness is not None:record['readiness']=readiness
         name=record_path(handoff['session_id']);path=safe_path(root,name)
         content=json.dumps(record,ensure_ascii=False,indent=2,sort_keys=True)+'\n'
         before=digest(read_regular(path)) if path.exists() else None
@@ -322,7 +331,7 @@ def make_plan(assessment, target, *, remove_obsolete=False, handoff=None):
         update['intent']='handoff'
     if snapshot(root)!=before_snapshot:
         raise HarnessError('Target changed during planning')
-    plan={'schema_version':'1.0','handoff':handoff,'update':update,'expected_absent':[op['path'] for op in deletes],'adapter':plan_adapter(a),'engine_version':VERSION,'policy_version':POLICY,'catalog_sha256':fingerprint(catalog),
+    plan={'schema_version':'1.0','engineering':engineering,'readiness':readiness,'handoff':handoff,'update':update,'expected_absent':[op['path'] for op in deletes],'adapter':plan_adapter(a),'engine_version':VERSION,'policy_version':POLICY,'catalog_sha256':fingerprint(catalog),
         'library_sha256':library_hash(),'engine_sha256':engine_hash(),'assessment':a,'target':str(root),'target_snapshot':before_snapshot,
         'status':'blocked' if blockers else 'ready-for-approval','blockers':sorted(set(blockers)),'warnings':warnings,
         'workflow':session_workflow(a,decisions),'route':session_workflow(a,decisions)['route'],'decisions':decisions,'operations':operations,'expected_files':{**manifest['files'],**{n:digest(c) for n,c in sorted(files.items())}}}
@@ -346,7 +355,7 @@ def check_plan(plan, target, *, fresh=True, recovering=False):
     if fresh:
         if snapshot(target)!=plan['target_snapshot']:
             raise HarnessError('Target changed; preview and approval required again')
-        expected=make_plan(plan['assessment'],target,remove_obsolete=plan['update']['remove_obsolete'],handoff=plan['handoff'])
+        expected=make_plan(plan['assessment'],target,remove_obsolete=plan['update']['remove_obsolete'],handoff=plan['handoff'],engineering=plan['engineering'])
         if expected!=plan:
             raise HarnessError('Plan differs from deterministic policy output')
     for op in plan['operations']:
@@ -363,6 +372,8 @@ def explain(plan):
            '## Готові рішення',plan['assessment']['reuse']['rationale'],'','## Що додамо']
     for d in plan['decisions']:
         if d['status']=='selected': lines.append('- '+labels.get(d['id'],d['id'])+': '+d['reason'])
+    if plan['readiness']:
+        lines+=['','## Готовність задачі',plan['readiness']['status']]+['- '+c['code']+': '+c['status']+' — '+c['reason'] for c in plan['readiness']['checks'] if c['status'] not in ('pass','not-applicable')]
     lines+=['','## Організація роботи',plan['workflow']['recommendation'],plan['workflow']['fallback'],'Verification обов’язковий; окремий чат сам по собі не означає незалежний огляд.']
     lines+=['','## Оновлення', 'Режим: '+plan['update']['intent'], 'Міграція: '+plan['update']['migration'], 'Додати модулі: '+', '.join(plan['update']['added']), 'Змінити модулі: '+', '.join(plan['update']['changed']), 'Більше не потрібні: '+', '.join(plan['update']['removed']), 'Очікують погодженого видалення: '+', '.join(plan['update']['pending_removal'])]
     lines+=['','## Що пропустимо']
