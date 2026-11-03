@@ -1,0 +1,113 @@
+{
+  "schema_version": "0.1.0-draft",
+  "status": "ready-for-approval",
+  "assessment": {
+    "project_name": "Offline calculator demo",
+    "project_type": "personal utility",
+    "development_stage": "greenfield",
+    "user_mode": "beginner",
+    "risk_flags": [
+      "local-only",
+      "no personal data confirmed in example"
+    ],
+    "unknowns": [
+      "Target host capability not yet verified"
+    ],
+    "source_repo": null,
+    "evidence": [
+      "Example fixture, not observed user repo"
+    ],
+    "feature_scale": "XS"
+  },
+  "host": {
+    "name": "example-coding-agent",
+    "version": null,
+    "capabilities_verified": false,
+    "supports_subagents": false,
+    "supports_hooks": false,
+    "network_access": false,
+    "limitations": [
+      "All capabilities illustrative; check in real host"
+    ]
+  },
+  "policy_version": "0.1.0-draft",
+  "catalog_version": "0.1.0-draft",
+  "reuse_evaluation": {
+    "status": "not-required",
+    "decision": "not-applicable",
+    "candidates": []
+  },
+  "module_decisions": [
+    {
+      "id": "core.agent-entry",
+      "decision": "selected",
+      "reason": "Коротка інструкція допоможе агенту відновити контекст проєкту.",
+      "evidence": [
+        "Project is new"
+      ],
+      "trigger": "project_exists"
+    },
+    {
+      "id": "core.test-baseline",
+      "decision": "selected",
+      "reason": "Потрібно перевіряти обчислення на прикладах.",
+      "evidence": [
+        "Calculator performs numerical operations"
+      ],
+      "trigger": "code_changes"
+    },
+    {
+      "id": "core.safety-baseline",
+      "decision": "selected",
+      "reason": "Потрібна базова перевірка секретів і дозволів навіть у маленькому проєкті.",
+      "evidence": [
+        "Safety baseline applies to all"
+      ],
+      "trigger": "always"
+    },
+    {
+      "id": "docs.adr",
+      "decision": "skipped",
+      "reason": "Немає архітектурного рішення, яке потребує окремого ADR.",
+      "evidence": [
+        "One-page offline calculator"
+      ],
+      "trigger": "significant_architecture_change"
+    }
+  ],
+  "proposed_operations": [
+    {
+      "action": "create",
+      "target_path": "AGENTS.md",
+      "reason": "Introduce a concise project entrypoint",
+      "diff_preview": null,
+      "risk": "low"
+    },
+    {
+      "action": "create",
+      "target_path": "tests/test_calculator.py",
+      "reason": "Verify the numerical behavior",
+      "diff_preview": null,
+      "risk": "low"
+    }
+  ],
+  "approval": {
+    "status": "pending",
+    "scope": [
+      "Create a minimal project-specific Harness; no third-party dependencies"
+    ],
+    "approved_by": null,
+    "approved_at": null
+  },
+  "validation": {
+    "status": "not-run",
+    "evidence": [],
+    "notes": [
+      "No generated files exist in example"
+    ]
+  },
+  "limitations": [
+    "Illustrative example only; not a real selection-engine output"
+  ],
+  "handoff": null
+}
