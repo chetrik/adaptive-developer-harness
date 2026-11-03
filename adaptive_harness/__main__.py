@@ -14,7 +14,7 @@ from .research import inspect_repository
 def main(argv=None):
     parser=argparse.ArgumentParser(description='Adaptive Harness: agent-operated plan/approve/apply/validate')
     sub=parser.add_subparsers(dest='command',required=True)
-    p=sub.add_parser('bootstrap'); p.add_argument('--prd',required=True); p.add_argument('--url',required=True); p.add_argument('--target')
+    p=sub.add_parser('bootstrap'); p.add_argument('--prd',required=True); p.add_argument('--url',required=True); p.add_argument('--target'); p.add_argument('--platform',default='codex',choices=('codex','cursor'))
     p=sub.add_parser('research'); p.add_argument('--url',required=True)
     p=sub.add_parser('plan'); p.add_argument('--assessment',required=True); p.add_argument('--target',required=True)
     p=sub.add_parser('explain'); p.add_argument('--plan',required=True)
@@ -25,7 +25,7 @@ def main(argv=None):
     p=sub.add_parser('validate'); p.add_argument('--plan',required=True); p.add_argument('--target',required=True)
     args=parser.parse_args(argv)
     try:
-        if args.command=='bootstrap': result=intake(args.prd,args.url,args.target)
+        if args.command=='bootstrap': result=intake(args.prd,args.url,args.target,args.platform)
         elif args.command=='research': result=inspect_repository(args.url)
         elif args.command=='plan': result=make_plan(read_json(args.assessment),args.target)
         else:

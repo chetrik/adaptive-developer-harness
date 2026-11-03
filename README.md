@@ -10,7 +10,7 @@ This repository contains an executable Python MVP: strict JSON contracts, a vers
 
 The target receives only selected original components: Codex Skills (`adh-implement`, `adh-verify`, and conditional reuse/security/migration/release Skills), a managed AGENTS.md block, templates, provenance/license data, an executable validator, and a read-only reviewer definition only when subagent capability is confirmed.
 
-Codex CLI 0.163.0 discovery of generated `adh-implement` and `adh-verify` has been observed through `skills/list`. Application tests, model comprehension, independent reviews and every host's subagent behavior are separate checks, not automatic consequences of installation. Claude Code/Cursor adapters and third-party Skill import are not implemented.
+Codex CLI 0.163.0 discovery of generated `adh-implement` and `adh-verify` has been observed through `skills/list`. Application tests, model comprehension, independent reviews and every host's subagent behavior are separate checks, not automatic consequences of installation. Cursor has an experimental shared-Skills adapter with automated Linux Apply coverage; native rules/subagents and macOS execution remain unverified. Claude Code and third-party Skill import are not implemented. See [Cursor macOS test](docs/CURSOR_MACOS_TEST.md) and [required documentation domains](docs/PLATFORM_ACCESS.md).
 
 ## How it works
 

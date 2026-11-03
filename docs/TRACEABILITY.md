@@ -79,3 +79,12 @@ New user idea or clarified constraint → amend PRD first → extend row and cor
 | `UX-10` | У згенерованому Harness повинні діяти правила пояснень, Reuse-First і безпеки, а не тільки в генераторі | PRD §7; ARCHITECTURE | AT-48 | v2 addition (approved) | core.render; library/target | test_all_four_scenarios_install_exact_selection | partial: installed operational rules verified; model behavior not guaranteed |
 
 Final evidence: 48 runtime tests passed; structural validation passed; generated integrity checker and Codex CLI baseline Skill discovery passed. See VERIFICATION.md for exact scope. This does not promote partial rows or unrun acceptance scenarios to fully verified.
+
+## Multiplatform increment
+
+| Requirement | Implementation / evidence | Acceptance | Status |
+|---|---|---|---|
+| `MP-01` | adapters.py, core.py; test_single_selector_same_effective_capabilities, test_explicit_executor_target_and_unknown_gate, test_adapter_tampering_invalidates_plan | AT-50 | Shared contracts tested; ModelProvider metadata only |
+| `MP-02` | test_cursor_four_scenarios_apply_and_idempotency; test_cursor_unconfirmed_discovery_blocks; existing Codex suite | AT-51 | Experimental shared Skills tested; native rules/agents deferred |
+| `DOC-01` | bootstrap.py, schemas, core.py; test_bootstrap_original_formats_and_separate_profiles, test_binary_reading_and_original_change_gate | AT-52 | Provenance/gates tested; real readers agent-owned |
+| `MP-03` | CURSOR_MACOS_TEST.md, PLATFORM_ACCESS.md | AT-53 | Protocol documented; native macOS NOT RUN; no network permission changes |

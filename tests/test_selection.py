@@ -67,7 +67,7 @@ class SelectionTests(unittest.TestCase):
         self.assertFalse(any(o['path'].endswith('.toml') for o in p['operations']))
         self.assertIn('не незалежним',explain(p))
     def test_unsupported_host_and_unverified_skill_capability(self):
-        a=fixture(); a['host']['name']='cursor'
+        a=fixture(); a['host']['name']='lovable'
         self.assertEqual(make_plan(a,self.root)['status'],'blocked')
         a=fixture(); a['host']['capabilities']['native_skills']['basis']='inferred'
         self.assertEqual(make_plan(a,self.root)['status'],'blocked')

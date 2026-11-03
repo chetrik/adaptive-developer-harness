@@ -87,12 +87,24 @@ The scenario table is the acceptance baseline, not 49 claimed passing tests. Exe
 |---|---|---|
 | AT-01..08, AT-12, AT-14 | test_selection.py: four fixtures, determinism, UI/migration conditions, hard policy | LLM interpretation and real customer security need separate evidence |
 | AT-15..17, AT-34, AT-43 | test_apply.py: no approval/stale input rejection, preservation, repeat Apply and recovery | Cooperative/exclusive writer assumption |
-| AT-19, AT-21, AT-31, AT-38, AT-42, AT-45..46 | contract/host/offline/unknown/graph/policy tests | Other hosts are explicitly blocked |
+| AT-19, AT-21, AT-31, AT-38, AT-42, AT-45..46 | contract/host/offline/unknown/graph/policy tests | Unsupported adapters are explicitly blocked |
 | AT-25, AT-27 | no secret copying from excluded files; integrity vs not-verified report | General secret detection and security certification not claimed |
 | AT-37, AT-39, AT-49 | test_entrypoint.py: two inputs, full agent CLI flow, safe research transport | Assessment supplied by fixture; no autonomous LLM benchmark |
 | AT-48 | actual generated Skills/rules + executable validator; native baseline discovery on Codex CLI 0.163.0 | Human comprehension/model behavior not automatically proven |
 | AT-18 | conditional reviewer definition + inline fallback | Native reviewer invocation not run |
-| AT-23/24/44, AT-47 | Not run | Third-party adaptation and second host deferred |
+| AT-23/24/44 | Not run | Third-party adaptation deferred |
+| AT-47 | Shared Cursor rendering/Apply automated; native NOT RUN | Real Cursor/macOS still required |
 | Remaining dialogue, market, production and semantic doc-review scenarios | Specified or partially supported by agent procedures | Not marked fully passed |
 
 Final local suite on 2026-11-03: **48 executable tests passed**. This number is the test runner count, not the number of acceptance scenarios marked complete.
+
+## Cursor and document-intake increment
+
+| Scenario | Expected behavior |
+|---|---|
+| AT-50 | Equivalent effective capabilities in Codex/Cursor produce identical selection decisions; paired profiles validated; adapter tampering rejected |
+| AT-51 | Cursor four scenarios install selected shared Skills; no native .cursor/.codex configs; preserve user files; repeat plan no-op; native status remains unverified |
+| AT-52 | PDF/DOCX/Markdown scaffold hashes original, records unread; incomplete binary reading or format mismatch blocks; changed original invalidates plan |
+| AT-53 | Real Cursor/macOS: suite, discovery, actual Skill application, approved Apply, integrity, idempotency and application tests recorded separately; currently NOT RUN |
+
+Automated increment: tests/test_adapters.py. PDF/DOCX bytes in contract tests are synthetic, not reader interoperability evidence. Native rules/subagents, real document interpretation and macOS behavior remain unverified. Network-domain inventory is in PLATFORM_ACCESS.md; no permissions changed.

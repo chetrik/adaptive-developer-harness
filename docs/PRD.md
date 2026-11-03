@@ -120,3 +120,12 @@ The user approved Python + JSON Schema + YAML, Codex-first, and milestones M0–
 - **PRD + generator URL (IN-01..05):** the coding agent performs available technical steps and obtains target-write approval; users need not use a CLI. A CLI is an internal agent interface. LLM interpretation remains separate from deterministic policy and file operations.
 
 Approval of this implementation project is not approval of any future target Harness Plan. No deployment, production access or external upload is included.
+
+## Approved multiplatform increment: Cursor first
+
+- **[MP-01]** One Selection Engine and Harness Plan; separate ExecutionHost, TargetPlatform, ModelProvider. Adapters render capabilities, never duplicate selection policy.
+- **[MP-02]** Preserve Codex; introduce Cursor shared-Skills adapter first. Native rules/subagents require verified official contracts and native tests. Missing capabilities must be explained; unsupported targets remain blocked.
+- **[DOC-01]** Accept PDF, DOCX and Markdown PRDs through available agent readers, without mandatory manual conversion; retain original hash, reader, page/section provenance and incomplete-reading gates.
+- **[MP-03]** Verify Cursor on macOS before claiming full support; network permissions stay unchanged without user approval.
+
+Order: shared interface → Cursor → real macOS test → Claude Code → Antigravity → Lovable/Handoff → AI Studio Export & Continue → Ollama. Lovable uses only confirmed Project Instructions/AGENTS.md/Workspace Skills/import contracts, with actual application checks. Python execution inside Lovable is not assumed. AI Studio prioritizes ZIP/GitHub code export, existing-code analysis and continuation, without assuming custom Skills execute. Handoff includes PRD, code, decisions, current state, dependencies, missing files/configuration, environment variable names and external service inventory; code export, database migration and conversation/context transfer are separate operations. Never export secret values. These integrations remain planned.

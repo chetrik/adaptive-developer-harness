@@ -22,7 +22,7 @@ Environment: Python 3.12.14; jsonschema 4.26.0; PyYAML 6.0.3; Linux/POSIX. Local
 
 - Broad beginner comprehension study and autonomous model behavior across arbitrary PRDs.
 - Native reviewer invocation or independent security review of this implementation.
-- Claude Code/Cursor integration (AT-47), production deployments and legal/security certification.
+- Native Cursor/macOS and Claude Code integration (AT-47), production deployments and legal/security certification.
 - Import and propagation of an actual third-party Skill (AT-23/24/44). Original component provenance/license propagation is tested; external adaptation remains deferred.
 - A fresh published environment or remote release. All implementation evidence is from this checkout.
 
@@ -33,3 +33,9 @@ The current agent used the calculator PRD and generator URL, retained explicit a
 The agent read the generated `adh-verify` Skill and ran its integrity command: exit 0, `Harness integrity: PASS`. Application tests were not run because this synthetic target has no application implementation. `python3 tools/probe_codex_skills.py --target <temporary-target>` returned pass with both expected Skills on the final generated files. No native model turn/subagent was invoked.
 
 Final structural validator: 31 required files, 55 requirement IDs and 49 acceptance scenario IDs; schema/catalog/fixture/local-link validation passed. These are separate from the 48 executed runtime tests.
+
+## Cursor increment, engine 0.2.0
+
+55 unittest methods passed on Linux (48 existing + 7 new); structural validation passed with 59 requirements / 53 acceptance scenarios. New tests cover four Cursor Apply scenarios, preservation/idempotency, same shared selector decisions, executor/target separation, unsupported discovery, adapter tampering and original document reading/hash gates. Codex regression tests pass.
+
+Native Cursor/macOS is NOT RUN. Official Cursor pages returned HTTP 403; only user-reported shared-Skills format is used. No third-party implementation/assets/dependencies were added. No native rules, Hooks or subagent configurations for Cursor are claimed. PDF/DOCX contract tests use synthetic bytes; they do not prove real parser/OCR behavior. The current increment does not rerun Codex native discovery; the earlier recorded baseline evidence remains scoped to its original run.

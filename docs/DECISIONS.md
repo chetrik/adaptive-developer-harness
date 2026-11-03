@@ -35,3 +35,11 @@ These supersede the proposal status of D-007, D-009, D-010 and D-013 for MVP.
 - D-022 Accepted: Codex-first; native Skills/subagents require observed capabilities. Unsupported capabilities have explicit blockers/fallbacks.
 - D-023 Accepted: original minimal target components first; external imports require per-file provenance and propagated notices.
 - D-024 Observed: LICENSE is MIT, copyright 2026 chetrik; D-012 no longer describes absence of a chosen repository license. Legal identity remains outside code verification.
+
+## D-025 — Approved shared architecture and Cursor priority
+
+One selector/plan, separate executor, target and model provider. Implement Cursor before Claude and Antigravity. Keep legacy host assessments; explicit executor/target must appear together and take precedence. Cursor 0.1 adapter is experimental shared-Skills only: user-reported format support, no invented native rules/agent contracts under HTTP 403. Native macOS validation remains a separate gate. Network permissions unchanged.
+
+## D-026 — Original-document provenance
+
+Agent readers handle PDF/DOCX/Markdown; bootstrap preserves original hash and records unread status. Complete reading metadata with source locators is required for PDF/DOCX final planning. No bundled PDF/DOCX parser, automatic OCR service upload or claim of comprehension. Engine 0.2.0 invalidates prior approvals and adds adapter identity to plans.

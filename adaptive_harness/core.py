@@ -3,6 +3,7 @@ import json
 import yaml
 from pathlib import Path
 from .contracts import ROOT, VERSION, POLICY, HarnessError, canonical, digest, fingerprint, validate, fact_value, confirmed
+from .adapters import adapter_for, effective_assessment, plan_adapter
 from .filesystem import root_path, safe_path, read_regular, snapshot
 
 RISK = ('personal_data', 'sensitive_data', 'payments', 'authentication', 'public_exposure', 'production')
@@ -64,11 +65,21 @@ def is_commodity(a):
 
 def check_assessment(a):
     validate('project-assessment',a)
+    a=effective_assessment(a)
     blockers = []
     source=Path(a['prd']['source'])
     if not source.is_absolute(): source=ROOT/source
     if not source.is_file() or source.is_symlink() or digest(read_regular(source))!=a['prd']['sha256']:
         blockers.append('PRD відсутній або змінився: потрібен новий assessment.')
+    document_format=a['prd'].get('format', {'.pdf':'pdf','.docx':'docx'}.get(source.suffix.lower(),'markdown'))
+    suffix_format={'.pdf':'pdf','.docx':'docx','.md':'markdown','.markdown':'markdown'}.get(source.suffix.lower())
+    if suffix_format and document_format!=suffix_format:
+        blockers.append('Формат PRD не відповідає оригінальному файлу.')
+    reading=a['prd'].get('reading')
+    if document_format in ('pdf','docx') and (not reading or reading['status']!='complete'):
+        blockers.append('Агент має прочитати оригінальний PDF/DOCX доступним reader, зафіксувати сторінки/розділи й невизначеність. Ручне перетворення не потрібне, якщо reader доступний.')
+    if reading and reading['status']!='complete':
+        blockers.append('PRD прочитано не повністю; уточніть пропущені вимоги до погодження.')
     for group in (a['facts'], a['host']['capabilities']):
         for name, f in group.items():
             if f['value'] != 'unknown' and f['basis'] in ('observed','user-confirmed') and not f['sources']:
@@ -80,7 +91,7 @@ def check_assessment(a):
         blockers.append('Спочатку перевірте наявні правила проєкту, щоб не встановити другий процес.')
     if a['stage'] == 'unknown':
         blockers.append('Уточніть, це новий чи наявний проєкт.')
-    if a['host']['name'] != 'codex':
+    if adapter_for(a) is None:
         blockers.append('Цей host ще не підтримується; доступний лише попередній перегляд.')
     for name in ('read_files','write_files','execute','native_skills'):
         if not confirmed(a['host']['capabilities'][name]):
@@ -98,6 +109,7 @@ def check_assessment(a):
     return sorted(set(blockers))
 
 def select(a, catalog):
+    a=effective_assessment(a)
     risk = any(fact_value(a,k) is not False for k in RISK)
     capability = confirmed(a['host']['capabilities']['subagents'])
     material = a['feature_size'] in ('M','L','XL')
@@ -151,12 +163,14 @@ def _source(name):
     return Path(name).name
 
 def render(a, decisions, catalog):
+    adapter=adapter_for(a)
     selected={d['id'] for d in decisions if d['status']=='selected'}
     files={}
     owners={}
     for m in catalog['modules']:
         if m['id'] not in selected: continue
-        for path in m['files']:
+        for canonical_path in m['files']:
+            path=adapter.output_path(canonical_path) if adapter else canonical_path
             content=(ROOT/'library/target'/_source(path)).read_text()
             if path in files and files[path] != content:
                 raise HarnessError('Conflicting module output')
@@ -200,7 +214,7 @@ def make_plan(assessment, target):
     decisions=select(a,catalog)
     blockers=check_assessment(a)
     blockers += ['Конфлікт модулів: '+d['id'] for d in decisions if d['status']=='conflict']
-    warnings=['Перевірка встановлених файлів не є перевіркою безпеки або тестів вашого застосунку.']
+    warnings=(adapter_for(a).warnings() if adapter_for(a) else [])+['Перевірка встановлених файлів не є перевіркою безпеки або тестів вашого застосунку.']
     if any(d['id']=='quality.inline-review' and d['status']=='selected' for d in decisions):
         warnings.append('Незалежний субагент недоступний: огляд буде inline, не незалежним.')
     files,owners=render(a,decisions,catalog)
@@ -247,7 +261,7 @@ def make_plan(assessment, target):
         operations.append({'action':'patch' if before else 'create','path':name,'before':before,'after':digest(content),'content':content,'modules':sorted(owners[name])})
     if snapshot(root)!=before_snapshot:
         raise HarnessError('Target changed during planning')
-    plan={'schema_version':'1.0','engine_version':VERSION,'policy_version':POLICY,'catalog_sha256':fingerprint(catalog),
+    plan={'schema_version':'1.0','adapter':plan_adapter(a),'engine_version':VERSION,'policy_version':POLICY,'catalog_sha256':fingerprint(catalog),
         'library_sha256':library_hash(),'engine_sha256':engine_hash(),'assessment':a,'target':str(root),'target_snapshot':before_snapshot,
         'status':'blocked' if blockers else 'ready-for-approval','blockers':sorted(set(blockers)),'warnings':warnings,
         'route':'quick' if a['feature_size'] in ('XS','S') else 'standard' if a['feature_size']=='M' else 'full','decisions':decisions,'operations':operations,'expected_files':{n:digest(c) for n,c in sorted(files.items())}}
@@ -261,6 +275,8 @@ def check_plan(plan, target, *, fresh=True):
         raise HarnessError('Plan hash mismatch')
     if str(root_path(target))!=plan['target']:
         raise HarnessError('Wrong target')
+    if plan['adapter']!=plan_adapter(plan['assessment']):
+        raise HarnessError('Adapter changed; replan and approve again')
     if plan['engine_sha256']!=engine_hash() or plan['engine_version']!=VERSION or plan['policy_version']!=POLICY or plan['catalog_sha256']!=fingerprint(load_catalog()) or plan['library_sha256']!=library_hash():
         raise HarnessError('Engine, policy, catalog or library changed; replan')
     if plan['status']!='ready-for-approval' or plan['blockers'] or check_assessment(plan['assessment']):

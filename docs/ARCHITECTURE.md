@@ -40,3 +40,11 @@ Existing AGENTS.md text outside the managed block is preserved byte-for-byte in 
 ## Verification history
 
 M0: 55 requirements / 49 acceptance scenarios structurally checked. M1: 16 selector tests passed before M2 validation. M2: integration and negative checks are recorded in [VERIFICATION.md](VERIFICATION.md); they do not imply every acceptance scenario has passed.
+
+## 0.2.0 adapter boundary
+
+`adapters.py` normalizes legacy host or paired ExecutionHost/TargetPlatform into effective capabilities for the existing selector. Executor supplies read/write/execute; target supplies native_skills/subagents. The renderer is versioned in Harness Plan and covered by fingerprints/approval. Codex uses existing outputs unchanged. Cursor currently shares `.agents/skills/`, portable AGENTS.md and templates/validator; unsupported native subagent rendering reduces effective subagents to false, selecting existing inline-review rules. No new filesystem namespace is allowed. Native Cursor rules/Hooks/agents await readable official contracts.
+
+ModelProvider is assessment metadata only in this increment. Future Ollama interprets PRD into the same validated assessment; it cannot change selection, approvals or filesystem policy. Existing schema_version 1.0 assessment fields remain compatible; the engine advances to 0.2.0 and requires adapter identity in new plans. Old plans must be regenerated and approved again.
+
+The agent reads PDF/DOCX/Markdown, preserving original bytes/hash and requirement locators; the engine validates reading metadata and gates incomplete binary-document intake. It does not claim to verify whether a reader understood every page. See BOOTSTRAP and CURSOR_MACOS_TEST for runtime evidence boundaries.
