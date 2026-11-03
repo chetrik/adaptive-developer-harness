@@ -2,7 +2,7 @@
 
 ## Project role and source of truth
 
-This repository is the source of specifications for **building** Adaptive Developer Harness Generator. Do not confuse these contributor instructions with the `AGENTS.md` a future generator might create inside a customer's repository.
+This repository contains the executable Python MVP and canonical specifications for Adaptive Developer Harness Generator. Do not confuse these contributor instructions with the `AGENTS.md` a future generator might create inside a customer's repository.
 
 Read in order: `docs/PRD.md` (product requirements), `docs/ARCHITECTURE.md` (current vs target), `docs/DECISIONS.md` (accepted vs proposed decisions), `docs/ROADMAP.md` (next milestone), the relevant feature spec or scenario, and `docs/TRACEABILITY.md` (coverage). Load other docs only if the task touches them.
 
@@ -20,4 +20,8 @@ Read in order: `docs/PRD.md` (product requirements), `docs/ARCHITECTURE.md` (cur
 
 ## First run
 
-Follow `CODEX_BOOTSTRAP_PROMPT.md`: audit plan and produce a proposal before implementing the Selection Engine. Use `docs/ACCEPTANCE.md` as the acceptance baseline.
+Read current implementation and verification evidence before proposing changes. Preserve the shared deterministic engine, common Harness Plan, approved writer and tested migration contracts. Run `python3 -m unittest discover -s tests -v` and `python3 tools/validate_package.py`. End-user entry is BOOTSTRAP.md; this AGENTS.md is the contributor continuation entrypoint.
+
+## Continuing development
+
+Preserve the product requirements in PRD, including Reuse-First, beginner explanations, selected working components and the PRD + URL entrypoint. Inspect actual code and tests before claiming support; develop the existing repository. Keep changes bounded and distinguish unsupported hosts, model behavior and independent security review from passing unit tests.

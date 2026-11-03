@@ -1,218 +1,247 @@
-catalog_version: 0.1.0-draft
-status: proposal; no runtime consumes this metadata yet
-notes:
-- Validate dependencies and avoid conflicts before selecting modules.
-- Security baseline is independent of project size.
-- Host-specific rendering and required approvals are separate capabilities.
+catalog_version: '1.0'
 modules:
 - id: core.agent-entry
   category: core
   purpose: Short project-specific agent navigation and safe working rules
-  candidate_trigger: project_exists
   dependencies: []
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: always
+  files: []
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: core.test-baseline
   category: quality
   purpose: Basic executable checks when software is modified
-  candidate_trigger: code_changes
   dependencies: []
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: always
+  files:
+  - .agents/skills/adh-verify/SKILL.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: core.safety-baseline
   category: security
   purpose: Input and secrets-handling guidance plus available technical controls
-  candidate_trigger: always
   dependencies: []
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: always
+  files:
+  - .adaptive-harness/validate.py
+  - .agents/skills/adh-implement/SKILL.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: core.handoff
   category: continuity
   purpose: Portable next step and evidence of work
-  candidate_trigger: multi_session
   dependencies: []
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: always
+  files:
+  - .adaptive-harness/templates/handoff.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: process.feature-spec
   category: process
   purpose: Behavior acceptance criteria and scope contract
-  candidate_trigger: nontrivial_feature
   dependencies: []
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: material
+  files:
+  - .adaptive-harness/templates/feature.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: process.sdd-workflow
   category: process
   purpose: Single selected specification-driven lifecycle
-  candidate_trigger: complex_workflow
   dependencies:
   - process.feature-spec
   conflicts:
   - process.alternate-sdd
-  selection_policy: proposal-not-executable
+  trigger: large
+  files: []
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: process.alternate-sdd
   category: process
   purpose: Alternate SDD workflow option; do not stack by default
-  candidate_trigger: explicit_workflow_choice
   dependencies:
   - process.feature-spec
   conflicts:
   - process.sdd-workflow
-  selection_policy: proposal-not-executable
+  trigger: never
+  files: []
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: docs.architecture
   category: documentation
   purpose: Current and target states, risks, structure
-  candidate_trigger: architecture_decision
   dependencies: []
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: architecture
+  files:
+  - .adaptive-harness/templates/architecture.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: docs.adr
   category: documentation
   purpose: Decision records when trade-offs matter
-  candidate_trigger: significant_architecture_change
   dependencies:
   - docs.architecture
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: large
+  files:
+  - .adaptive-harness/templates/decision.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: docs.doc-impact
   category: documentation
   purpose: Compare code changes with canonical documentation
-  candidate_trigger: behavioral_change
   dependencies: []
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: always
+  files: []
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: ux.ui-flow
   category: ux
   purpose: UI flows and screen-level acceptance
-  candidate_trigger: has_ui
   dependencies: []
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: ui
+  files:
+  - .adaptive-harness/templates/ui-check.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: data.migration-safety
   category: data
   purpose: Data schema migration and rollback policy
-  candidate_trigger: schema_changed
   dependencies: []
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: migration
+  files:
+  - .agents/skills/adh-migration/SKILL.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: api.contract
   category: api
   purpose: External API/interface contract checks
-  candidate_trigger: public_contract_changed
   dependencies: []
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: api
+  files:
+  - .adaptive-harness/templates/api-check.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: quality.independent-review
   category: quality
   purpose: Read-only independent verifier when supported
-  candidate_trigger: elevated_risk_or_material_change
   dependencies: []
   conflicts:
   - quality.inline-review
-  selection_policy: proposal-not-executable
+  trigger: subagents
+  files:
+  - .codex/agents/adh-reviewer.toml
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: quality.inline-review
   category: quality
   purpose: Explicitly non-independent review fallback
-  candidate_trigger: subagent_unavailable
   dependencies: []
   conflicts:
   - quality.independent-review
-  selection_policy: proposal-not-executable
+  trigger: inline
+  files: []
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: security.auth-and-data
   category: security
   purpose: Authorization/privacy checks for external personal data
-  candidate_trigger: customer_data_or_auth
   dependencies:
   - core.safety-baseline
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: risk
+  files:
+  - .agents/skills/adh-security/SKILL.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: security.release-gate
   category: security
   purpose: Deployment/production approvals, verification and rollback
-  candidate_trigger: public_release_or_production
   dependencies:
   - core.safety-baseline
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: production
+  files:
+  - .agents/skills/adh-release/SKILL.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: research.reuse-first
   category: research
   purpose: Verified build/adapt/buy research before generic subsystem
-  candidate_trigger: commodity_subsystem
   dependencies: []
   conflicts: []
-  selection_policy: proposal-not-executable
+  trigger: commodity
+  files:
+  - .agents/skills/adh-reuse/SKILL.md
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: experience.beginner
   category: experience
   purpose: Beginner-friendly explanations and consent UX
-  candidate_trigger: beginner_mode
   dependencies: []
   conflicts:
   - experience.developer
-  selection_policy: proposal-not-executable
+  trigger: beginner
+  files: []
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik
 - id: experience.developer
   category: experience
   purpose: Developer-mode compact technical output
-  candidate_trigger: developer_mode
   dependencies: []
   conflicts:
   - experience.beginner
-  selection_policy: proposal-not-executable
+  trigger: developer
+  files: []
   provenance:
-    kind: project-original-draft
-    external_source: null
+    kind: project-original
+    license: MIT
+    copyright: 2026 chetrik

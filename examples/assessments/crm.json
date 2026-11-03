@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "project_name": "crm",
+  "project_type": "crm",
+  "stage": "greenfield",
+  "user_mode": "beginner",
+  "feature_size": "M",
+  "surfaces": [
+    "web",
+    "api"
+  ],
+  "prd": {
+    "source": "examples/PRD_CRM.md",
+    "sha256": "01fb4166d90cd49709bfb996531aa8157e8e059466b364d2736e29f316dde81e"
+  },
+  "facts": {
+    "personal_data": {
+      "value": true,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "sensitive_data": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "payments": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "authentication": {
+      "value": true,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "public_exposure": {
+      "value": true,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "production": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "schema_change": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "api_change": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "existing_harness": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "commodity": {
+      "value": true,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    }
+  },
+  "host": {
+    "name": "codex",
+    "version": "synthetic-test-host",
+    "capabilities": {
+      "read_files": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      },
+      "write_files": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      },
+      "execute": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      },
+      "network": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      },
+      "native_skills": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      },
+      "subagents": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      }
+    }
+  },
+  "reuse": {
+    "status": "pending",
+    "decision": "undecided",
+    "rationale": "До остаточного плану потрібно дослідити готові рішення. Ця fixture не вигадує виконане дослідження.",
+    "candidates": []
+  },
+  "unknowns": [],
+  "project_scale": "medium"
+}

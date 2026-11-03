@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Structural checks for the documentation starter; NOT a generator or security scanner.
+"""Structural checks for the repository, runtime contracts and historical examples; not a security scanner.
 
 Run: python tools/validate_package.py
-Optional: install `jsonschema` to also validate the illustrative plan against its schema.
+Use the project dependencies in requirements.lock.
 """
 from __future__ import annotations
 import json, pathlib, re, sys
@@ -10,14 +10,19 @@ import json, pathlib, re, sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 errors = []
 required = [
-    'README.md','START_HERE_UA.md','CODEX_BOOTSTRAP_PROMPT.md','AGENTS.md',
+    'README.md','START_HERE_UA.md','AGENTS.md',
     'INSPIRATIONS.md','THIRD_PARTY_NOTICES.md','docs/PRD.md','docs/ARCHITECTURE.md',
     'docs/DECISIONS.md','docs/ROADMAP.md','docs/TRACEABILITY.md','docs/ACCEPTANCE.md',
-    'docs/CONVERSATION_COVERAGE.md','docs/SELECTION_POLICY.md',
+    'docs/history/CONVERSATION_COVERAGE.md','docs/SELECTION_POLICY.md',
     'docs/BEGINNER_EXPERIENCE.md','docs/SECURITY.md','docs/REUSE_FIRST.md',
-    'docs/SKILLS_AGENTS.md','docs/STATE_HANDOFF.md',
-    'schemas/harness-plan.schema.json','catalog/modules.yaml','templates/HARNESS_PLAN.md',
-    'examples/harness-plan-calculator.json'
+    'docs/SKILLS_AGENTS.md','docs/UPDATES_AND_SESSIONS.md',
+    'schemas/harness-plan.schema.json','catalog/modules.yaml','docs/history/HARNESS_PLAN_TEMPLATE_V0.md',
+    'docs/history/harness-plan-calculator-v0.json', 'BOOTSTRAP.md', 'docs/VERIFICATION.md',
+    'docs/REFERENCE_AUDIT.md', 'adaptive_harness/core.py', 'adaptive_harness/apply.py',
+    'schemas/plan-v1.schema.json', 'schemas/project-assessment.schema.json', 'requirements.lock',
+    'catalog/legacy-component-hashes.json', 'schemas/manifest-v1.schema.json',
+    'schemas/manifest-v2.schema.json', 'tests/fixtures/manifest-v1-output.json',
+    'docs/history/README.md'
 ]
 for path in required:
     if not (ROOT / path).is_file(): errors.append('Missing: ' + path)
@@ -46,7 +51,7 @@ for path in ROOT.rglob('*.md'):
             errors.append('Broken local Markdown link in '+str(path.relative_to(ROOT))+': '+target)
 
 schema=json.loads((ROOT/'schemas/harness-plan.schema.json').read_text(encoding='utf-8'))
-example=json.loads((ROOT/'examples/harness-plan-calculator.json').read_text(encoding='utf-8'))
+example=json.loads((ROOT/'docs/history/harness-plan-calculator-v0.json').read_text(encoding='utf-8'))
 try:
     from jsonschema import Draft202012Validator
 except ImportError:
@@ -72,9 +77,23 @@ else:
             if dep not in ids:errors.append('Unknown catalog module reference '+dep+' in '+m['id'])
         if m['id'] in m.get('dependencies',[]):errors.append('Self-dependency '+m['id'])
 
+# Current runtime contracts are required; legacy v0 example remains separately checked.
+sys.path.insert(0, str(ROOT))
+try:
+    from adaptive_harness.core import load_catalog
+    from adaptive_harness.contracts import validate
+    from jsonschema import Draft202012Validator
+    load_catalog()
+    for schema_path in (ROOT/'schemas').glob('*.schema.json'):
+        Draft202012Validator.check_schema(json.loads(schema_path.read_text()))
+    for fixture in (ROOT/'examples/assessments').glob('*.json'):
+        validate('project-assessment',json.loads(fixture.read_text()))
+except Exception as exc:
+    errors.append('Runtime contracts: '+type(exc).__name__+' '+str(exc))
+
 if errors:
     print('VALIDATION FAILED')
     for e in errors:print(' -',e)
     sys.exit(1)
 print(f'OK: {len(required)} required files; {len(reqs)} requirements; {len(tests)} acceptance tests; local links and plan schema checked.')
-print('This does not mean any generator or safety functionality is implemented.')
+print('Structural validation does not replace runtime tests or security/host evidence.')

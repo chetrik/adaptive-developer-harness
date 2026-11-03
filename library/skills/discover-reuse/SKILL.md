@@ -3,9 +3,9 @@ name: discover-reuse
 description: Research existing maintained open-source projects, libraries and services to compare adapting, composing or building a solution.
 ---
 
-# Discover Reuse — original draft procedure
+# Discover Reuse — generator orchestration procedure
 
-**Status:** draft, not installed/verified. Refer to `docs/REUSE_FIRST.md` and `docs/SECURITY.md`.
+**Status:** generator-side guidance connected to the executable MVP; native installation of this orchestration Skill is not claimed. Follow BOOTSTRAP.md and the runtime schemas. Target-project assets are separately stored in library/target/.
 
 ## Procedure
 
@@ -19,3 +19,7 @@ description: Research existing maintained open-source projects, libraries and se
 ## Output
 
 An evidence-backed reuse comparison suitable for a beginner, with unavailable/uncertain fields explicitly labeled. Research is not proof of code safety.
+
+## Runtime binding
+
+Use the agent-operated commands in BOOTSTRAP.md. Selection uses `adaptive_harness.core.make_plan`; approval/apply/recovery use `adaptive_harness.apply`; validation reports actual file checks separately from application tests and native discovery. Do not implement formal policy by improvising this prose.

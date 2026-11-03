@@ -1,67 +1,56 @@
-# Roadmap — bounded implementation milestones
+# Roadmap — approved executable MVP
 
-All milestones are **planned**. No implementation of the Selection Engine or agent adapters has been completed in this starter archive.
+Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
 
-## M0 — Specification baseline (starter delivered)
+Approved 2026-11-03. Requirements, code and bounded evidence are mapped in TRACEABILITY.md.
 
-- [x] Consolidate product requirements and beginner UX principles from conversation and supplied teaching notes.
-- [x] Record security/IP/reuse policies and inspirations.
-- [x] Define acceptance scenarios, traceability and draft plan/schema.
-- [x] Create a starter docs/schema validation script.
-- [ ] **User review** of decisions and intended product scope.
+| Milestone | Current status | Evidence / remaining limits |
+|---|---|---|
+| M0: integrate v2 and public bootstrap | Implemented | 55 requirements and 49 scenario IDs preserved/linked; structural validator passes |
+| M1: contracts, deterministic selection, early reuse and beginner plan | Implemented | Selector/contract suite; first checkpoint passed 16 tests before M2 |
+| M2: approval, real selected components, Apply/recovery, Codex flow | Implemented for bounded POSIX/Codex workflow | Integration/negative tests, generated checker and native baseline Skill discovery; model comprehension and reviewer invocation remain separately unverified |
+| M3: expand candidate research and UX evaluation | Planned | MVP already includes live Git evidence collection, required pre-plan research and readable explanations |
+| M4: external Skill adaptation and expanded library | Planned | MVP already installs original selected Skills/rules/templates; external assets need per-file notices and tests |
+| M5: additional hosts and advanced migration | Sequenced below | Native evidence is required per adapter |
+| M6: release review | Pending | Independent security review, novice evaluation, license review and publication |
 
-### M1 — Research & architecture decision
+All four user-mandated MVP outcomes remain in M0–M2. A passing unit suite does not complete every broad acceptance scenario. No production release or deployment has been performed. See VERIFICATION.md.
 
-- [ ] Audit competitor/framework repositories at pinned commits; classify compatible techniques and licensing constraints.
-- [ ] Compare repository-driven vs custom CLI/SDK plan and select implementation boundaries.
-- [ ] Agree core modules, approval mechanism, exact host fallback contracts and generated file structure.
-- [ ] Resolve relevant items in `DECISIONS.md` and capture ADRs as appropriate.
-- [ ] Ensure requirement traceability with no unexplained omissions.
+## Approved priority order after Codex MVP
 
-**Exit:** written architecture review, approved MVP and research/provenance ledger.
+1. Preserve Codex regression suite and extract shared adapter interface — implemented in 0.2.0.
+2. Cursor shared-Skills adapter — automated Linux integration tests; native rules/subagents pending accessible official contracts.
+3. Real Cursor/macOS Apply and Skill application — NOT RUN; follow [test protocol](CURSOR_MACOS_TEST.md). User diagnostics are preliminary evidence only.
+4. Claude Code adapter, then Antigravity adapter — planned; verified native contracts and tests required.
+5. Lovable Integration + Project Handoff — planned; Project Instructions, AGENTS.md, selected Workspace Skills and confirmed GitHub/ZIP import, actual instruction application, code export. External generator unless Python execution is demonstrated.
+6. Google AI Studio Export & Continue — planned; ZIP and supported GitHub export, missing files/services/secrets configuration inventory, preserve existing code. No assumed custom Skill execution.
+7. Ollama Model Provider — planned; normalized PRD assessment via API, unchanged deterministic selection.
 
-### M2 — Assessment + Selection Engine
+Each stage runs automated tests, then native integration where available. Native failures/unavailable hosts are reported, never promoted to PASS. Handoff keeps code export, database/data movement and development context/history separate. See [network domains and evidence](PLATFORM_ACCESS.md).
 
-- [ ] Implement normalized project assessment and host capability detection.
-- [ ] Define validated module catalog, trigger/dependency/conflict rules, risk overrides.
-- [ ] Produce deterministic Harness Plan JSON and human-readable version.
-- [ ] Test plans for calculator/CRM/sensitive SaaS/existing app.
+## Shared-core increment: sessions and updates
 
-**Exit:** AT-01 through AT-14 and policy consistency checks as applicable.
+Scope and acceptance gates are in [SESSION_UPDATE_PLAN.md](history/SESSION_UPDATE_PLAN.md). Approved stages delivered; implementation checkpoints below supersede this original ordering:
 
-### M3 — Approved generation, validation and first adapter
+1. Derive structured phase/session recommendations from the existing deterministic route.
+2. Add validated handoff checkpoints and safe resume with stale-state detection.
+3. Add version inventory and incremental update reconciliation; protect managed AGENTS edits and retain ownership of obsolete files until resolved.
+4. Add tested deletion/recovery and the first explicit legacy migration before enabling full update Apply.
 
-- [ ] Generate only approved files with diff preview, no silent overwrite, idempotency.
-- [ ] First official target adapter (Codex, subject to verified host capabilities).
-- [ ] Structural validator, doc impact, risk, provenance and evidence reports.
-- [ ] Canonical Skills + agents are selected from library rather than blanket installed.
+Run regression checks after each stage and record actual evidence. Existing Cursor/macOS native gate and subsequent adapter ordering remain in force. No new host integration or automatic session API is implied.
 
-**Exit:** AT-15 through AT-17, AT-25, AT-27, AT-34, AT-35, plus host tests.
+Approved revised order: integrity fixes → Harness Update Management → Session Workflow → Session Handoff. Stage 1 checkpoint: implemented and 59 tests passed; managed-block conflicts and pending-removal inventory covered. Subsequent stage evidence is recorded in VERIFICATION.md.
 
-### M4 — Reuse-first + beginner experience
+Stages 2 and 3 implemented: incremental versioned updates/migration/deletion/recovery (74-test checkpoint), then structured session workflow (77-test checkpoint). Native Cursor/macOS evidence is still pending; unit counts do not change that gate.
 
-- [ ] OSS/service research workflow with true citations, license/security/maintenance evidence and offline fallback.
-- [ ] Beginner/Developer explanation modes and minimal clarification discipline.
-- [ ] Safe proof-of-concept guidance, scope-sliced PRD support, cost disclosures.
+Stage 4 implemented: structured immutable handoff through the same Plan/Apply, resume freshness checks, CLI and interruption tests. Shared-core stage delivery is complete within the documented limits; native Cursor/macOS and model behavior remain separate gates. Usage: [UPDATES_AND_SESSIONS.md](UPDATES_AND_SESSIONS.md). Future work: additional explicitly tested release migrations and native session integration only where supported.
 
-**Exit:** AT-02, AT-09 through AT-11, AT-20 through AT-22, AT-29, AT-30.
+## Engineering Gates — approved 0.4.0 increment
 
-### M5 — Cross-host + updates + provenance
+Implemented in sequence: exact 0.3.0 compatibility registry/recovery regression; strict spec/context/readiness contracts; observed unittest RED/GREEN; shared Plan/handoff/managed Skill integration. Automated evidence is recorded in VERIFICATION.md. Remaining: native host gate hooks, verified PDF/DOCX reader receipts, other test runners/CI attestations, authenticated host approval events, independent security review. No second SDD pipeline or universal agent interception. [Operational guide](ENGINEERING_GATES.md).
 
-- [ ] Second adapter, then Cursor/other beta/optional adapter after compatibility tests.
-- [ ] Independent reviewer where supported, honest inline fallback otherwise.
-- [ ] Harness update, migrations, recovery/handoff, docs drift checks.
-- [ ] Third-party import pipeline and generated-license propagation.
+## Product delivery checkpoint — 0.5.0
 
-**Exit:** AT-18, AT-19, AT-23, AT-24, AT-26, AT-28, AT-31, AT-33.
+Product-delivery priority supersedes the earlier serial platform list: finish existing adapters and real first-task flows; no new framework layers. Delivered code: Claude rendering, 0.4 compatibility, lightweight daily workflow, local Ollama contract, project handoff/export and diagnostics. Remaining release blockers: actual native Claude/Cursor test, confirmed Antigravity/Lovable contracts and native integrations, AI Studio export/account verification, real Ollama model run. PLATFORM_DELIVERY.md is the current capability table.
 
-### M6 — Public release gates
-
-- [ ] Complete all required acceptance checks, security audit and licensing review.
-- [ ] Finalize ownership and public license; verify external assets and notices.
-- [ ] Publish README, quickstart, examples and limitations; demonstrate 3–4 real host/project scenarios.
-- [ ] No false claims of production readiness, compatibility or certification.
-
-## Change discipline
-
-Each feature is scoped with acceptance criteria, implemented, tested, reviewed according to risk, followed by a documentation-impact check. Update Current State and traceability only when evidence justifies it. Carry a concise handoff with next work; choose a single next milestone rather than attempting the entire roadmap in one agent run.
+Native-contract delivery update: official documentation now accessible. Cursor and Antigravity native renderers and Lovable Project Instructions/selected-Skill ZIP packaging are implemented through the same adapter/Plan/Apply. AI Studio ZIP/GitHub Export & Continue is documented and backed by shared inspection/handoff tools. Automated contracts are tested; real host invocation/import/account-dependent steps remain explicitly unverified. Current details: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md).

@@ -1,6 +1,8 @@
-# Proposed Skills and subagent library (not installed or implemented)
+# Generator and target libraries
 
-The generator has **orchestration Skills** that run inside its source project and a **library of potential target-project Skills/subagents**. Do not conflate them. Selection chooses what the target receives; no blanket copy.
+The generator has **orchestration Skill guidance** for agents working inside its source project and a **library of potential target-project Skills/subagents**. Do not conflate them. Selection chooses what the target receives; no blanket copy.
+
+Runtime target components now exist in `library/target/` and are selected by the catalog. The tables below describe the broader library design; they are not claims that every listed role is implemented. Native discovery evidence and remaining limits are in VERIFICATION.md.
 
 ## Generator orchestration Skills
 
@@ -42,3 +44,5 @@ Each subagent should declare role, tools and writable paths (if any), relevant s
 ## Reuse of external Skills/agents
 
 The team **wants to inspect and may adapt specific third-party Skills/subagents**, especially from `genkovich/sdd` and `gotalab/cc-sdd`. Do not assume they were copied into this archive. Before any import, decide whether it is a direct licensed adaptation, a rewritten independently authored implementation informed by ideas, or a runtime dependency. Maintain original obligations, including in generated target projects.
+
+Native installation of generator-side Skills is not implemented. The active installable target library is library/target/; unused neutral role drafts are retained as [historical drafts](history/README.md). The runtime explanation is produced by core.explain; there is no installed explain-plan Skill.

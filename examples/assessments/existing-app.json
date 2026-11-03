@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0",
+  "project_name": "existing-app",
+  "project_type": "custom",
+  "stage": "brownfield",
+  "user_mode": "beginner",
+  "feature_size": "XS",
+  "surfaces": [
+    "web"
+  ],
+  "prd": {
+    "source": "examples/PRD_EXISTING_APP.md",
+    "sha256": "4bc9e2672560b9e86ed1cd622f40eb7db69b50c8b356176a5b3125e9e9e51e6e"
+  },
+  "facts": {
+    "personal_data": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "sensitive_data": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "payments": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "authentication": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "public_exposure": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "production": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "schema_change": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "api_change": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "existing_harness": {
+      "value": true,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    },
+    "commodity": {
+      "value": false,
+      "basis": "user-confirmed",
+      "sources": [
+        "Synthetic acceptance fixture; not a live capability claim"
+      ]
+    }
+  },
+  "host": {
+    "name": "codex",
+    "version": "synthetic-test-host",
+    "capabilities": {
+      "read_files": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      },
+      "write_files": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      },
+      "execute": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      },
+      "network": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      },
+      "native_skills": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      },
+      "subagents": {
+        "value": true,
+        "basis": "user-confirmed",
+        "sources": [
+          "Synthetic acceptance fixture; not a live capability claim"
+        ]
+      }
+    }
+  },
+  "reuse": {
+    "status": "not-required",
+    "decision": "not-applicable",
+    "rationale": "Локальна вузька задача без типового підкомпонента; окремий пошук не потрібний.",
+    "candidates": []
+  },
+  "unknowns": [],
+  "project_scale": "small"
+}

@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "handoff": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$"
+        },
+        "phase": {
+          "enum": [
+            "Specification",
+            "Implementation",
+            "Verification"
+          ]
+        },
+        "task": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "decisions": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "completed": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "unfinished": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "changed_files": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "uniqueItems": true,
+          "maxItems": 200
+        },
+        "tests": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "command": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 2000
+              },
+              "status": {
+                "enum": [
+                  "pass",
+                  "fail",
+                  "not-verified",
+                  "skipped"
+                ]
+              },
+              "exit_code": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "detail": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              }
+            },
+            "required": [
+              "command",
+              "status",
+              "exit_code",
+              "detail"
+            ]
+          }
+        },
+        "risks": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "next_step": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "session_id",
+        "phase",
+        "task",
+        "decisions",
+        "completed",
+        "unfinished",
+        "changed_files",
+        "tests",
+        "risks",
+        "next_step"
+      ]
+    },
+    "workspace_snapshot": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "evidence_source": {
+      "const": "agent-reported; commands not executed by recorder"
+    },
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "pass",
+            "blocked",
+            "not-verified"
+          ]
+        },
+        "allowed": {
+          "type": "boolean"
+        },
+        "transition": {
+          "enum": [
+            "implementation",
+            "verification",
+            "complete"
+          ]
+        },
+        "task_id": {
+          "type": "string"
+        },
+        "task_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "workflow_route": {
+          "enum": [
+            "quick",
+            "standard",
+            "full"
+          ]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "pass",
+                  "blocked",
+                  "not-verified",
+                  "not-applicable"
+                ]
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "status",
+              "reason"
+            ]
+          }
+        },
+        "scope": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "allowed",
+        "transition",
+        "task_id",
+        "task_sha256",
+        "workflow_route",
+        "checks",
+        "scope"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "handoff",
+    "workspace_snapshot",
+    "evidence_source"
+  ]
+}

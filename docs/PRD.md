@@ -1,6 +1,8 @@
 # Product Requirements Document — Adaptive Developer Harness Generator
 
-**Version:** draft 0.1 · **Date:** 2026-11-03 · **Status:** design agreement pending.  
+Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
+
+**Version:** 2.0 MVP · **Date:** 2026-11-03 · **Status:** architecture and M0–M2 approved; implementation evidence is in TRACEABILITY and VERIFICATION.
 **Canonical product intent:** this document.  
 **Audience:** beginner/non-technical project owners first; also experienced developers.  
 **Language of user conversation:** default Ukrainian; public/source identifiers may be English.
@@ -93,3 +95,63 @@ A user may say: “I want a CRM for my tourism business.” The agent helps stru
 ## 6. Acceptance outcomes and limitations
 
 Functional coverage and negative cases are in `docs/ACCEPTANCE.md`; traceability is in `docs/TRACEABILITY.md`. The generator's value is measured by (1) **minimality**, (2) **coverage of justified safeguards**, (3) **clarity for non-developers**, (4) **portability**, (5) **verified legal provenance**, and (6) **resumability**. It must never claim to guarantee software safety or successful production deployment.
+
+## 7. Approved v2 MVP contract (2026-11-03)
+
+The user approved Python + JSON Schema + YAML, Codex-first, and milestones M0–M2. These requirements extend, not replace, the original 42 IDs.
+
+- **[IN-01]** Primary entrypoint: **PRD + URL генератора**, без обов'язкового CLI/install та ручного вибору модулів
+- **[IN-02]** `BOOTSTRAP.md` із чітким порядком read-only завантаження матеріалів, версій і перевірки host capabilities
+- **[IN-03]** Existing project location/access запитувати лише для brownfield і лише за відсутності доступного workspace
+- **[IN-04]** Якщо URL/мережа недоступні — безпечний і зрозумілий fallback без удаваного аналізу
+- **[IN-05]** Безпечне виконання коду engine: pinned revision/перевірене походження, host permission та sandbox; URL сам не дає права запуску
+- **[DET-01]** Детерміновані програмні правила вибору, залежностей, конфліктів і безпекових hard gates
+- **[DET-02]** Машинно валідний assessment; `true/false/unknown` для ризикових фактів, source/evidence відокремлено від inference
+- **[DET-03]** Версіонування policy/catalog/engine та відтворюваність вибору для тотожних входів
+- **[DET-04]** Перевірки eligibility/compatibility/schema/path/approvals у коді з автоматичними тестами
+- **[DET-05]** User approval прив'язаний до immutable plan і стану цільових файлів; зміни потребують нового preview/approval
+- **[DET-06]** Непідтримуваний host, відсутня залежність, цикли і невизначеність не можуть перетворюватися на прихований PASS
+- **[IP-01]** Відтворювана per-file attribution/licensing з передаванням notices у generated project
+- **[UX-10]** У згенерованому Harness повинні діяти правила пояснень, Reuse-First і безпеки, а не тільки в генераторі
+
+### Four mandatory MVP outcomes
+
+- **Reuse before final planning (RU-01..04, IN-01, DET-01):** CRM, CMS, auth, billing and other commodity systems require an evidence-backed reuse evaluation before a ready-for-approval plan. An offline assessment may produce a blocked preview with a clear explanation, never invented research. Research may be skipped only with a recorded non-commodity rationale.
+- **Beginner experience from v1 (UX-02/03/05/10):** Ukrainian plain-language plans explain selected and skipped modules, risks, blockers and next actions. Developer mode retains the same safeguards.
+- **Real selected components (GN-01/02/09):** install a minimal set of original working Skills, project rules, selected templates and executable validation; native subagents only where capability is confirmed. A JSON plan or documentation alone does not meet MVP acceptance. Native discovery and execution need host evidence.
+- **PRD + generator URL (IN-01..05):** the coding agent performs available technical steps and obtains target-write approval; users need not use a CLI. A CLI is an internal agent interface. LLM interpretation remains separate from deterministic policy and file operations.
+
+Approval of this implementation project is not approval of any future target Harness Plan. No deployment, production access or external upload is included.
+
+## Approved multiplatform increment: Cursor first
+
+- **[MP-01]** One Selection Engine and Harness Plan; separate ExecutionHost, TargetPlatform, ModelProvider. Adapters render capabilities, never duplicate selection policy.
+- **[MP-02]** Preserve Codex; introduce Cursor shared-Skills adapter first. Native rules/subagents require verified official contracts and native tests. Missing capabilities must be explained; unsupported targets remain blocked.
+- **[DOC-01]** Accept PDF, DOCX and Markdown PRDs through available agent readers, without mandatory manual conversion; retain original hash, reader, page/section provenance and incomplete-reading gates.
+- **[MP-03]** Verify Cursor on macOS before claiming full support; network permissions stay unchanged without user approval.
+
+Order: shared interface → Cursor → real macOS test → Claude Code → Antigravity → Lovable/Handoff → AI Studio Export & Continue → Ollama. Lovable uses only confirmed Project Instructions/AGENTS.md/Workspace Skills/import contracts, with actual application checks. Python execution inside Lovable is not assumed. AI Studio prioritizes ZIP/GitHub code export, existing-code analysis and continuation, without assuming custom Skills execute. Handoff includes PRD, code, decisions, current state, dependencies, missing files/configuration, environment variable names and external service inventory; code export, database migration and conversation/context transfer are separate operations. Never export secret values. These integrations remain planned.
+
+## Approved session and update mechanisms (0.3.0)
+
+- **[SW-01]** Deterministic Specification → Implementation → Verification workflow in the common Harness Plan: XS/S one short session; M separate Specification/Implementation recommended; L/XL bounded milestone sessions recommended. No unnecessary mandatory chats or unverified session-creation API. Risk controls remain independent of size.
+- **[SW-02]** Every explicitly completed work session checkpoints state, decisions, changed files, actual test results and next task through a validated portable Session Handoff; resume detects stale evidence. Abrupt termination preserves only the last recorded checkpoint, not a guaranteed final handoff.
+- **[UP-01]** Compare installed versions/components with the reviewed generator and reassessed desired configuration; plan module additions/changes/removals through the existing selector and common Harness Plan. Do not rewrite unchanged components.
+- **[UP-02]** Preserve user customization, including managed AGENTS edits; show exact update diff and require approval. Verify writes/deletions, support safe recovery and only explicitly tested version migrations; unknown histories block, rather than triggering blind replacement.
+
+These extend GN-08 and SE-02. Detailed audit, minimal contracts and implementation order: [Session/update proposal](history/SESSION_UPDATE_PLAN.md). Runtime implements deterministic recommendations, validated handoff, inventory/conflict checks, approved deletion and the explicit manifest-1-to-2 migration. Human/agent behavior and native hosts require separate evidence; see UPDATES_AND_SESSIONS.md.
+
+## Engineering Gates (approved, engine 0.4.0)
+
+- **[EG-01] Spec quality.** Validate goal/scope, testable AC, risk-dependent error/edge/NFR coverage and unresolved critical questions; XS/S inline without mandatory documents.
+- **[EG-02] Stage readiness.** Compute pass/blocked/not-verified/not-applicable from fresh source/approval/execution evidence; separate install, task and risky execution permission. No universal host enforcement claim.
+- **[EG-03] Bounded context.** Deliver bounded relevant sources with hashes/locators, verify critical freshness and handoff, distinguish delivered bytes from model comprehension.
+- **[EG-04] Bugfix evidence.** Observe RED on approved baseline and GREEN on changed current code, preserve tests/fixtures/config expectations, review documentation impact; unreproduced defects stay not-verified.
+
+Implementation and explicit limits: [ENGINEERING_GATES.md](ENGINEERING_GATES.md). Migration retains the shared writer and manifest format; modified managed assets require approved minimal update.
+
+## Product delivery checkpoint — 0.5.0
+
+User-approved product delivery supersedes mandatory ceremony: XS/S use an inline cycle and actual application tests without compulsory task JSON/receipts/checkpoints. Formal Engineering Gates remain available for additional evidence, with no unsupported-runner pass claim. Claude native-format adapter, local Ollama proposal client and portable project inspection/export now have executable implementations; native application evidence remains separate. See PLATFORM_DELIVERY.md.
+
+Native-contract delivery update: official documentation now accessible. Cursor and Antigravity native renderers and Lovable Project Instructions/selected-Skill ZIP packaging are implemented through the same adapter/Plan/Apply. AI Studio ZIP/GitHub Export & Continue is documented and backed by shared inspection/handoff tools. Automated contracts are tested; real host invocation/import/account-dependent steps remain explicitly unverified. Current details: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md).

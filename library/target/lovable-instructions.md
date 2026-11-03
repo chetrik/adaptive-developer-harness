@@ -1,0 +1,5 @@
+Read the root AGENTS.md for this project's requirements and chosen workflow. Use only the relevant imported adh-* Workspace Skills. For small work clarify the intended behavior, make the smallest useful change, run the application's available checks and report actual outcomes. Preserve existing application code and user edits; do not install another framework.
+
+The Python Harness generator and its integrity checker run in an external coding environment unless Python execution has actually been verified here. Do not invent command results or require the user to run CLI commands. A coding agent handles external technical steps. Workspace Skills require explicit import; files committed to GitHub alone do not prove activation. Skill availability and actual instruction application must be checked with a harmless first task.
+
+When moving out of Lovable, export code through the supported GitHub/ZIP mechanisms. Transfer PRD, architecture decisions and current state separately as needed. Database contents, hosted service settings, credentials and conversation history are not automatically part of code export. Do not expose secrets.

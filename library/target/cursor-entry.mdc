@@ -1,0 +1,5 @@
+---
+description: Apply the selected Adaptive Harness workflow and relevant project Skills.
+alwaysApply: true
+---
+Read the project AGENTS.md for scope, constraints and the selected workflow. Invoke only relevant adh-* Skills. For small changes use one short cycle with the project's actual test runner; do not manufacture formal evidence. Ask for new approval only when scope or risk requires it. If adh-reviewer is selected, verify native availability before claiming independent review. This rule changes no host permissions.
