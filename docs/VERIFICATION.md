@@ -1,5 +1,14 @@
 # Verification evidence — 2026-11-03
 
+## 0.5.1 lightweight workflow and guidance patch
+
+- `python3 -m unittest discover -s tests -v`: **136 tests passed**, exit 0 (30.560 s). Includes Codex/Cursor regressions and 4 new migration tests with Codex/Cursor/Claude subcases.
+- `python3 tools/validate_package.py`: passed, exit 0; 35 required files, 67 requirements, 64 acceptance scenario IDs, local links and plan schema. Scenario IDs are not a count of executed native trials.
+- `git diff --check`: passed. No native host scenario was run for this patch; the owner is conducting those trials separately.
+- Verified 0.5.0 → 0.5.1: preserve user files and text outside the managed AGENTS block; block customized components and stale approvals; recover an interrupted write, retry, and produce no operations on unchanged repeat. The original 0.5.0 checkout can still recover its own interrupted operations before a new upgrade.
+- Existing 0.3.0/0.4.0 migration/recovery tests pass. Manifest remains 2.0; target paths/platform formats are unchanged. Generator engine/library fingerprints change, so old plans require a fresh preview and approval. Apply and formal gate enforcement code are unchanged.
+- Generated guidance now aligns small-task handoff with the quick route and strengthens bounded context, beginner choices, UI journeys and criterion-based verification. This tests delivery/integrity, not LLM adherence.
+
 Environment: Python 3.12.14; jsonschema 4.26.0; PyYAML 6.0.3; Linux/POSIX. Local development changes are not a published release.
 
 ## Milestone evidence

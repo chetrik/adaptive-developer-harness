@@ -135,7 +135,7 @@ Order: shared interface → Cursor → real macOS test → Claude Code → Antig
 ## Approved session and update mechanisms (0.3.0)
 
 - **[SW-01]** Deterministic Specification → Implementation → Verification workflow in the common Harness Plan: XS/S one short session; M separate Specification/Implementation recommended; L/XL bounded milestone sessions recommended. No unnecessary mandatory chats or unverified session-creation API. Risk controls remain independent of size.
-- **[SW-02]** Every explicitly completed work session checkpoints state, decisions, changed files, actual test results and next task through a validated portable Session Handoff; resume detects stale evidence. Abrupt termination preserves only the last recorded checkpoint, not a guaranteed final handoff.
+- **[SW-02]** Transfers of unfinished work and large milestone boundaries checkpoint state, decisions, changed files, actual test results and next task through a validated portable Session Handoff; a completed XS/S task needs only a concise chat report; resume detects stale evidence. Abrupt termination preserves only the last recorded checkpoint, not a guaranteed final handoff.
 - **[UP-01]** Compare installed versions/components with the reviewed generator and reassessed desired configuration; plan module additions/changes/removals through the existing selector and common Harness Plan. Do not rewrite unchanged components.
 - **[UP-02]** Preserve user customization, including managed AGENTS edits; show exact update diff and require approval. Verify writes/deletions, support safe recovery and only explicitly tested version migrations; unknown histories block, rather than triggering blind replacement.
 

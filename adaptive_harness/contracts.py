@@ -5,7 +5,7 @@ from pathlib import Path
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '0.5.0'
+VERSION = '0.5.1'
 POLICY = '1.0'
 
 class HarnessError(ValueError):

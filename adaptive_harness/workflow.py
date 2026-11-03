@@ -20,5 +20,5 @@ def session_workflow(assessment, decisions):
                 {'name':'Implementation','exit_criteria':['approved-scope-implemented','changed-files-recorded']},
                 {'name':'Verification','exit_criteria':checks+['results-and-next-step-recorded']}],
             'review':review,'specification_format':'inline' if route=='quick' else 'existing-or-selected-feature-spec',
-            'handoff':'at-explicit-session-close-and-milestone-boundaries',
+            'handoff':'when-transferring-unfinished-work' if route=='quick' else 'at-explicit-session-close-and-milestone-boundaries',
             'fallback':'Якщо нова сесія недоступна або недоречна, збережи ті самі етапи й контрольні точки в поточному чаті.'}

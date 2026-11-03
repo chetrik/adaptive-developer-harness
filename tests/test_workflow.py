@@ -19,6 +19,7 @@ class WorkflowTests(unittest.TestCase):
                     self.assertIn(w['recommendation'],explain(p))
                     if size in ('XS','S'):
                         self.assertEqual(w['specification_format'],'inline')
+                        self.assertEqual(w['handoff'],'when-transferring-unfinished-work')
                         self.assertFalse(any(o['path'].endswith('/feature.md') for o in p['operations']))
                 self.assertEqual(results[0],results[1])
     def test_small_risky_task_keeps_security_verification(self):
@@ -27,6 +28,7 @@ class WorkflowTests(unittest.TestCase):
             p=make_plan(a,root)
             self.assertEqual(p['route'],'quick')
             self.assertIn('security-and-data-access',p['workflow']['phases'][2]['exit_criteria'])
+            self.assertEqual(p['workflow']['handoff'],'when-transferring-unfinished-work')
     def test_workflow_cannot_be_forged_even_with_new_hash(self):
         with tempfile.TemporaryDirectory() as root:
             p=make_plan(fixture(),root);p['workflow']['phases'][2]['exit_criteria']=['skip tests']

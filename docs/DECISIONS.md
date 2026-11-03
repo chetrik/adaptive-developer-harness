@@ -1,5 +1,7 @@
 # Decision register
 
+0.5.1: align generated templates with the existing lightweight workflow. No mandatory formal gate receipts or checkpoints for ordinary completed XS/S tasks. Preserve critical scope/risk checks. Add task-specific context, understandable decision options and meaningful UI/test guidance to existing assets, without adding another workflow, task tracker or document type. All wording is project-original; workshop practices informed the changes without copying implementation.
+
 Legend: **Aligned** = user-stated direction in discussion; **Proposal** = proposed implementation subject to review; **Open** = decision not made.
 
 | ID | Status | Decision / issue | Reason / next evidence |
