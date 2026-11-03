@@ -1,49 +1,31 @@
-# Adaptive Developer Harness Generator
+# Adaptive Developer Harness
 
-Give your coding agent **your PRD + this repository URL**. It helps choose, explain and install the smallest useful set of development Skills, rules, templates and checks for your project.
+Передайте coding agent **свій PRD + посилання на цей репозиторій**. Агент підбере мінімально потрібні Skills, правила й перевірки, пояснить вибір і після вашого погодження встановить їх у проєкт.
 
-**Start:** [BOOTSTRAP.md](BOOTSTRAP.md). Українською: [START_HERE_UA.md](START_HERE_UA.md).
+**Початок:** [BOOTSTRAP.md](BOOTSTRAP.md). До погодженого merge використовуйте [feat/deterministic-harness-mvp](https://github.com/chetrik/adaptive-developer-harness/tree/feat/deterministic-harness-mvp), а не main.
 
-## Current capability
+## Що працює
 
-This repository contains an executable Python MVP: strict JSON contracts, a versioned YAML catalog, deterministic selection, mandatory pre-plan reuse checks for commodity systems, Ukrainian plan explanations, exact file previews, explicit hash-bound approval, bounded Apply with recovery, and generated integrity checks.
+- Спільний генератор: аналіз структурованих вимог → мінімальний вибір → зрозумілий план → preview → погодження → встановлення й перевірка файлів.
+- Нативні формати Codex, Claude Code, Cursor та Antigravity; Lovable import packages. Точні межі перевірок: [платформи](docs/PLATFORM_DELIVERY.md). Створення конфігурацій не означає підтверджену роботу кожного host.
+- Оновлення без мовчазного перезапису користувацьких правок; погоджене видалення, inventory, recovery і міграції.
+- PRD у Markdown/PDF/DOCX через reader агента. Локальний Ollama може запропонувати assessment для Markdown; агент його перевіряє.
+- Перевірка отриманого ZIP, аналіз існуючого проєкту, вибірковий export із handoff для продовження роботи в іншому середовищі.
 
-The target receives only selected original components: Codex Skills (`adh-implement`, `adh-verify`, and conditional reuse/security/migration/release Skills), a managed AGENTS.md block, templates, provenance/license data, an executable validator, and a read-only reviewer definition only when subagent capability is confirmed.
+Ви не мусите запускати CLI чи вручну встановлювати Skills. Агент виконує технічні кроки в межах дозволів. Для малих змін досить короткого циклу в чаті й справжніх тестів застосунку. Великі/ризикові зміни отримують відповідні специфікації й перевірки.
 
-Codex CLI 0.163.0 discovery of generated `adh-implement` and `adh-verify` has been observed through `skills/list`. Application tests, model comprehension, independent reviews and every host's subagent behavior are separate checks, not automatic consequences of installation. Cursor has an experimental shared-Skills adapter with automated Linux Apply coverage; native rules/subagents and macOS execution remain unverified. Claude Code and third-party Skill import are not implemented. See [Cursor macOS test](docs/CURSOR_MACOS_TEST.md) and [required documentation domains](docs/PLATFORM_ACCESS.md).
+**Ще не підтверджено в реальних account-сесіях:** invocation Skills/subagents у Claude/Cursor/Antigravity, імпорт і застосування у Lovable, експорт конкретного проєкту AI Studio. Конфігурації та пакування реалізовано й перевірено автоматизовано. Деталі й конкретні blockers наведено в таблиці платформ. Ми не називаємо це завершеною підтримкою лише на підставі unit tests.
 
-## How it works
+## Для розробки генератора
 
-1. The agent reads your PRD, inspects the workspace and records facts/unknowns.
-2. For CRM, CMS and similar systems it researches ready-made alternatives before a final plan.
-3. Code selects modules, resolves dependencies and enforces risk/capability gates.
-4. You review understandable reasons and exact changes, then approve the specific plan.
-5. Code applies only approved operations and checks the output. The agent reports actual evidence and next steps.
-
-LLM interpretation and research are agent responsibilities; this is not an automatic PRD parser. Missing evidence produces blockers or `not-verified`, never invented success. Approval receipts check integrity; host permissions establish authority. This is an MVP, not a security certification or production release guarantee.
-
-## Development
-
-Use a reviewed checkout, Python 3.11+ and the dependencies in `requirements.lock`. This version runs from the repository; standalone wheel distribution is not supported.
+Python 3.11+, POSIX, dependencies із requirements.lock; запуск із checkout, standalone wheel не підтримується.
 
 ```sh
 python3 -m unittest discover -s tests -v
 python3 tools/validate_package.py
-python3 -m adaptive_harness --help
+python3 -m adaptive_harness doctor --platform claude-code
 ```
 
-Runtime implementation: [architecture](docs/ARCHITECTURE.md). Requirements and evidence: [PRD](docs/PRD.md), [traceability](docs/TRACEABILITY.md), [acceptance](docs/ACCEPTANCE.md), [verification](docs/VERIFICATION.md). Contributor rules: [AGENTS.md](AGENTS.md).
+[Contributor instructions](AGENTS.md) · [Architecture](docs/ARCHITECTURE.md) · [Requirements](docs/PRD.md) · [Verification](docs/VERIFICATION.md) · [Updates/recovery](docs/UPDATES_AND_SESSIONS.md) · [Engineering Gates](docs/ENGINEERING_GATES.md).
 
-## Attribution
-
-[Reference audit](docs/REFERENCE_AUDIT.md), [inspirations](INSPIRATIONS.md), [third-party notices](THIRD_PARTY_NOTICES.md). Target components in this MVP are original MIT-licensed files; no external framework is installed wholesale.
-
-## Updates and session continuity (0.3.0)
-
-The same deterministic engine now plans versioned Harness updates, protects managed AGENTS edits, keeps pending removals inventoried, and applies explicitly approved deletions with recovery. It recommends Specification/Implementation/Verification boundaries and records structured session checkpoints through the existing Plan/Apply path. See [agent-operated usage and limitations](docs/UPDATES_AND_SESSIONS.md). Native chat creation and arbitrary-version migrations are not implemented.
-
-Repository navigation: BOOTSTRAP.md is the user workflow; AGENTS.md is for contributors. [Historical design material](docs/history/README.md) is not part of generated projects. Migration contracts and legacy fixtures remain supported inputs, not cleanup targets.
-
-## Engineering Gates (0.4.0)
-
-Spec quality, stage readiness, bounded context receipts and observed unittest RED → GREEN extend the existing workflow. See [agent guide and explicit limits](docs/ENGINEERING_GATES.md), including controlled migration from 0.3.0.
+[Third-party notices](THIRD_PARTY_NOTICES.md) · [Reference audit](docs/REFERENCE_AUDIT.md). Generated components are original MIT-licensed assets. Historical documents and generator internals are not installed in customer projects.

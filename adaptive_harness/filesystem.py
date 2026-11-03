@@ -26,7 +26,7 @@ def safe_path(root, name):
         raise HarnessError('Unsafe target path')
     if not p.parts or any(x == '.git' or x.startswith('.env') for x in p.parts):
         raise HarnessError('Protected target path')
-    allowed = name == 'AGENTS.md' or name.startswith(('.adaptive-harness/', '.agents/skills/adh-', '.codex/agents/adh-'))
+    allowed = name in ('AGENTS.md','CLAUDE.md') or name.startswith(('.adaptive-harness/', '.agents/skills/adh-', '.codex/agents/adh-', '.claude/skills/adh-', '.claude/agents/adh-', '.cursor/rules/adh', '.cursor/agents/adh-', '.agents/rules/adh', '.agents/agents/adh-'))
     if not allowed:
         raise HarnessError('Path outside harness scope')
     current = root

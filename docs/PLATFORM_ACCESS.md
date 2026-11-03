@@ -20,3 +20,5 @@
 У цій сесії Cursor rules/skills/subagents pages повернули proxy HTTP 403. Публічний getcursor/cursor README не містить достатнього контракту native rules/subagents. Спільний `.agents/skills/` підтверджений лише наданою користувачем діагностикою; кожне реальне середовище все одно проходить capability gate. Жодних непідтверджених `.cursor/rules` чи agent-конфігурацій не реалізовано. Інші платформи лишаються запланованими.
 
 Відомі цільові сторінки для наступного дослідження: https://docs.lovable.dev/features/knowledge, https://docs.lovable.dev/features/skills, https://docs.lovable.dev/integrations/github, https://ai.google.dev/gemini-api/docs/aistudio-build-mode. Саме посилання не є підтвердженням доступності функції.
+
+Current delivery session: user approved network access and saved unrestricted Internet access in environment settings. Cursor, Antigravity, Lovable and AI Studio official pages subsequently returned HTTP 200. Prior 403 findings above are historical. Claude documentation still returned 403; official pinned GitHub contracts were used. See [current platform evidence](PLATFORM_DELIVERY.md).

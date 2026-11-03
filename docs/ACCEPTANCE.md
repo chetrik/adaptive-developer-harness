@@ -1,5 +1,7 @@
 # Acceptance test plan — functional, minimality, security and beginner UX
 
+Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
+
 **Status:** test cases specified but **not run against an implemented generator**. These are acceptance criteria for future Codex milestones. Tests should inspect exact output files, metadata, decisions, warnings, approval state and operational evidence, not merely compare model prose.
 
 ## Scenarios
@@ -135,3 +137,9 @@ Current final regression count for engine 0.3.0: **90 passing unittest methods**
 | AT-64 | Common Plan/Apply/handoff and CLI support gates for Codex/Cursor; install approval cannot become task/execution approval |
 
 Executable evidence: test_engineering_gates.py and test_engine_migration.py plus unchanged adapter/regression suites. Native host interception and semantic comprehension remain unverified. See [ENGINEERING_GATES.md](ENGINEERING_GATES.md).
+
+## Product delivery checkpoint — 0.5.0
+
+0.5.0 delivery evidence extends AT-31/AT-50..53 (platform boundaries), AT-54 (small-task route), AT-57..58 and AT-63 (migration preservation). test_platform_delivery.py checks Claude paths, conflict/discovery guards, migration/adapter switch/removal/recovery, code ZIP round trip and unsafe archive rejection. test_provider.py checks real loopback HTTP schema and capability isolation. No native model behavior is inferred from these automated checks.
+
+Native-contract delivery update: official documentation now accessible. Cursor and Antigravity native renderers and Lovable Project Instructions/selected-Skill ZIP packaging are implemented through the same adapter/Plan/Apply. AI Studio ZIP/GitHub Export & Continue is documented and backed by shared inspection/handoff tools. Automated contracts are tested; real host invocation/import/account-dependent steps remain explicitly unverified. Current details: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md).

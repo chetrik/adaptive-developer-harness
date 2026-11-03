@@ -1,4 +1,6 @@
-# Engineering Gates — 0.4.0
+# Engineering Gates — optional formal evidence
+
+In 0.5.0, ordinary XS/S work uses inline scope and the application’s real tests without mandatory task JSON/receipts. The formal API below is retained for additional evidence; unsupported runners cannot receive verified receipts but do not prohibit development. This supersedes mandatory use in the original 0.4.0 workflow.
 
 Це перевірки готовності всередині наявного Specification → Implementation → Verification. Selection Engine, Harness Plan та Apply залишаються спільними для Codex/Cursor. Gate не є host hook і не може заборонити всі сторонні дії coding agent.
 

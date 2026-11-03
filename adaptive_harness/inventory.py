@@ -9,6 +9,15 @@ def path_owners(catalog):
     for module in catalog['modules']:
         for name in module['files']:
             owners.setdefault(name,[]).append(module['id'])
+    from .adapters import ADAPTERS
+    for adapter in ADAPTERS.values():
+        for name in adapter.extra_files():owners[name]=["core.agent-entry"]
+        for module in catalog["modules"]:
+            for name in module["files"]:
+                if name.startswith(".codex/agents/") and not adapter.subagents:continue
+                mapped=adapter.output_path(name)
+                owners.setdefault(mapped,[])
+                if module["id"] not in owners[mapped]:owners[mapped].append(module["id"])
     return owners
 
 def load_inventory(root, catalog):
@@ -36,19 +45,19 @@ def load_inventory(root, catalog):
                     raise HarnessError('Unrecognized legacy component: '+name)
         else:
             v=old['versions']
-            if v['generator'] not in ('0.3.0',VERSION) or v['policy']!=POLICY or v['catalog']!=catalog['catalog_version']:
+            if v['generator'] not in ('0.3.0','0.4.0',VERSION) or v['policy']!=POLICY or v['catalog']!=catalog['catalog_version']:
                 raise HarnessError('Unsupported installed versions; migration required')
             from .adapters import ADAPTERS
             adapter=ADAPTERS.get(v['adapter'])
-            if not adapter or v['adapter_version']!=adapter.version:raise HarnessError('Unknown installed adapter version')
+            if not adapter or (v['adapter_version']!=adapter.version and not (v['adapter']=='cursor' and v['adapter_version']=='0.1' and v['generator'] in ('0.3.0','0.4.0'))):raise HarnessError('Unknown installed adapter version')
             if set(old['owners'])!=set(old['files']) or not set(old['components'])<=ids:
                 raise HarnessError('Incomplete ownership inventory')
             from .core import _source
             for name,sha in old['files'].items():
                 if name=='AGENTS.md':continue
                 source=ROOT/'LICENSE' if name=='.adaptive-harness/LICENSE' else ROOT/'library/target'/_source(name)
-                supported=[digest(source.read_bytes()),*legacy.get(name,[]),registry['releases']['0.3.0']['files'].get(name)]
-                if v['generator']=='0.3.0': supported=[registry['releases']['0.3.0']['files'].get(name),*legacy.get(name,[])]
+                supported=[digest(source.read_bytes()),*legacy.get(name,[]),*[r['files'].get(name) for r in registry['releases'].values()]]
+                if v['generator'] in registry['releases']:supported=[registry['releases'][v['generator']]['files'].get(name),*legacy.get(name,[])]
                 if sha not in supported:
                     raise HarnessError('Unrecognized installed component revision: '+name)
             for name,owners in old['owners'].items():

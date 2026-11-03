@@ -25,10 +25,10 @@ class EngineMigrationTests(unittest.TestCase):
     def tearDown(self):self.tmp.cleanup()
     def test_migration_preserves_format_and_repeat(self):
         p=make_plan(self.a,self.root)
-        self.assertEqual(p['update']['migration'],'engine-0.3-to-0.4')
+        self.assertEqual(p['update']['migration'],'engine-0.3-to-0.5')
         apply_plan(p,approve(p,self.root,'Synthetic migration consent'),self.root,self.state)
         m=json.loads((self.root/'.adaptive-harness/manifest.json').read_text())
-        self.assertEqual(m['schema_version'],'2.0');self.assertEqual(m['versions']['generator'],'0.4.0')
+        self.assertEqual(m['schema_version'],'2.0');self.assertEqual(m['versions']['generator'],'0.5.0')
         self.assertEqual(make_plan(self.a,self.root)['operations'],[])
     def test_conflict_and_stale_plan(self):
         p=make_plan(self.a,self.root);a=approve(p,self.root,'Synthetic consent')

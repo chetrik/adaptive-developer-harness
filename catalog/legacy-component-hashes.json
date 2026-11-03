@@ -68,6 +68,27 @@
         ".agents/skills/adh-reuse/SKILL.md": "6d2f70fc2f1f3bd04139ec6abfcd6ce1ac83da0defe9b0f5ef071127219a85b6",
         ".adaptive-harness/LICENSE": "1c97e5a6a81e9dd0088723b47cd201e8038680fbae4e22bf5a4dc24c7078c216"
       }
+    },
+    "0.4.0": {
+      "commit": "34e3d74500158bfe3ed2c0e007d1c31ef2f4f573",
+      "engine_sha256": "6bff53fe34225ab0ddc2287fed15bc8017ccdc35d283ed2ef294c163b5fb13cf",
+      "files": {
+        ".agents/skills/adh-verify/SKILL.md": "2b1f7b6410209987fb00553a583818956038e9ba2b54d6423e0b6483503c0bd1",
+        ".adaptive-harness/validate.py": "626272f886a98395624255ad2439e08e9c25fcebbf5f6d32331cf2a76b837987",
+        ".agents/skills/adh-implement/SKILL.md": "8751e1b0e97b4113804232f692754cd7cafd0fb8d403f6b60faafefcb5f0866e",
+        ".adaptive-harness/templates/handoff.md": "1244bb1da474846bdad3fd5a6b5912e431a8344a0b03f75b3b718facb8eeaa9b",
+        ".adaptive-harness/templates/feature.md": "6583073e7e7fb0d9a95ca948bd453b1fce148ea6bf6f11c481b639cc7f9f258d",
+        ".adaptive-harness/templates/architecture.md": "7637901698fa2c94d42387405dfcd4c54a73f8047cb2585066d2a9c6b2cab218",
+        ".adaptive-harness/templates/decision.md": "23256fb89a4bb7e3bc11414241d47eaafd500b63c923b83edeb039bb421b83b3",
+        ".adaptive-harness/templates/ui-check.md": "a8d593443cda0d21c2f90b458e44f29c2d0cf9d37d1b66e726f0a658497c8214",
+        ".agents/skills/adh-migration/SKILL.md": "1a0f6b0d897c50231419eac6114c4a3d1500006b1239a161b42d1a3c2254353a",
+        ".adaptive-harness/templates/api-check.md": "a0f1450592d543a7d06ea26c2e71bf2e66810042c8860c54c63255dcef55a16a",
+        ".codex/agents/adh-reviewer.toml": "4752cf7a8d4e833f40697a7c0d8d371df4514137e216401e786c773ee1da791a",
+        ".agents/skills/adh-security/SKILL.md": "21d2018573da3d9b601ecd1817c0c3cc02f694a6b92cc3ccbbce2855b6aa9297",
+        ".agents/skills/adh-release/SKILL.md": "f672234145a2eb7d9ab264a1cacf3cd41237376cf01f629b1d6571df9970389f",
+        ".agents/skills/adh-reuse/SKILL.md": "6d2f70fc2f1f3bd04139ec6abfcd6ce1ac83da0defe9b0f5ef071127219a85b6",
+        ".adaptive-harness/LICENSE": "1c97e5a6a81e9dd0088723b47cd201e8038680fbae4e22bf5a4dc24c7078c216"
+      }
     }
   }
 }

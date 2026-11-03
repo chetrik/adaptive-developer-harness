@@ -95,7 +95,9 @@ def check_assessment(a):
         blockers.append('Уточніть, це новий чи наявний проєкт.')
     if adapter_for(a) is None:
         blockers.append('Цей host ще не підтримується; доступний лише попередній перегляд.')
-    for name in ('read_files','write_files','execute','native_skills'):
+    adapter=adapter_for(a)
+    required_capabilities=('read_files','write_files','execute')+(() if adapter and adapter.kind=='integration' else ('native_skills',))
+    for name in required_capabilities:
         if not confirmed(a['host']['capabilities'][name]):
             blockers.append(f'Не підтверджено можливість host: {name}.')
     reuse = a['reuse']
@@ -159,6 +161,10 @@ def select(a, catalog):
     return decisions
 
 def _source(name):
+    special={'.cursor/agents/adh-reviewer.md':'reviewer-cursor.md','.agents/agents/adh-reviewer.md':'reviewer-antigravity.md','.cursor/rules/adh.mdc':'cursor-entry.mdc','.agents/rules/adh.md':'antigravity-entry.md','.adaptive-harness/integrations/lovable/project-instructions.md':'lovable-instructions.md','.adaptive-harness/integrations/lovable/IMPORT.md':'lovable-import.md'}
+    if name in special:return special[name]
+    if name=='CLAUDE.md':return 'claude-entry.md'
+    if name=='.claude/agents/adh-reviewer.md':return 'reviewer-claude.md'
     if name.endswith('SKILL.md'):
         return name.split('/')[-2].removeprefix('adh-')+'.md'
     if name.endswith('.toml'): return 'reviewer.toml'
@@ -177,8 +183,12 @@ def render(a, decisions, catalog):
             if path in files and files[path] != content:
                 raise HarnessError('Conflicting module output')
             files[path]=content; owners.setdefault(path,[]).append(m['id'])
+    if adapter:
+        for name,source in adapter.extra_files().items():
+            files[name]=(ROOT/'library/target'/source).read_text();owners[name]=['core.agent-entry']
     workflow=session_workflow(a,decisions)
     summary='\n'.join('- '+d['id']+': '+d['reason'] for d in decisions if d['status']=='selected')
+    skill_glob=adapter.output_path('.agents/skills/adh-*/SKILL.md') if adapter else '.agents/skills/adh-*/SKILL.md'
     block=f'''{BEGIN}
 # Adaptive Developer Harness
 
@@ -195,21 +205,21 @@ PRD source: {a['prd']['source']}
 Обрані компоненти:
 {summary}
 
-Перевірка Harness: `python3 .adaptive-harness/validate.py`.
+Перевірка Harness: `python3 .adaptive-harness/validate.py` у середовищі з дозволеним Python; інакше це виконує зовнішній coding agent. Не стверджуй, що недоступна команда виконана.
 Вона НЕ доводить успіх тестів застосунку. Знайди їх у README/manifests/CI і запиши реальний результат.
 Не називай inline review незалежним. Невиконана перевірка = not-verified.
-Skill-файли: .agents/skills/adh-*/SKILL.md; їх автоматичне виявлення перевіряй у поточному host.
+Skill-файли: {skill_glob}; їх автоматичне виявлення перевіряй у поточному host.
 Маршрут роботи: {workflow['recommendation']}
 Specification → Implementation → Verification; новий чат не обов’язковий.
 Specification: узгодь вимоги й критерії приймання, перевір наявний код до реалізації.
 Verification: перевір приймальні критерії, релевантні тести, документацію та ризики; запиши фактичні результати.
 Для XS/S короткої специфікації в поточному чаті достатньо; не створюй зайвих документів.
 Для великих етапів перевір результат і передай стан перед наступним етапом.
-Engineering Gates: перед Implementation перевір spec approval, критичний context і `gate --transition implementation`; перед verified complete — актуальні observed test receipts.
+Перед Implementation звір погоджений scope і релевантний context. Для XS/S достатньо поточного чату та реальних тестів застосунку. Engineering Gates — додаткова формальна перевірка для великих/ризикових задач; відсутність підтриманого runner не забороняє роботу, але формальний результат лишається not-verified.
 Погодження встановлення Harness, специфікації та ризикових операцій є різними межами дозволів. Уже наданий точний дозвіл можна використати без повторного запитання.
 Для відтворюваного bugfix потрібні RED → виправлення → GREEN без підлаштування очікувань тесту. Непідтверджений запуск = not-verified.
 Передача контексту: .adaptive-harness/templates/handoff.md.
-Перед завершенням сесії/етапу підготуй структурований handoff і запиши через handoff-plan → preview → approval → apply генератора.
+Перед передачею незавершеної роботи або великого етапу підготуй handoff через handoff-plan → preview → approval → apply. Для завершеної XS/S зміни досить короткого результату в чаті.
 При продовженні виконай resume для session_id; stale означає, що спочатку треба звірити фактичні файли.
 Погодження запису стану не є дозволом на наступні ризикові дії; автоматичне збереження при аварійному закритті чату не гарантується.
 {END}
@@ -300,7 +310,7 @@ def make_plan(assessment, target, *, remove_obsolete=False, handoff=None, engine
     old_components=previous.get('components',{})
     old_modules=set(previous.get('modules',[]))|set(old_components)
     update={'intent':'update' if previous else 'install','remove_obsolete':remove_obsolete,
-            'migration':'manifest-1-to-2' if previous.get('schema_version')=='1.0' else 'engine-0.3-to-0.4' if previous.get('versions',{}).get('generator')=='0.3.0' else 'none',
+            'migration':'manifest-1-to-2' if previous.get('schema_version')=='1.0' else 'engine-'+previous.get('versions',{}).get('generator','')[:3]+'-to-0.5' if previous.get('versions',{}).get('generator') in ('0.3.0','0.4.0') else 'none',
             'installed_versions':previous.get('versions',{'generator':'unknown','manifest':previous.get('schema_version','none')}),
             'desired_versions':manifest['versions'],
             'added':sorted(selected-old_modules),'removed':sorted(old_modules-selected),

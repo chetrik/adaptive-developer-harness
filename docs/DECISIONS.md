@@ -53,3 +53,9 @@ User requested deterministic session guidance and Harness update management. Pro
 Extend the existing workflow, Plan, Skills and Apply. Formal readiness uses content identity and observed execution, not agent-written verdicts. An explicit existing task instruction can satisfy spec authorization; execution privileges remain host-owned. Use original lightweight mechanisms inspired by spec-driven engineering practices; no genkovich/sdd code, assets, dependencies or second framework copied/installed.
 
 Approved controlled engine/component transition from 0.3.0 preserves manifest 2.0 and old-engine recovery. Frozen original output plus pinned old checkout tests protect that boundary. Host-owned HMAC detects receipt modification, not hostile same-user execution. Details: [ENGINEERING_GATES.md](ENGINEERING_GATES.md).
+
+## Product delivery checkpoint — 0.5.0
+
+Accepted user direction: prioritize usable platform integration over additional framework machinery. Small work uses current chat and real project tests; formal receipts are optional additional evidence. Native formats need official source contracts and native behavior remains explicitly unverified until tested. Existing conflicting CLAUDE.md is preserved and blocks installation; no implicit permission edits. Sources and scope: PLATFORM_DELIVERY.md.
+
+Native-contract delivery update: official documentation now accessible. Cursor and Antigravity native renderers and Lovable Project Instructions/selected-Skill ZIP packaging are implemented through the same adapter/Plan/Apply. AI Studio ZIP/GitHub Export & Continue is documented and backed by shared inspection/handoff tools. Automated contracts are tested; real host invocation/import/account-dependent steps remain explicitly unverified. Current details: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md).

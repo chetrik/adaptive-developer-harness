@@ -22,3 +22,5 @@ A `SOURCES.md`/`INSPIRATIONS.md` credit is **not a substitute** for carrying leg
 ## Original generated assets
 
 `library/target/` contains original MIT components, copyright 2026 chetrik. Each installed file is listed in `.adaptive-harness/manifest.json` with source path/content fingerprint, copyright, license and scope; `.adaptive-harness/LICENSE` carries the full license. For an existing AGENTS.md, attribution applies only to the generated block; prior user text retains its ownership. This is not evidence of third-party import support.
+
+0.5.0 platform delivery: official Anthropic GitHub examples, Cursor/Antigravity/Lovable/AI Studio documentation and Ollama API documentation were used to confirm file/API contracts. No source implementation or prompt bodies were copied. New target files are original project MIT assets. A temporary Claude CLI 2.1.317 installation was used for diagnostics only, outside this repository; it is not bundled or redistributed. Exact references are in docs/PLATFORM_DELIVERY.md.

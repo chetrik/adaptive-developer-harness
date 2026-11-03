@@ -1,5 +1,7 @@
 # Product Requirements Document — Adaptive Developer Harness Generator
 
+Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
+
 **Version:** 2.0 MVP · **Date:** 2026-11-03 · **Status:** architecture and M0–M2 approved; implementation evidence is in TRACEABILITY and VERIFICATION.
 **Canonical product intent:** this document.  
 **Audience:** beginner/non-technical project owners first; also experienced developers.  
@@ -147,3 +149,9 @@ These extend GN-08 and SE-02. Detailed audit, minimal contracts and implementati
 - **[EG-04] Bugfix evidence.** Observe RED on approved baseline and GREEN on changed current code, preserve tests/fixtures/config expectations, review documentation impact; unreproduced defects stay not-verified.
 
 Implementation and explicit limits: [ENGINEERING_GATES.md](ENGINEERING_GATES.md). Migration retains the shared writer and manifest format; modified managed assets require approved minimal update.
+
+## Product delivery checkpoint — 0.5.0
+
+User-approved product delivery supersedes mandatory ceremony: XS/S use an inline cycle and actual application tests without compulsory task JSON/receipts/checkpoints. Formal Engineering Gates remain available for additional evidence, with no unsupported-runner pass claim. Claude native-format adapter, local Ollama proposal client and portable project inspection/export now have executable implementations; native application evidence remains separate. See PLATFORM_DELIVERY.md.
+
+Native-contract delivery update: official documentation now accessible. Cursor and Antigravity native renderers and Lovable Project Instructions/selected-Skill ZIP packaging are implemented through the same adapter/Plan/Apply. AI Studio ZIP/GitHub Export & Continue is documented and backed by shared inspection/handoff tools. Automated contracts are tested; real host invocation/import/account-dependent steps remain explicitly unverified. Current details: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md).

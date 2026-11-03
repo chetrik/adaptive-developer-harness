@@ -11,23 +11,40 @@ class Adapter:
     subagents: bool
     native_rules: bool
 
+    kind: str = 'native'
+
     def output_path(self, canonical_path):
+        if self.name == 'claude-code':
+            if canonical_path.startswith('.agents/skills/'):return canonical_path.replace('.agents/skills/', '.claude/skills/', 1)
+            if canonical_path == '.codex/agents/adh-reviewer.toml':return '.claude/agents/adh-reviewer.md'
+        if self.name == 'cursor' and canonical_path == '.codex/agents/adh-reviewer.toml':return '.cursor/agents/adh-reviewer.md'
+        if self.name == 'antigravity' and canonical_path == '.codex/agents/adh-reviewer.toml':return '.agents/agents/adh-reviewer.md'
+        if self.name == 'lovable' and canonical_path.startswith('.agents/skills/'):
+            return canonical_path.replace('.agents/skills/', '.adaptive-harness/integrations/lovable/skills/',1)
         if canonical_path.startswith('.codex/agents/') and not self.subagents:
             raise HarnessError('Adapter cannot render native subagents')
         return canonical_path
 
+    def extra_files(self):
+        return {
+            'claude-code':{'CLAUDE.md':'claude-entry.md'},
+            'cursor':{'.cursor/rules/adh.mdc':'cursor-entry.mdc'},
+            'antigravity':{'.agents/rules/adh.md':'antigravity-entry.md'},
+            'lovable':{'.adaptive-harness/integrations/lovable/project-instructions.md':'lovable-instructions.md',
+                '.adaptive-harness/integrations/lovable/IMPORT.md':'lovable-import.md'},
+        }.get(self.name,{})
+
     def warnings(self):
-        if self.name == 'cursor':
-            return [
-                'Cursor: підтримується лише спільний формат .agents/skills/ за наданою користувачем діагностикою. Native discovery у цій сесії не перевірено.',
-                'Cursor: нативні правила, Hooks і конфігурації субагентів не підтверджені; їхні файли не генеруються. AGENTS.md — переносимий контекст для явного читання зі Skill, не підтверджене автоматичне правило Cursor.',
-                'Повний Apply у Cursor на macOS потребує окремого наскрізного тесту.'
-            ]
+        if self.name=='lovable':return ['Lovable: це пакет для імпорту, не активована Workspace Skill. Генератор виконується поза Lovable; потрібен owner/admin для імпорту, після нього перевірте застосування інструкцій.']
+        if self.name!='codex':return [self.name+': формати підтверджено офіційними джерелами; фактичне discovery/invocation у вашому host потребує перевірки. Permissions не змінюються.']
         return []
 
 ADAPTERS = {
     'codex': Adapter('codex', '1.0', 'baseline-tested', True, True),
-    'cursor': Adapter('cursor', '0.1', 'experimental-shared-skills', False, False),
+    'cursor': Adapter('cursor', '1.0', 'contract-tested-native-unverified', True, True),
+    'claude-code': Adapter('claude-code', '1.0', 'contract-tested-native-unverified', True, True),
+    'antigravity': Adapter('antigravity', '1.0', 'contract-tested-native-unverified', True, True),
+    'lovable': Adapter('lovable', '1.0', 'import-required', False, False, 'integration'),
 }
 
 def profiles(assessment):

@@ -1,5 +1,7 @@
 # Architecture — executable MVP and remaining boundaries
 
+Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
+
 ## Current state
 
 The approved Python + JSON Schema + YAML MVP is implemented in the existing repository. `adaptive_harness/` is the executable package; `library/skills/` remains the generator's orchestration guidance, and `library/target/` holds original components rendered into customer projects. No second project or external framework is installed.
@@ -68,3 +70,9 @@ workflow.py is the single route function consumed by the common plan and rendere
 `gates.evaluate` consumes the existing selection/workflow route plus strict task contract. It computes readiness; it does not select/install modules or create a second lifecycle. Optional engineering request/readiness extends the single Plan and existing handoff. `evidence.py` provides bounded reader and external host-owned receipts; `verification.py` observes a fixed unittest runner and binds evidence to current workspace/code/test inputs. Receipts use the existing external state write helper, never a second target Apply. The original Apply/journal owns all target component and handoff mutations.
 
 Task spec approval and test execution authorization are separate from install approval. Receipt integrity is not user identity authentication; the host remains the authority. Historical handoff readiness cannot substitute for current evaluation. Formats, threat boundary, commands and version transition: [ENGINEERING_GATES.md](ENGINEERING_GATES.md).
+
+## Product delivery checkpoint — 0.5.0
+
+0.5.0 adds Claude path/asset mapping in the existing Adapter and extends the existing inventory allowlist across adapters. No second selector or Apply. provider.py handles local interpretation only; project_handoff.py inspects/exports explicitly selected application files to an external archive, never installs Harness or executes exported code. diagnostics.py reports runtime availability separately from native discovery. See PLATFORM_DELIVERY.md.
+
+Native-contract delivery update: official documentation now accessible. Cursor and Antigravity native renderers and Lovable Project Instructions/selected-Skill ZIP packaging are implemented through the same adapter/Plan/Apply. AI Studio ZIP/GitHub Export & Continue is documented and backed by shared inspection/handoff tools. Automated contracts are tested; real host invocation/import/account-dependent steps remain explicitly unverified. Current details: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md).

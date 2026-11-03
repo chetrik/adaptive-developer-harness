@@ -14,7 +14,7 @@ from .research import inspect_repository
 def main(argv=None):
     parser=argparse.ArgumentParser(description='Adaptive Harness: agent-operated plan/approve/apply/validate')
     sub=parser.add_subparsers(dest='command',required=True)
-    p=sub.add_parser('bootstrap'); p.add_argument('--prd',required=True); p.add_argument('--url',required=True); p.add_argument('--target'); p.add_argument('--platform',default='codex',choices=('codex','cursor'))
+    p=sub.add_parser('bootstrap'); p.add_argument('--prd',required=True); p.add_argument('--url',required=True); p.add_argument('--target'); p.add_argument('--platform',default='codex',choices=('codex','cursor','claude-code','antigravity','lovable'))
     p=sub.add_parser('research'); p.add_argument('--url',required=True)
     p=sub.add_parser('plan'); p.add_argument('--assessment',required=True); p.add_argument('--target',required=True); p.add_argument('--remove-obsolete',action='store_true'); p.add_argument('--engineering')
     p=sub.add_parser('inventory'); p.add_argument('--target',required=True)
@@ -33,6 +33,13 @@ def main(argv=None):
         if command=='approve-spec':p.add_argument('--confirmation',required=True)
         if command=='test-run':
             p.add_argument('--execution-confirmation',required=True); p.add_argument('--phase',choices=('red','green'),default='green'); p.add_argument('--start',default='tests'); p.add_argument('--pattern',default='test*.py'); p.add_argument('--timeout',type=float,default=30)
+    p=sub.add_parser('interpret');p.add_argument('--prd',required=True);p.add_argument('--model',required=True);p.add_argument('--target');p.add_argument('--platform',default='codex',choices=('codex','cursor','claude-code','antigravity','lovable'));p.add_argument('--endpoint',default='http://127.0.0.1:11434');p.add_argument('--timeout',type=float,default=60)
+    p=sub.add_parser('inspect-project');p.add_argument('--target',required=True)
+    p=sub.add_parser('inspect-export');p.add_argument('--archive',required=True)
+    p=sub.add_parser('export-project');p.add_argument('--target',required=True);p.add_argument('--files',required=True);p.add_argument('--output',required=True);p.add_argument('--confirmation',required=True)
+    p=sub.add_parser('doctor');p.add_argument('--platform',default='codex');p.add_argument('--target')
+    p=sub.add_parser('package-skills');p.add_argument('--target',required=True);p.add_argument('--output-dir',required=True);p.add_argument('--confirmation',required=True)
+    p=sub.add_parser('check-instructions');p.add_argument('--target',required=True);p.add_argument('--project-instructions',required=True);p.add_argument('--workspace-instructions')
     args=parser.parse_args(argv)
     try:
         if args.command in ('gate','approve-spec','read-context','test-run'):
@@ -46,6 +53,21 @@ def main(argv=None):
             else:
                 from .gates import evaluate
                 result=evaluate(read_json(args.assessment),task,args.target,args.evidence_dir,transition=args.transition,receipts=read_json(args.receipts) if args.receipts else {})
+        elif args.command in ('inspect-project','inspect-export','export-project'):
+            from .project_handoff import inspect_project,inspect_archive,export_project
+            if args.command=='inspect-project':result=inspect_project(args.target)
+            elif args.command=='inspect-export':result=inspect_archive(args.archive)
+            else:result=export_project(args.target,read_json(args.files),args.output,args.confirmation)
+        elif args.command in ('package-skills','check-instructions'):
+            from .integrations import package_skills,check_instructions
+            if args.command=='package-skills':result=package_skills(args.target,args.output_dir,args.confirmation)
+            else:result=check_instructions(args.target,args.project_instructions,args.workspace_instructions)
+        elif args.command=='doctor':
+            from .diagnostics import diagnose
+            result=diagnose(args.platform,args.target)
+        elif args.command=='interpret':
+            from .provider import ollama_assessment
+            result=ollama_assessment(args.prd,args.model,target=args.target,platform=args.platform,endpoint=args.endpoint,timeout=args.timeout)
         elif args.command=='bootstrap': result=intake(args.prd,args.url,args.target,args.platform)
         elif args.command=='research': result=inspect_repository(args.url)
         elif args.command=='plan': result=make_plan(read_json(args.assessment),args.target,remove_obsolete=args.remove_obsolete,engineering=read_json(args.engineering) if args.engineering else None)

@@ -1,5 +1,7 @@
 # Cursor на macOS: PRD + URL, перевірка експериментального адаптера
 
+0.5.0 update: native `.cursor/rules/adh.mdc` and optional `.cursor/agents/adh-reviewer.md` now accompany shared Skills. Confirm the alwaysApply rule is attached, invoke a selected Skill on a harmless real task, and verify the readonly reviewer can inspect but cannot edit. Record Cursor/macOS versions and actual outcomes; Linux automated tests do not establish native macOS behavior. Older shared-Skills-only notes below describe the previous adapter.
+
 Статус: автоматизований Apply перевіряється на Linux; native discovery, поведінка агента і повний Apply на macOS ще НЕ підтверджені. Підтримується спільний `.agents/skills/`. Нативні `.cursor/rules`, Hooks і субагенти не генеруються до перевірки офіційних контрактів. AGENTS.md слід явно прочитати; автоматичне завантаження не заявляється.
 
 ## Повідомлення для Cursor Agent

@@ -1,5 +1,7 @@
 # Requirements traceability matrix
 
+Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
+
 **Purpose:** make omissions visible. Canonical requirement definitions are in [PRD.md](PRD.md), and test definitions in [ACCEPTANCE.md](ACCEPTANCE.md). Rows distinguish design intent from bounded executable evidence. A tested core does not mark the entire broad requirement complete.
 
 Runtime evidence is from the current local checkout on 2026-11-03. `verified core` means the named deterministic behavior passed; `partial` includes agent/manual or future behavior. See VERIFICATION.md for host and security limits.
@@ -106,3 +108,9 @@ Final evidence: 48 runtime tests passed; structural validation passed; generated
 | `EG-02` | Formal stage readiness and separate permissions | ENGINEERING_GATES.md | AT-60, AT-63, AT-64 | User-approved engineering gates | gates.py, core.py, inventory.py | test_engineering_gates.py, test_engine_migration.py | Automated; no universal host enforcement |
 | `EG-03` | Bounded verified context | ENGINEERING_GATES.md | AT-61 | User-approved engineering gates | evidence.py | test_engineering_gates.py | UTF-8 delivery; native binary receipts pending |
 | `EG-04` | RED/GREEN tied to current code | ENGINEERING_GATES.md | AT-62 | User-approved engineering gates | verification.py, verification_runner.py | test_engineering_gates.py | Observed unittest; other runners pending |
+
+## Product delivery checkpoint — 0.5.0
+
+Current delivery evidence: MP-01/MP-02 now also covered by test_platform_delivery.py (Claude rendering, shared Apply/inventory), SW-01 by lightweight target instructions, UP-01/UP-02 by 0.4 migration tests. Local Ollama and project-export tests validate bounded contracts, not hosted platform behavior. PLATFORM_DELIVERY.md records remaining native blockers. Earlier planned statuses for these bounded implementations are superseded; untested platform integrations remain planned.
+
+Native-contract delivery update: official documentation now accessible. Cursor and Antigravity native renderers and Lovable Project Instructions/selected-Skill ZIP packaging are implemented through the same adapter/Plan/Apply. AI Studio ZIP/GitHub Export & Continue is documented and backed by shared inspection/handoff tools. Automated contracts are tested; real host invocation/import/account-dependent steps remain explicitly unverified. Current details: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md).

@@ -1,5 +1,7 @@
 # Roadmap — approved executable MVP
 
+Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
+
 Approved 2026-11-03. Requirements, code and bounded evidence are mapped in TRACEABILITY.md.
 
 | Milestone | Current status | Evidence / remaining limits |
@@ -46,3 +48,9 @@ Stage 4 implemented: structured immutable handoff through the same Plan/Apply, r
 ## Engineering Gates — approved 0.4.0 increment
 
 Implemented in sequence: exact 0.3.0 compatibility registry/recovery regression; strict spec/context/readiness contracts; observed unittest RED/GREEN; shared Plan/handoff/managed Skill integration. Automated evidence is recorded in VERIFICATION.md. Remaining: native host gate hooks, verified PDF/DOCX reader receipts, other test runners/CI attestations, authenticated host approval events, independent security review. No second SDD pipeline or universal agent interception. [Operational guide](ENGINEERING_GATES.md).
+
+## Product delivery checkpoint — 0.5.0
+
+Product-delivery priority supersedes the earlier serial platform list: finish existing adapters and real first-task flows; no new framework layers. Delivered code: Claude rendering, 0.4 compatibility, lightweight daily workflow, local Ollama contract, project handoff/export and diagnostics. Remaining release blockers: actual native Claude/Cursor test, confirmed Antigravity/Lovable contracts and native integrations, AI Studio export/account verification, real Ollama model run. PLATFORM_DELIVERY.md is the current capability table.
+
+Native-contract delivery update: official documentation now accessible. Cursor and Antigravity native renderers and Lovable Project Instructions/selected-Skill ZIP packaging are implemented through the same adapter/Plan/Apply. AI Studio ZIP/GitHub Export & Continue is documented and backed by shared inspection/handoff tools. Automated contracts are tested; real host invocation/import/account-dependent steps remain explicitly unverified. Current details: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md).

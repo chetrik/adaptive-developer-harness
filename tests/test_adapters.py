@@ -21,9 +21,10 @@ class AdapterTests(unittest.TestCase):
                 a['host']['name']='cursor'
                 p=make_plan(a,target)
                 self.assertEqual(p['status'],'ready-for-approval')
-                self.assertEqual(p['adapter']['status'],'experimental-shared-skills')
+                self.assertEqual(p['adapter']['status'],'contract-tested-native-unverified')
                 self.assertTrue(any(o['path'].startswith('.agents/skills/') for o in p['operations']))
-                self.assertFalse(any(o['path'].startswith(('.codex/','.cursor/')) for o in p['operations']))
+                self.assertFalse(any(o['path'].startswith('.codex/') for o in p['operations']))
+                self.assertTrue(any(o['path']=='.cursor/rules/adh.mdc' for o in p['operations']))
                 self.assertFalse((target/'AGENTS.md').exists())
                 receipt=approve(p,target,'Synthetic consent')
                 self.assertEqual(apply_plan(p,receipt,target,Path(tmp)/'state')['status'],'applied')
@@ -38,7 +39,7 @@ class AdapterTests(unittest.TestCase):
             a['host']['name']='cursor'; cursor=make_plan(a,tmp)
             self.assertEqual(baseline['decisions'],cursor['decisions'])
             self.assertEqual([o for o in baseline['operations'] if not o['path'].endswith('/manifest.json')],
-                             [o for o in cursor['operations'] if not o['path'].endswith('/manifest.json')])
+                             [o for o in cursor['operations'] if not o['path'].endswith('/manifest.json') and not o['path'].startswith('.cursor/')])
 
     def test_explicit_executor_target_and_unknown_gate(self):
         with tempfile.TemporaryDirectory() as tmp:
