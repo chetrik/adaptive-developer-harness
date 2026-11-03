@@ -1,3 +1,5 @@
+> Historical reference from engine 0.3.0 audit. Not an active agent procedure or an installable component.
+
 # Independent Verifier — neutral subagent source draft
 
 **Status:** draft role contract; only call independent when a separate read-only context truly executes.

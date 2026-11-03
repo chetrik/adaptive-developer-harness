@@ -20,4 +20,8 @@ Read in order: `docs/PRD.md` (product requirements), `docs/ARCHITECTURE.md` (cur
 
 ## First run
 
-Read current implementation/evidence before proposing changes. Python + JSON Schema + YAML and M0–M2 are approved (D-019..024); do not restart the initial architecture approval. Run `python3 -m unittest discover -s tests -v` and `python3 tools/validate_package.py`. End-user entry is BOOTSTRAP.md; CODEX_BOOTSTRAP_PROMPT.md is for contributors.
+Read current implementation and verification evidence before proposing changes. Preserve the shared deterministic engine, common Harness Plan, approved writer and tested migration contracts. Run `python3 -m unittest discover -s tests -v` and `python3 tools/validate_package.py`. End-user entry is BOOTSTRAP.md; this AGENTS.md is the contributor continuation entrypoint.
+
+## Continuing development
+
+Preserve the product requirements in PRD, including Reuse-First, beginner explanations, selected working components and the PRD + URL entrypoint. Inspect actual code and tests before claiming support; develop the existing repository. Keep changes bounded and distinguish unsupported hosts, model behavior and independent security review from passing unit tests.

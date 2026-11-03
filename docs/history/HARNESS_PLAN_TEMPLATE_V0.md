@@ -1,3 +1,5 @@
+> Historical reference from engine 0.3.0 audit. Not an active agent procedure or an installable component.
+
 # Harness Plan — <Project Name>
 
 Status: `PROPOSED / APPROVED / APPLIED / VERIFIED / NEEDS-REVIEW`

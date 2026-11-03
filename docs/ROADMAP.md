@@ -28,7 +28,7 @@ Each stage runs automated tests, then native integration where available. Native
 
 ## Shared-core increment: sessions and updates
 
-Scope and acceptance gates are in [SESSION_UPDATE_PLAN.md](SESSION_UPDATE_PLAN.md). Approved stages delivered; implementation checkpoints below supersede this original ordering:
+Scope and acceptance gates are in [SESSION_UPDATE_PLAN.md](history/SESSION_UPDATE_PLAN.md). Approved stages delivered; implementation checkpoints below supersede this original ordering:
 
 1. Derive structured phase/session recommendations from the existing deterministic route.
 2. Add validated handoff checkpoints and safe resume with stale-state detection.

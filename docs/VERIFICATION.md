@@ -61,3 +61,17 @@ Final suite: **90 unittest methods passed** on Linux, including all existing Cod
 Session records use the same approval/Apply/journal, remain outside installed component hashes, reject invalid references/inconsistent reported test results, and detect workspace drift on resume. Explicit checkpoints only: no host close-event API or autonomous native session evaluation. Test commands in records are not executed by the recorder.
 
 Recovery improvement supersedes the stage 2 limitation about unchanged PRD: a changed/missing PRD no longer prevents rollback of the approved journal, but does prevent applying the stale plan. Recovery still uses the same reviewed engine. Successful-release downgrade/revert and unknown-version migrations are not implemented. The retained legacy fixture is original project output, not third-party material; no new dependency or external assets were introduced.
+
+## Repository cleanup verification
+
+Cleanup retains all runtime sources, schemas (including fingerprinted historical schemas), catalog, target assets, LICENSE and legacy migration fixture byte-for-byte against commit 0ede22c. Only contributor guidance, documentation navigation, historical placement and development checks changed. No main merge was performed.
+
+- Full regression suite: **92 unittest methods passed** (90 existing + 2 explicit repository/output boundary tests). This includes legacy manifest migration, interrupted migration/deletion recovery, user-edit preservation, session handoff and Codex/Cursor coverage.
+- Structural validation passed: 35 required paths, 63 requirements, 58 acceptance scenario IDs; local Markdown links and all schemas validated. Historical v0 example remains validated at its new archive path.
+- Eight fixture/host combinations produced the exact same per-file output hashes as before cleanup. Each was applied, reapplied with already-applied status, and replanned with zero operations. No internal or historical documentation entered the target.
+- README → BOOTSTRAP → PRD + generator URL remains the active entry; BOOTSTRAP and executable bootstrap are unchanged. Contributor instructions reside in AGENTS.md, distinct from generated AGENTS.
+- engine_hash unchanged: `5df62584f6f87710af13d1cd7d76aa00db1c6dd9f99f61e271edc0c2f93ecf4f`.
+- library_hash unchanged: `13293c5106154d4ba357d64f3cd47c6084d9316b0b1dc2e12a600b687c0207dd`.
+- catalog fingerprint unchanged: `28c34539578ebf6d5311aecdc2a3fdbf94c620f6371afc7f9a57f76ec0b91b59`.
+
+Tracked structure after cleanup: **101 files total: 92 active/development/compatibility files and 9 historical files under docs/history/** (including its index). Eight files moved into history; two duplicate documents were merged and their old paths removed. This is a navigation cleanup, not a smaller runtime or new release of component formats. Existing valid 0.3.0 plans retain their fingerprint compatibility; target/PRD freshness conditions still apply. Unknown engine versions remain unsupported. Native Cursor/macOS behavior was not evaluated by this cleanup.

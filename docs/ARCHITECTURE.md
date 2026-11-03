@@ -35,7 +35,7 @@ Existing AGENTS.md text outside the managed block is preserved byte-for-byte in 
 - Advisory locks coordinate generator writers; prohibit concurrent non-cooperating writers during Apply. No claim of multi-file transactional atomicity. Journals permit recovery and preserve conflicting user edits.
 - Codex CLI 0.163.0 has discovered generated baseline Skills. This does not prove subagent invocation, model compliance or cloud-wide registration. The optional reviewer definition is conditional and its execution remains separately verifiable.
 - Only original target assets are rendered. External Skill import/license propagation across third-party assets and other host adapters remain future work.
-- Existing legacy `harness-plan.schema.json` and calculator JSON are marked historical v0 examples; runtime uses `plan-v1.schema.json` and `examples/assessments/`.
+- The historical v0 calculator JSON is archived under docs/history; `schemas/harness-plan.schema.json` stays at its original path because it participates in the engine fingerprint; runtime uses `plan-v1.schema.json` and `examples/assessments/`.
 
 ## Verification history
 
@@ -51,7 +51,7 @@ The agent reads PDF/DOCX/Markdown, preserving original bytes/hash and requiremen
 
 ## Session and update design history
 
-See [audit and minimal design](SESSION_UPDATE_PLAN.md). Extend the existing route into structured workflow recommendations; keep one selector and one Harness Plan. Add validated mutable session state outside component integrity hashes. Extend current-vs-desired planning with versioned inventories, module delta and typed delete operations; reuse preview, approval, journal and recovery. Migrations transform inventory/plan through an explicit tested registry, not a second filesystem executor.
+See [audit and minimal design](history/SESSION_UPDATE_PLAN.md). Extend the existing route into structured workflow recommendations; keep one selector and one Harness Plan. Add validated mutable session state outside component integrity hashes. Extend current-vs-desired planning with versioned inventories, module delta and typed delete operations; reuse preview, approval, journal and recovery. Migrations transform inventory/plan through an explicit tested registry, not a second filesystem executor.
 
 Audit limitation: existing managed AGENTS block edits can currently be replaced without a conflict blocker. Deselected files are not removed and can fall out of manifest tracking. Existing recovery handles interrupted create/patch, not verified cross-version migrations or successful-update revert. These gaps must be closed before claiming update management. This describes the pre-change audit; the implementation below supersedes these gaps.
 

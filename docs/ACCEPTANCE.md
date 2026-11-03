@@ -119,6 +119,6 @@ Automated increment: tests/test_adapters.py. PDF/DOCX bytes in contract tests ar
 | AT-57 | Customized managed AGENTS/Skills and obsolete user-edited files survive update; conflicts block Apply; exact create/patch/delete preview and approval required |
 | AT-58 | Supported legacy migration and interrupted deletion recovery preserve user edits; unknown versions blocked; removed files verified absent; repeat update is no-op |
 
-Executable coverage: AT-54 test_workflow.py; AT-55 test_handoff.py; AT-56..58 test_updates.py plus existing Apply regression suite. Native model/session behavior remains NOT RUN. Universal successful-release revert is not claimed. Detailed design history: [SESSION_UPDATE_PLAN.md](SESSION_UPDATE_PLAN.md).
+Executable coverage: AT-54 test_workflow.py; AT-55 test_handoff.py; AT-56..58 test_updates.py plus existing Apply regression suite. Native model/session behavior remains NOT RUN. Universal successful-release revert is not claimed. Detailed design history: [SESSION_UPDATE_PLAN.md](history/SESSION_UPDATE_PLAN.md).
 
 Current final regression count for engine 0.3.0: **90 passing unittest methods**; details and stage counts in VERIFICATION.md. Native Codex/Cursor model behavior and Cursor/macOS remain outside this run.

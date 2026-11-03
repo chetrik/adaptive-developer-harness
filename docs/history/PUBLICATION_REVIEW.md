@@ -1,3 +1,5 @@
+> Historical reference from engine 0.3.0 audit. Not an active agent procedure or an installable component.
+
 # Pre-publication review — 2026-11-03
 
 Scope: the 68 changed/new MVP files relative to baseline d93b8828c90b4e5c3bbe0b9e978832791e6c6375, plus this review record. No production or customer data is included.

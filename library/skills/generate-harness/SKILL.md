@@ -16,9 +16,9 @@ description: Apply only an approved Harness Plan to a target repository using a 
 
 ## Procedure after preflight
 
-1. Generate selected canonical components to a safe staging area.
-2. Render through verified host adapter. Never invent native subagent/Skill support.
-3. Validate staging and produce preview; reconcile with existing files using user-approved, bounded changes only.
+1. Use the existing deterministic plan and its exact operations; do not create a second staging/apply workflow.
+2. Confirm the plan adapter and capability evidence. Never invent native support.
+3. Use runtime explain/preview and validate the plan before recording the actual approval; resolve conflicts through a new plan, not blind overwrites.
 4. Apply selected file operations idempotently, recording exact changes and a recovery route.
 5. Run `validate-harness` on actual files. Do not claim verified success merely because generation returned normally.
 6. Write short user-facing outcome and portable handoff with limitations.

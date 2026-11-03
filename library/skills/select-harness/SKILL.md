@@ -14,7 +14,7 @@ description: Recommend an explainable minimum sufficient Developer Harness from 
 3. Resolve dependencies and functional duplication. Do not stack complete SDD toolchains as a default.
 4. Evaluate project-wide Harness separately from per-feature workflow route. Limit documents to those the project needs.
 5. Make proposed file operations explicit; preserve existing user files and permissions.
-6. Show beginner-readable plan using `templates/HARNESS_PLAN.md`; separately export planned JSON matching `schemas/plan-v1.schema.json` if supported.
+6. Obtain the machine-valid plan from the runtime `plan` command and use `explain` and `preview` for the beginner-readable review. Do not manually reconstruct a plan from the historical Markdown template.
 7. **Stop before target file changes.** Request specific user approval and address blockers; never assert approved if no explicit permission exists.
 
 ## Quality checks

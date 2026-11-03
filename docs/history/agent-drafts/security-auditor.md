@@ -1,3 +1,5 @@
+> Historical reference from engine 0.3.0 audit. Not an active agent procedure or an installable component.
+
 # Security Auditor — neutral subagent source draft
 
 **Status:** draft role contract, not a certification or native installed agent.

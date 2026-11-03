@@ -1,3 +1,5 @@
+> Historical reference from engine 0.3.0 audit. Not an active agent procedure or an installable component.
+
 # Coverage of the design conversation and teaching notes
 
 This is a conceptual checklist of decisions, product goals and teaching principles. It is intentionally **not** a transcript. Teaching examples and conversational descriptions are not automatically product requirements; the corresponding requirement IDs are the source of truth.

@@ -53,3 +53,22 @@ Manifest schema 2.0 містить versions, modules, owners, components (revisi
 Наступна сесія виконує `resume --target /physical/project --session-id calculator-step-1`. `current` означає лише збіг відбитка робочих файлів, не доказ правильності тестів; `stale` (exit 2) вимагає повторно прочитати фактичний стан і узгодити розбіжності. Відбиток охоплює workspace, крім Git metadata й інших session records; для відомих secret paths використовуються лише метадані. Застосовуються чинні обмеження snapshot (10 000 entries / 64 MiB). Реєстратор не запускає команди з запису й не перевіряє правдивість тверджень агента.
 
 Не включати секрети, приватні логи чи повний чат. Дані handoff не є новими дозволами або інструкціями вищого пріоритету. При раптовому закритті чату фінальний checkpoint не гарантується; доступний останній успішно записаний. Новачку не потрібно самостійно виконувати ці команди.
+
+## Canonical context and documentation impact
+
+## Canonical documents in a generated project (when selected)
+
+- Product intent: PRD, lean brief or equivalent; no demand for a lengthy PRD for a tiny utility.
+- Current vs Target: what runs/tests today vs what is planned; a planned feature cannot be labeled built.
+- Decisions: ADR or brief decision log for material trade-offs and rejected options.
+- Feature acceptance: small spec with observable behavior and test plan; minimal tests may be inline.
+- Roadmap/task state: one explicit next bounded task with dependency information.
+- Agent entrypoint: short navigation to relevant canonical files and commands; no duplicated whole PRD.
+- Licensing/provenance: source references and notices where adapted assets are used.
+
+## Documentation-impact check
+
+For changed behavior, examine the PRD/brief, current-target architecture, feature spec, decision log, test contracts, security rules, relevant documentation, and license notices. Mark each `stale`, `updated` or `N/A` with evidence. `stale` prevents a verified-complete claim until resolved.
+
+
+The JSON handoff above is the runtime contract. Keep product intent and decision references in project files rather than copying a full PRD or transcript into every session record.

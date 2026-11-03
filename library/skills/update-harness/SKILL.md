@@ -11,9 +11,9 @@ description: Reassess and safely evolve an existing generated Developer Harness 
 
 1. Inspect current files, existing plan/provenance, user customizations and source git status; identify actual current state and deviations.
 2. Ask whether scope/risks/host changed, but infer from available PRD/repo evidence before asking repeated questions.
-3. Re-run assessment and policy selection while preserving stable module IDs and prior approvals where still valid.
+3. Re-run assessment and policy selection while preserving stable module IDs. A changed plan needs approval bound to its exact contents and target snapshot.
 4. Produce a migration/diff plan separating kept, added, modified, deprecated and user-custom items; explain safety implications.
-5. Require fresh approvals for high-impact or breaking changes; avoid removing safeguards that still address active risks.
+5. Require approval of every exact update plan, including additions, modifications and removals. Use inventory and plan --remove-obsolete as documented in docs/UPDATES_AND_SESSIONS.md; the option proposes removal but does not authorize it. Unknown versions and conflicts block Apply.
 6. Apply only approved changes, test, update relevant docs/attributions, and create cross-host handoff.
 
 Never rebuild the target from scratch as an automatic response to scope changes.

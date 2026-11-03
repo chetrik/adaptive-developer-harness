@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Structural checks for the documentation starter; NOT a generator or security scanner.
+"""Structural checks for the repository, runtime contracts and historical examples; not a security scanner.
 
 Run: python tools/validate_package.py
-Optional: install `jsonschema` to also validate the illustrative plan against its schema.
+Use the project dependencies in requirements.lock.
 """
 from __future__ import annotations
 import json, pathlib, re, sys
@@ -10,16 +10,19 @@ import json, pathlib, re, sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 errors = []
 required = [
-    'README.md','START_HERE_UA.md','CODEX_BOOTSTRAP_PROMPT.md','AGENTS.md',
+    'README.md','START_HERE_UA.md','AGENTS.md',
     'INSPIRATIONS.md','THIRD_PARTY_NOTICES.md','docs/PRD.md','docs/ARCHITECTURE.md',
     'docs/DECISIONS.md','docs/ROADMAP.md','docs/TRACEABILITY.md','docs/ACCEPTANCE.md',
-    'docs/CONVERSATION_COVERAGE.md','docs/SELECTION_POLICY.md',
+    'docs/history/CONVERSATION_COVERAGE.md','docs/SELECTION_POLICY.md',
     'docs/BEGINNER_EXPERIENCE.md','docs/SECURITY.md','docs/REUSE_FIRST.md',
-    'docs/SKILLS_AGENTS.md','docs/STATE_HANDOFF.md',
-    'schemas/harness-plan.schema.json','catalog/modules.yaml','templates/HARNESS_PLAN.md',
-    'examples/harness-plan-calculator.json', 'BOOTSTRAP.md', 'docs/VERIFICATION.md',
+    'docs/SKILLS_AGENTS.md','docs/UPDATES_AND_SESSIONS.md',
+    'schemas/harness-plan.schema.json','catalog/modules.yaml','docs/history/HARNESS_PLAN_TEMPLATE_V0.md',
+    'docs/history/harness-plan-calculator-v0.json', 'BOOTSTRAP.md', 'docs/VERIFICATION.md',
     'docs/REFERENCE_AUDIT.md', 'adaptive_harness/core.py', 'adaptive_harness/apply.py',
-    'schemas/plan-v1.schema.json', 'schemas/project-assessment.schema.json', 'requirements.lock'
+    'schemas/plan-v1.schema.json', 'schemas/project-assessment.schema.json', 'requirements.lock',
+    'catalog/legacy-component-hashes.json', 'schemas/manifest-v1.schema.json',
+    'schemas/manifest-v2.schema.json', 'tests/fixtures/manifest-v1-output.json',
+    'docs/history/README.md'
 ]
 for path in required:
     if not (ROOT / path).is_file(): errors.append('Missing: ' + path)
@@ -48,7 +51,7 @@ for path in ROOT.rglob('*.md'):
             errors.append('Broken local Markdown link in '+str(path.relative_to(ROOT))+': '+target)
 
 schema=json.loads((ROOT/'schemas/harness-plan.schema.json').read_text(encoding='utf-8'))
-example=json.loads((ROOT/'examples/harness-plan-calculator.json').read_text(encoding='utf-8'))
+example=json.loads((ROOT/'docs/history/harness-plan-calculator-v0.json').read_text(encoding='utf-8'))
 try:
     from jsonschema import Draft202012Validator
 except ImportError:

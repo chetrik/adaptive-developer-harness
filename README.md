@@ -41,3 +41,5 @@ Runtime implementation: [architecture](docs/ARCHITECTURE.md). Requirements and e
 ## Updates and session continuity (0.3.0)
 
 The same deterministic engine now plans versioned Harness updates, protects managed AGENTS edits, keeps pending removals inventoried, and applies explicitly approved deletions with recovery. It recommends Specification/Implementation/Verification boundaries and records structured session checkpoints through the existing Plan/Apply path. See [agent-operated usage and limitations](docs/UPDATES_AND_SESSIONS.md). Native chat creation and arbitrary-version migrations are not implemented.
+
+Repository navigation: BOOTSTRAP.md is the user workflow; AGENTS.md is for contributors. [Historical design material](docs/history/README.md) is not part of generated projects. Migration contracts and legacy fixtures remain supported inputs, not cleanup targets.

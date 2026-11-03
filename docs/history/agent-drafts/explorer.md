@@ -1,3 +1,5 @@
+> Historical reference from engine 0.3.0 audit. Not an active agent procedure or an installable component.
+
 # Explorer — neutral subagent source draft
 
 **Status:** draft role contract, not an installed Codex/Claude/Cursor native agent.

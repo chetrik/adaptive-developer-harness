@@ -1,6 +1,8 @@
+> Historical reference from engine 0.3.0 audit. Not an active agent procedure or an installable component.
+
 # Adaptive Session Workflow and Harness Update Management
 
-Status: approved and implemented in bounded form in engine 0.3.0, in revised order: integrity → updates → workflow → handoff. The audit below describes the pre-change 0.2.0 baseline; it is retained as design rationale. Current usage and limits: [UPDATES_AND_SESSIONS.md](UPDATES_AND_SESSIONS.md); stage evidence: [VERIFICATION.md](VERIFICATION.md).
+Status: approved and implemented in bounded form in engine 0.3.0, in revised order: integrity → updates → workflow → handoff. The audit below describes the pre-change 0.2.0 baseline; it is retained as design rationale. Current usage and limits: [UPDATES_AND_SESSIONS.md](../UPDATES_AND_SESSIONS.md); stage evidence: [VERIFICATION.md](../VERIFICATION.md).
 
 ## Audit of the current implementation
 
