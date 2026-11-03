@@ -4,6 +4,8 @@
 
 **Почніть тут:** [інструкція для користувача українською](START_HERE_UA.md) — з готовим текстом для агента.
 
+Змінюєте чат або coding agent? [Як передати проєкт і продовжити роботу](START_HERE_UA.md#5-як-змінити-чат-модель-або-coding-agent).
+
 Для coding agent: [BOOTSTRAP.md](BOOTSTRAP.md). Актуальна версія — у `main`: https://github.com/chetrik/adaptive-developer-harness .
 
 ## Перевірено в Claude Code на macOS
