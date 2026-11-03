@@ -107,7 +107,8 @@
     ]
   },
   "limitations": [
-    "Illustrative example only; not a real selection-engine output"
+    "Illustrative example only; not a real selection-engine output",
+    "Historical v0 draft only. Runtime v1 uses plan-v1.schema.json and examples/assessments; this fixture is retained for compatibility inspection."
   ],
   "handoff": null
 }

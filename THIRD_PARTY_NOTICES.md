@@ -1,6 +1,6 @@
 # Third-party notices and modified works
 
-**Status of this starter archive:** No third-party source files, SKILL.md bodies, scripts, or agent definitions have intentionally been copied into it. This does not imply the sources listed in `INSPIRATIONS.md` are owned by this project.
+**Status of the MVP:** No third-party source files, SKILL.md bodies, scripts, or agent definitions have intentionally been copied into the generator or target library. This does not imply the sources listed in `INSPIRATIONS.md` are owned by this project.
 
 Before importing or modifying an external file:
 
@@ -18,3 +18,7 @@ Before importing or modifying an external file:
 | _No external files incorporated in this starter_ | — | — | — | — |
 
 A `SOURCES.md`/`INSPIRATIONS.md` credit is **not a substitute** for carrying legally required notices when source files are copied or adapted. Seek legal review for uncertain cases or license incompatibilities.
+
+## Original generated assets
+
+`library/target/` contains original MIT components, copyright 2026 chetrik. Each installed file is listed in `.adaptive-harness/manifest.json` with source path/content fingerprint, copyright, license and scope; `.adaptive-harness/LICENSE` carries the full license. For an existing AGENTS.md, attribution applies only to the generated block; prior user text retains its ownership. This is not evidence of third-party import support.

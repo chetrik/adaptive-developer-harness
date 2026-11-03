@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "catalog_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1
+          },
+          "trigger": {
+            "enum": [
+              "always",
+              "material",
+              "ui",
+              "migration",
+              "api",
+              "risk",
+              "production",
+              "commodity",
+              "beginner",
+              "developer",
+              "subagents",
+              "inline",
+              "architecture",
+              "large",
+              "never"
+            ]
+          },
+          "dependencies": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "conflicts": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "provenance": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "enum": [
+                  "project-original"
+                ]
+              },
+              "license": {
+                "enum": [
+                  "MIT"
+                ]
+              },
+              "copyright": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind",
+              "license",
+              "copyright"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "category",
+          "purpose",
+          "trigger",
+          "dependencies",
+          "conflicts",
+          "files",
+          "provenance"
+        ]
+      }
+    }
+  },
+  "required": [
+    "catalog_version",
+    "modules"
+  ]
+}

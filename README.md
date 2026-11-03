@@ -1,53 +1,39 @@
 # Adaptive Developer Harness Generator
 
-> Project status: **design starter / specification**, not a production-ready generator.
+Give your coding agent **your PRD + this repository URL**. It helps choose, explain and install the smallest useful set of development Skills, rules, templates and checks for your project.
 
-An adaptive, beginner-friendly toolkit that helps a coding agent examine a PRD and an existing project, propose a **minimum sufficient Developer Harness**, and generate it **only after user approval**.
+**Start:** [BOOTSTRAP.md](BOOTSTRAP.md). Українською: [START_HERE_UA.md](START_HERE_UA.md).
 
-## Why we built this
+## Current capability
 
-Coding agents make software development accessible, but setting up reliable project instructions, specifications, tests, security controls, documentation, and independent checks remains difficult for people without an engineering background. Existing frameworks provide strong building blocks; selecting and configuring them can itself require expertise.
+This repository contains an executable Python MVP: strict JSON contracts, a versioned YAML catalog, deterministic selection, mandatory pre-plan reuse checks for commodity systems, Ukrainian plan explanations, exact file previews, explicit hash-bound approval, bounded Apply with recovery, and generated integrity checks.
 
-This project is intended to make that work easier for beginners and non-technical builders, while remaining useful to experienced teams. A simple calculator should not inherit the same process as a multi-tenant SaaS with customer data.
+The target receives only selected original components: Codex Skills (`adh-implement`, `adh-verify`, and conditional reuse/security/migration/release Skills), a managed AGENTS.md block, templates, provenance/license data, an executable validator, and a read-only reviewer definition only when subagent capability is confirmed.
 
-**Principle: begin with what the project needs; add complexity only when justified by evidence and risk.**
+Codex CLI 0.163.0 discovery of generated `adh-implement` and `adh-verify` has been observed through `skills/list`. Application tests, model comprehension, independent reviews and every host's subagent behavior are separate checks, not automatic consequences of installation. Claude Code/Cursor adapters and third-party Skill import are not implemented.
 
-## What it is
+## How it works
 
-A **meta-generator of development workflows**, not a generic app template, a new foundation model, a replacement for coding agents, or a production security scanner.
+1. The agent reads your PRD, inspects the workspace and records facts/unknowns.
+2. For CRM, CMS and similar systems it researches ready-made alternatives before a final plan.
+3. Code selects modules, resolves dependencies and enforces risk/capability gates.
+4. You review understandable reasons and exact changes, then approve the specific plan.
+5. Code applies only approved operations and checks the output. The agent reports actual evidence and next steps.
 
-1. **Assess:** understand product intent, current code, technical environment, user experience level, risks, and existing controls.
-2. **Discover reuse:** evaluate credible off-the-shelf services, OSS products, libraries, and reusable architectures before reinventing them.
-3. **Select:** propose Skills, subagents, agent instructions, specifications, tests, docs, and enforceable controls with reasons and exclusions.
-4. **Approve:** show a plain-language Harness Plan, intended file changes, risks, and approximate effort. Get explicit approval.
-5. **Generate:** write only selected components, using an adapter for the target coding environment and preserving existing work.
-6. **Validate and maintain:** check consistency, safety policy coverage, evidence, provenance, and documentation impact. Support changes to the harness over time.
+LLM interpretation and research are agent responsibilities; this is not an automatic PRD parser. Missing evidence produces blockers or `not-verified`, never invented success. Approval receipts check integrity; host permissions establish authority. This is an MVP, not a security certification or production release guarantee.
 
-## Foundational principles
+## Development
 
-- **Minimum sufficient configuration:** no universal large template; conditional modules and explicit skips.
-- **Beginner-first communication:** explain implications, not every code line; offer both beginner and developer modes.
-- **Security by default:** meaningful risk analysis and enforced gates where supported; prompt text alone is not a security boundary.
-- **Reuse before custom build:** verify licenses, maintenance, integration cost, security, and fit before recommending OSS.
-- **Human approval:** no unapproved high-impact writes, dependency installs, production deployments, or destructive actions.
-- **Traceability and honest status:** distinguish current from target; claims of success require evidence.
-- **Portable by design:** canonical modules, agent-specific adapters, capability checks, and clear fallbacks.
-- **IP compliance:** recognize inspirations separately from copied/adapted assets; retain licenses and attribution.
+Use a reviewed checkout, Python 3.11+ and the dependencies in `requirements.lock`. This version runs from the repository; standalone wheel distribution is not supported.
 
-## Start here
+```sh
+python3 -m unittest discover -s tests -v
+python3 tools/validate_package.py
+python3 -m adaptive_harness --help
+```
 
-- Ukrainian beginner guide: [START_HERE_UA.md](START_HERE_UA.md)
-- Full requirements: [docs/PRD.md](docs/PRD.md)
-- Architecture and status: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-- What must not be forgotten: [docs/TRACEABILITY.md](docs/TRACEABILITY.md)
-- Ready-to-paste first task for Codex: [CODEX_BOOTSTRAP_PROMPT.md](CODEX_BOOTSTRAP_PROMPT.md)
-- Project sources: [INSPIRATIONS.md](INSPIRATIONS.md)
-- Third-party notices: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)
-
-## Current state
-
-This archive includes a **draft specification, policies, a machine-readable schema, a draft module catalog, an example Harness Plan, draft canonical Skill/subagent role files, and a validation script**. It does **not** yet include an implemented Selection Engine, working CLI, generated adapters, platform-installed or tested Skills, or production-grade policy enforcement. They are planned in the roadmap.
+Runtime implementation: [architecture](docs/ARCHITECTURE.md). Requirements and evidence: [PRD](docs/PRD.md), [traceability](docs/TRACEABILITY.md), [acceptance](docs/ACCEPTANCE.md), [verification](docs/VERIFICATION.md). Contributor rules: [AGENTS.md](AGENTS.md).
 
 ## Attribution
 
-Inspired by open-source agentic development work. See [INSPIRATIONS.md](INSPIRATIONS.md). This starter package does not intentionally contain source code or `SKILL.md` text copied from those repositories. If such material is later incorporated, record licenses and notices in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+[Reference audit](docs/REFERENCE_AUDIT.md), [inspirations](INSPIRATIONS.md), [third-party notices](THIRD_PARTY_NOTICES.md). Target components in this MVP are original MIT-licensed files; no external framework is installed wholesale.

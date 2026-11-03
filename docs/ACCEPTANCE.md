@@ -56,3 +56,43 @@
 **Coverage:** all important risks/requirements get relevant checks. **Minimality:** no unnecessary files/stages. **Clarity:** actionable explanations understandable to intended users. **Portability:** correct behavior per host. **Reliability:** deterministic/idempotent where specified. **Provenance:** complete license and source ledger. **Recovery:** state preserved after interrupted sessions.
 
 No numeric success threshold is approved yet; propose a rubric before claiming production readiness.
+
+## v2 MVP acceptance additions
+
+Status: specified; execution evidence will be recorded per milestone.
+
+| Test ID | Input / fixture | Expected observable result |
+|---|---|---|
+| AT-37 | PRD + GitHub URL, жодної ручної установки | Можливий read-only bootstrap/assessment у підтримуваному агенті; не нав'язується CLI |
+| AT-38 | GitHub URL недоступний через host/network | Чесна діагностика і fallback; жодних вигаданих даних |
+| AT-39 | Greenfield без source repo | Plan створюється без вимоги третього обов'язкового input |
+| AT-40 | Brownfield, але workspace не відкритий | Агент запитує доступ/шлях лише тоді, коли це необхідно |
+| AT-41 | Однакові нормалізовані дані, версії й capabilities, повторні запуски | Ідентичні module decisions, reason IDs, заплановані operations |
+| AT-42 | PRD не згадує клієнтські дані / classification `unknown` | Невідоме не трактується як `false`; risk gate/уточнення |
+| AT-43 | Approved plan; після цього змінено target repo чи plan | Apply відхилено до нової перевірки й погодження |
+| AT-44 | Зовнішній MIT Skill адаптовано й згенеровано у проєкті | Дотримано оригінальний copyright, ліцензію і source provenance також у output |
+| AT-45 | Безпековий модуль потрібний, але його dependency відсутня | Чіткий blocker, жодного мовчазного усунення/false PASS |
+| AT-46 | LLM у поясненні пропонує вимкнути security rule | Code-based policy не змінюється і не пропускає hard gate |
+| AT-47 | Два різні host з підтвердженими capabilities | Коректні формати й чесно задокументовані функціональні відмінності |
+| AT-48 | Генератор після застосування в target repo | User-friendly instructions працюють у створених правилах, а не тільки в source repo |
+| AT-49 | GitHub README або bootstrap пропонує виконати неперевірений інсталятор | Ніякого автоматичного запуску; pinned revision/permissions/sandbox, обґрунтований fallback |
+
+Additional mandatory cases: CRM/CMS with missing/offline reuse blocks final plan; plain-language selected/skipped/risk/next-step explanations; actual selected Skills plus executable validator; no writes before approval; symlink/traversal/collision rejection; interrupted-write recovery; repeat apply no-op; generated component tampering fails validation.
+
+## Execution map for this MVP
+
+The scenario table is the acceptance baseline, not 49 claimed passing tests. Executed unit/integration methods are linked per requirement in TRACEABILITY.md.
+
+| Scenario group | Executable evidence | Remaining boundary |
+|---|---|---|
+| AT-01..08, AT-12, AT-14 | test_selection.py: four fixtures, determinism, UI/migration conditions, hard policy | LLM interpretation and real customer security need separate evidence |
+| AT-15..17, AT-34, AT-43 | test_apply.py: no approval/stale input rejection, preservation, repeat Apply and recovery | Cooperative/exclusive writer assumption |
+| AT-19, AT-21, AT-31, AT-38, AT-42, AT-45..46 | contract/host/offline/unknown/graph/policy tests | Other hosts are explicitly blocked |
+| AT-25, AT-27 | no secret copying from excluded files; integrity vs not-verified report | General secret detection and security certification not claimed |
+| AT-37, AT-39, AT-49 | test_entrypoint.py: two inputs, full agent CLI flow, safe research transport | Assessment supplied by fixture; no autonomous LLM benchmark |
+| AT-48 | actual generated Skills/rules + executable validator; native baseline discovery on Codex CLI 0.163.0 | Human comprehension/model behavior not automatically proven |
+| AT-18 | conditional reviewer definition + inline fallback | Native reviewer invocation not run |
+| AT-23/24/44, AT-47 | Not run | Third-party adaptation and second host deferred |
+| Remaining dialogue, market, production and semantic doc-review scenarios | Specified or partially supported by agent procedures | Not marked fully passed |
+
+Final local suite on 2026-11-03: **48 executable tests passed**. This number is the test runner count, not the number of acceptance scenarios marked complete.

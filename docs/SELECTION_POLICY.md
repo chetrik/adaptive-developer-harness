@@ -1,6 +1,8 @@
 # Selection policy: minimum sufficient, explainable harness
 
-Status: **proposed policy / not yet executable**. The future Selection Engine must implement and test this specification.
+Status: executable MVP in `adaptive_harness/core.py`; the broad examples below remain product guidance. Exact supported behavior and limitations are in ARCHITECTURE.md and VERIFICATION.md.
+
+Runtime routes derive from feature size (XS/S → quick, M → standard, L/XL → full). Project scale independently affects project-level artifacts. Security gates remain required on every route. The catalog uses a finite allowlist of trigger names, not Python expressions or LLM instructions. Missing/changed hard-baseline rules, graph cycles and missing dependencies are errors. Reuse evidence must precede ready-for-approval for commodity systems.
 
 ## Inputs
 

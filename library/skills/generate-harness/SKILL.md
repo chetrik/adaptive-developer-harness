@@ -3,9 +3,9 @@ name: generate-harness
 description: Apply only an approved Harness Plan to a target repository using a verified host adapter and bounded file operations.
 ---
 
-# Generate Harness — original draft procedure
+# Generate Harness — generator orchestration procedure
 
-**Status:** draft, not executable without a host adapter and authorization. Refer to `docs/SECURITY.md`, `docs/ARCHITECTURE.md` and the approved `Harness Plan`.
+**Status:** generator-side guidance connected to the executable MVP; native installation of this orchestration Skill is not claimed. Follow BOOTSTRAP.md and the runtime schemas. Target-project assets are separately stored in library/target/.
 
 ## Hard preflight
 
@@ -24,3 +24,7 @@ description: Apply only an approved Harness Plan to a target repository using a 
 6. Write short user-facing outcome and portable handoff with limitations.
 
 If an unsupported host prevents a critical gate, return BLOCKED/NEEDS-REVIEW and safe fallback; do not silently omit it.
+
+## Runtime binding
+
+Use the agent-operated commands in BOOTSTRAP.md. Selection uses `adaptive_harness.core.make_plan`; approval/apply/recovery use `adaptive_harness.apply`; validation reports actual file checks separately from application tests and native discovery. Do not implement formal policy by improvising this prose.

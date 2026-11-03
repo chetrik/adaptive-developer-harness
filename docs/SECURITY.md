@@ -47,3 +47,11 @@ A green test suite is insufficient to claim security. If evidence is missing, re
 - User requests deployment to a real customer environment: show operation scope and permission requirements before acting.
 - Existing uncommitted customer changes: do not overwrite; ask for safe path if necessary.
 - Tool lacks subagents: do not advertise independent review.
+
+## Executable MVP controls and threat boundary
+
+`core.check_plan` recomputes policy output before target writes; a recomputed hash alone cannot authorize altered operations. PRD, engine/schema, catalog/library and target snapshots are checked. `apply.py` validates explicit approval, allowlisted paths, no-follow directory traversal, no-clobber creates and journalled recovery. The target lock is shared across state directories. Recovery only changes still-matching generator output; new user edits remain conflicts. State/journal files are outside the target, created with private permissions.
+
+These controls assume the reviewed engine and trusted coding agent run under the host sandbox. A user/process with the same filesystem privileges can forge approval records or modify the interpreter. Receipts are not human authentication. Non-cooperating concurrent writers must be paused during Apply; we do not claim an OS-level multi-file compare-and-swap transaction.
+
+Credential paths are not read by target snapshots, but secret detection in arbitrary project prose is not guaranteed. Do not place credentials in PRDs or AGENTS.md. The generator does not execute test commands from input JSON or external README files. Generated validation only checks Harness integrity. Application tests, dependency audits and security reviews need their own actual evidence.

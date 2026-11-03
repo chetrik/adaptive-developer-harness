@@ -1,6 +1,6 @@
 # Product Requirements Document — Adaptive Developer Harness Generator
 
-**Version:** draft 0.1 · **Date:** 2026-11-03 · **Status:** design agreement pending.  
+**Version:** 2.0 MVP · **Date:** 2026-11-03 · **Status:** architecture and M0–M2 approved; implementation evidence is in TRACEABILITY and VERIFICATION.
 **Canonical product intent:** this document.  
 **Audience:** beginner/non-technical project owners first; also experienced developers.  
 **Language of user conversation:** default Ukrainian; public/source identifiers may be English.
@@ -93,3 +93,30 @@ A user may say: “I want a CRM for my tourism business.” The agent helps stru
 ## 6. Acceptance outcomes and limitations
 
 Functional coverage and negative cases are in `docs/ACCEPTANCE.md`; traceability is in `docs/TRACEABILITY.md`. The generator's value is measured by (1) **minimality**, (2) **coverage of justified safeguards**, (3) **clarity for non-developers**, (4) **portability**, (5) **verified legal provenance**, and (6) **resumability**. It must never claim to guarantee software safety or successful production deployment.
+
+## 7. Approved v2 MVP contract (2026-11-03)
+
+The user approved Python + JSON Schema + YAML, Codex-first, and milestones M0–M2. These requirements extend, not replace, the original 42 IDs.
+
+- **[IN-01]** Primary entrypoint: **PRD + URL генератора**, без обов'язкового CLI/install та ручного вибору модулів
+- **[IN-02]** `BOOTSTRAP.md` із чітким порядком read-only завантаження матеріалів, версій і перевірки host capabilities
+- **[IN-03]** Existing project location/access запитувати лише для brownfield і лише за відсутності доступного workspace
+- **[IN-04]** Якщо URL/мережа недоступні — безпечний і зрозумілий fallback без удаваного аналізу
+- **[IN-05]** Безпечне виконання коду engine: pinned revision/перевірене походження, host permission та sandbox; URL сам не дає права запуску
+- **[DET-01]** Детерміновані програмні правила вибору, залежностей, конфліктів і безпекових hard gates
+- **[DET-02]** Машинно валідний assessment; `true/false/unknown` для ризикових фактів, source/evidence відокремлено від inference
+- **[DET-03]** Версіонування policy/catalog/engine та відтворюваність вибору для тотожних входів
+- **[DET-04]** Перевірки eligibility/compatibility/schema/path/approvals у коді з автоматичними тестами
+- **[DET-05]** User approval прив'язаний до immutable plan і стану цільових файлів; зміни потребують нового preview/approval
+- **[DET-06]** Непідтримуваний host, відсутня залежність, цикли і невизначеність не можуть перетворюватися на прихований PASS
+- **[IP-01]** Відтворювана per-file attribution/licensing з передаванням notices у generated project
+- **[UX-10]** У згенерованому Harness повинні діяти правила пояснень, Reuse-First і безпеки, а не тільки в генераторі
+
+### Four mandatory MVP outcomes
+
+- **Reuse before final planning (RU-01..04, IN-01, DET-01):** CRM, CMS, auth, billing and other commodity systems require an evidence-backed reuse evaluation before a ready-for-approval plan. An offline assessment may produce a blocked preview with a clear explanation, never invented research. Research may be skipped only with a recorded non-commodity rationale.
+- **Beginner experience from v1 (UX-02/03/05/10):** Ukrainian plain-language plans explain selected and skipped modules, risks, blockers and next actions. Developer mode retains the same safeguards.
+- **Real selected components (GN-01/02/09):** install a minimal set of original working Skills, project rules, selected templates and executable validation; native subagents only where capability is confirmed. A JSON plan or documentation alone does not meet MVP acceptance. Native discovery and execution need host evidence.
+- **PRD + generator URL (IN-01..05):** the coding agent performs available technical steps and obtains target-write approval; users need not use a CLI. A CLI is an internal agent interface. LLM interpretation remains separate from deterministic policy and file operations.
+
+Approval of this implementation project is not approval of any future target Harness Plan. No deployment, production access or external upload is included.

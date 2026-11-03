@@ -3,9 +3,9 @@ name: select-harness
 description: Recommend an explainable minimum sufficient Developer Harness from project assessment, risk policy and component catalog.
 ---
 
-# Select Harness — original draft procedure
+# Select Harness — generator orchestration procedure
 
-**Status:** draft. A future deterministic policy engine must replace unsupported LLM-only selection claims. Inputs: assessed project, host capabilities, catalog, policy, reuse evaluation.
+**Status:** generator-side guidance connected to the executable MVP; native installation of this orchestration Skill is not claimed. Follow BOOTSTRAP.md and the runtime schemas. Target-project assets are separately stored in library/target/.
 
 ## Procedure
 
@@ -14,9 +14,13 @@ description: Recommend an explainable minimum sufficient Developer Harness from 
 3. Resolve dependencies and functional duplication. Do not stack complete SDD toolchains as a default.
 4. Evaluate project-wide Harness separately from per-feature workflow route. Limit documents to those the project needs.
 5. Make proposed file operations explicit; preserve existing user files and permissions.
-6. Show beginner-readable plan using `templates/HARNESS_PLAN.md`; separately export planned JSON matching `schemas/harness-plan.schema.json` if supported.
+6. Show beginner-readable plan using `templates/HARNESS_PLAN.md`; separately export planned JSON matching `schemas/plan-v1.schema.json` if supported.
 7. **Stop before target file changes.** Request specific user approval and address blockers; never assert approved if no explicit permission exists.
 
 ## Quality checks
 
 Every selected/skipped module has a reason; every dependency exists; no unresolved conflicts; all required risk gates retained; unsupported host features labeled. Output is a proposed plan, **not** completed setup.
+
+## Runtime binding
+
+Use the agent-operated commands in BOOTSTRAP.md. Selection uses `adaptive_harness.core.make_plan`; approval/apply/recovery use `adaptive_harness.apply`; validation reports actual file checks separately from application tests and native discovery. Do not implement formal policy by improvising this prose.

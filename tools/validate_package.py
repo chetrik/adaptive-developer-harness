@@ -17,7 +17,9 @@ required = [
     'docs/BEGINNER_EXPERIENCE.md','docs/SECURITY.md','docs/REUSE_FIRST.md',
     'docs/SKILLS_AGENTS.md','docs/STATE_HANDOFF.md',
     'schemas/harness-plan.schema.json','catalog/modules.yaml','templates/HARNESS_PLAN.md',
-    'examples/harness-plan-calculator.json'
+    'examples/harness-plan-calculator.json', 'BOOTSTRAP.md', 'docs/VERIFICATION.md',
+    'docs/REFERENCE_AUDIT.md', 'adaptive_harness/core.py', 'adaptive_harness/apply.py',
+    'schemas/plan-v1.schema.json', 'schemas/project-assessment.schema.json', 'requirements.lock'
 ]
 for path in required:
     if not (ROOT / path).is_file(): errors.append('Missing: ' + path)
@@ -72,9 +74,23 @@ else:
             if dep not in ids:errors.append('Unknown catalog module reference '+dep+' in '+m['id'])
         if m['id'] in m.get('dependencies',[]):errors.append('Self-dependency '+m['id'])
 
+# Current runtime contracts are required; legacy v0 example remains separately checked.
+sys.path.insert(0, str(ROOT))
+try:
+    from adaptive_harness.core import load_catalog
+    from adaptive_harness.contracts import validate
+    from jsonschema import Draft202012Validator
+    load_catalog()
+    for schema_path in (ROOT/'schemas').glob('*.schema.json'):
+        Draft202012Validator.check_schema(json.loads(schema_path.read_text()))
+    for fixture in (ROOT/'examples/assessments').glob('*.json'):
+        validate('project-assessment',json.loads(fixture.read_text()))
+except Exception as exc:
+    errors.append('Runtime contracts: '+type(exc).__name__+' '+str(exc))
+
 if errors:
     print('VALIDATION FAILED')
     for e in errors:print(' -',e)
     sys.exit(1)
 print(f'OK: {len(required)} required files; {len(reqs)} requirements; {len(tests)} acceptance tests; local links and plan schema checked.')
-print('This does not mean any generator or safety functionality is implemented.')
+print('Structural validation does not replace runtime tests or security/host evidence.')

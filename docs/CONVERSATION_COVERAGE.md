@@ -42,3 +42,7 @@ This is a conceptual checklist of decisions, product goals and teaching principl
 | Avoid non-evidenced “any app in two hours” or legal guarantees | UX-08; SC-08; BEGINNER_EXPERIENCE | Specified |
 
 **Known boundary:** the supplied long-form lesson included student discussions and general educational examples. We extract reusable design principles without importing the full private transcript, student examples or personally identifying details into this public-oriented repo starter.
+
+## Approved MVP clarification (2026-11-03)
+
+All four are mandatory in M0–M2: pre-plan reuse research for commodity systems; beginner explanations; real selected components; PRD + URL agent-driven entry. See PRD §7 and D-019..024. Status: bounded runtime implemented; exact tests and remaining agent/host limits are in TRACEABILITY.md and VERIFICATION.md. The historical table above records design coverage, not current runtime completion.

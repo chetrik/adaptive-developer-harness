@@ -1,0 +1,797 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0"
+      ]
+    },
+    "project_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_type": {
+      "enum": [
+        "calculator",
+        "crm",
+        "cms",
+        "auth",
+        "billing",
+        "custom"
+      ]
+    },
+    "stage": {
+      "enum": [
+        "greenfield",
+        "brownfield",
+        "unknown"
+      ]
+    },
+    "user_mode": {
+      "enum": [
+        "beginner",
+        "developer"
+      ]
+    },
+    "feature_size": {
+      "enum": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ]
+    },
+    "surfaces": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "web",
+          "api",
+          "cli",
+          "worker",
+          "mobile",
+          "desktop",
+          "library"
+        ]
+      }
+    },
+    "prd": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "sha256",
+        "source"
+      ]
+    },
+    "facts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "personal_data": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "enum": [
+                true,
+                false,
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "observed",
+                "user-confirmed",
+                "inferred",
+                "unknown"
+              ]
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "value",
+            "basis",
+            "sources"
+          ]
+        },
+        "sensitive_data": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "enum": [
+                true,
+                false,
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "observed",
+                "user-confirmed",
+                "inferred",
+                "unknown"
+              ]
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "value",
+            "basis",
+            "sources"
+          ]
+        },
+        "payments": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "enum": [
+                true,
+                false,
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "observed",
+                "user-confirmed",
+                "inferred",
+                "unknown"
+              ]
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "value",
+            "basis",
+            "sources"
+          ]
+        },
+        "authentication": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "enum": [
+                true,
+                false,
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "observed",
+                "user-confirmed",
+                "inferred",
+                "unknown"
+              ]
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "value",
+            "basis",
+            "sources"
+          ]
+        },
+        "public_exposure": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "enum": [
+                true,
+                false,
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "observed",
+                "user-confirmed",
+                "inferred",
+                "unknown"
+              ]
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "value",
+            "basis",
+            "sources"
+          ]
+        },
+        "production": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "enum": [
+                true,
+                false,
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "observed",
+                "user-confirmed",
+                "inferred",
+                "unknown"
+              ]
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "value",
+            "basis",
+            "sources"
+          ]
+        },
+        "schema_change": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "enum": [
+                true,
+                false,
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "observed",
+                "user-confirmed",
+                "inferred",
+                "unknown"
+              ]
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "value",
+            "basis",
+            "sources"
+          ]
+        },
+        "api_change": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "enum": [
+                true,
+                false,
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "observed",
+                "user-confirmed",
+                "inferred",
+                "unknown"
+              ]
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "value",
+            "basis",
+            "sources"
+          ]
+        },
+        "existing_harness": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "enum": [
+                true,
+                false,
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "observed",
+                "user-confirmed",
+                "inferred",
+                "unknown"
+              ]
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "value",
+            "basis",
+            "sources"
+          ]
+        },
+        "commodity": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "enum": [
+                true,
+                false,
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "observed",
+                "user-confirmed",
+                "inferred",
+                "unknown"
+              ]
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "value",
+            "basis",
+            "sources"
+          ]
+        }
+      },
+      "required": [
+        "personal_data",
+        "sensitive_data",
+        "payments",
+        "authentication",
+        "public_exposure",
+        "production",
+        "schema_change",
+        "api_change",
+        "existing_harness",
+        "commodity"
+      ]
+    },
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capabilities": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "read_files": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "enum": [
+                    true,
+                    false,
+                    "unknown"
+                  ]
+                },
+                "basis": {
+                  "enum": [
+                    "observed",
+                    "user-confirmed",
+                    "inferred",
+                    "unknown"
+                  ]
+                },
+                "sources": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "basis",
+                "sources"
+              ]
+            },
+            "write_files": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "enum": [
+                    true,
+                    false,
+                    "unknown"
+                  ]
+                },
+                "basis": {
+                  "enum": [
+                    "observed",
+                    "user-confirmed",
+                    "inferred",
+                    "unknown"
+                  ]
+                },
+                "sources": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "basis",
+                "sources"
+              ]
+            },
+            "execute": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "enum": [
+                    true,
+                    false,
+                    "unknown"
+                  ]
+                },
+                "basis": {
+                  "enum": [
+                    "observed",
+                    "user-confirmed",
+                    "inferred",
+                    "unknown"
+                  ]
+                },
+                "sources": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "basis",
+                "sources"
+              ]
+            },
+            "network": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "enum": [
+                    true,
+                    false,
+                    "unknown"
+                  ]
+                },
+                "basis": {
+                  "enum": [
+                    "observed",
+                    "user-confirmed",
+                    "inferred",
+                    "unknown"
+                  ]
+                },
+                "sources": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "basis",
+                "sources"
+              ]
+            },
+            "native_skills": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "enum": [
+                    true,
+                    false,
+                    "unknown"
+                  ]
+                },
+                "basis": {
+                  "enum": [
+                    "observed",
+                    "user-confirmed",
+                    "inferred",
+                    "unknown"
+                  ]
+                },
+                "sources": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "basis",
+                "sources"
+              ]
+            },
+            "subagents": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "enum": [
+                    true,
+                    false,
+                    "unknown"
+                  ]
+                },
+                "basis": {
+                  "enum": [
+                    "observed",
+                    "user-confirmed",
+                    "inferred",
+                    "unknown"
+                  ]
+                },
+                "sources": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "basis",
+                "sources"
+              ]
+            }
+          },
+          "required": [
+            "read_files",
+            "write_files",
+            "execute",
+            "network",
+            "native_skills",
+            "subagents"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "capabilities"
+      ]
+    },
+    "reuse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "complete",
+            "not-required",
+            "offline",
+            "pending"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "adapt",
+            "compose",
+            "buy",
+            "build",
+            "undecided",
+            "not-applicable"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "url": {
+                "type": "string",
+                "pattern": "^https://github\\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+              },
+              "revision": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "license": {
+                "enum": [
+                  "MIT",
+                  "Apache-2.0",
+                  "unknown",
+                  "other"
+                ]
+              },
+              "license_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "checked_at": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "fit": {
+                "type": "string",
+                "minLength": 1
+              },
+              "maintenance": {
+                "type": "string",
+                "minLength": 1
+              },
+              "security": {
+                "type": "string",
+                "minLength": 1
+              },
+              "cost": {
+                "type": "string",
+                "minLength": 1
+              },
+              "integration": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "url",
+              "revision",
+              "license",
+              "license_sha256",
+              "checked_at",
+              "evidence",
+              "fit",
+              "maintenance",
+              "security",
+              "cost",
+              "integration"
+            ]
+          }
+        }
+      },
+      "required": [
+        "status",
+        "decision",
+        "rationale",
+        "candidates"
+      ]
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "project_scale": {
+      "enum": [
+        "small",
+        "medium",
+        "large",
+        "unknown"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_name",
+    "project_type",
+    "stage",
+    "user_mode",
+    "feature_size",
+    "surfaces",
+    "prd",
+    "facts",
+    "host",
+    "reuse",
+    "unknowns",
+    "project_scale"
+  ]
+}

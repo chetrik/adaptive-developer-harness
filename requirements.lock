@@ -1,0 +1,8 @@
+# Validated Python 3.12 environment; install from the trusted PyPI index with TLS.
+attrs==26.1.0
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+PyYAML==6.0.3
+referencing==0.37.0
+rpds-py==2026.6.3
+typing-extensions==4.16.0

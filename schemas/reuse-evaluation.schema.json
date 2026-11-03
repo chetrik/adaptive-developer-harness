@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "status": {
+      "enum": [
+        "complete",
+        "not-required",
+        "offline",
+        "pending"
+      ]
+    },
+    "decision": {
+      "enum": [
+        "adapt",
+        "compose",
+        "buy",
+        "build",
+        "undecided",
+        "not-applicable"
+      ]
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "type": "string",
+            "pattern": "^https://github\\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+          },
+          "revision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "license": {
+            "enum": [
+              "MIT",
+              "Apache-2.0",
+              "unknown",
+              "other"
+            ]
+          },
+          "license_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "checked_at": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "fit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "maintenance": {
+            "type": "string",
+            "minLength": 1
+          },
+          "security": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cost": {
+            "type": "string",
+            "minLength": 1
+          },
+          "integration": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "url",
+          "revision",
+          "license",
+          "license_sha256",
+          "checked_at",
+          "evidence",
+          "fit",
+          "maintenance",
+          "security",
+          "cost",
+          "integration"
+        ]
+      }
+    }
+  },
+  "required": [
+    "status",
+    "decision",
+    "rationale",
+    "candidates"
+  ]
+}

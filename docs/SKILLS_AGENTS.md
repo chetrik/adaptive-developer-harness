@@ -1,6 +1,8 @@
-# Proposed Skills and subagent library (not installed or implemented)
+# Generator and target libraries
 
 The generator has **orchestration Skills** that run inside its source project and a **library of potential target-project Skills/subagents**. Do not conflate them. Selection chooses what the target receives; no blanket copy.
+
+Runtime target components now exist in `library/target/` and are selected by the catalog. The tables below describe the broader library design; they are not claims that every listed role is implemented. Native discovery evidence and remaining limits are in VERIFICATION.md.
 
 ## Generator orchestration Skills
 

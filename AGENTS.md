@@ -2,7 +2,7 @@
 
 ## Project role and source of truth
 
-This repository is the source of specifications for **building** Adaptive Developer Harness Generator. Do not confuse these contributor instructions with the `AGENTS.md` a future generator might create inside a customer's repository.
+This repository contains the executable Python MVP and canonical specifications for Adaptive Developer Harness Generator. Do not confuse these contributor instructions with the `AGENTS.md` a future generator might create inside a customer's repository.
 
 Read in order: `docs/PRD.md` (product requirements), `docs/ARCHITECTURE.md` (current vs target), `docs/DECISIONS.md` (accepted vs proposed decisions), `docs/ROADMAP.md` (next milestone), the relevant feature spec or scenario, and `docs/TRACEABILITY.md` (coverage). Load other docs only if the task touches them.
 
@@ -20,4 +20,4 @@ Read in order: `docs/PRD.md` (product requirements), `docs/ARCHITECTURE.md` (cur
 
 ## First run
 
-Follow `CODEX_BOOTSTRAP_PROMPT.md`: audit plan and produce a proposal before implementing the Selection Engine. Use `docs/ACCEPTANCE.md` as the acceptance baseline.
+Read current implementation/evidence before proposing changes. Python + JSON Schema + YAML and M0–M2 are approved (D-019..024); do not restart the initial architecture approval. Run `python3 -m unittest discover -s tests -v` and `python3 tools/validate_package.py`. End-user entry is BOOTSTRAP.md; CODEX_BOOTSTRAP_PROMPT.md is for contributors.
