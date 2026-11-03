@@ -1,5 +1,20 @@
 # Verification evidence — 2026-11-03
 
+## Claude Code macOS native test 2026-11-03
+
+Documentation update checks: full regression **136 tests passed** (34.604 s, exit 0); structural/local-link validation and `git diff --check` passed. These automated checks are separate from the owner-reported native trial below.
+
+Source: owner-supplied installation and follow-up session reports from a real local test; not independently rerun in the generator development environment. Tested generator: `6405173ccc1d48314c92fce124eec6b4535bf899` (0.5.1), Python 3.14.7 on macOS. The exact Claude client version and macOS version were not supplied for this trial. Project: personal-offline-calculator, with the sample Markdown PRD; no application code or Git repository. Private local paths and session artifacts are not published.
+
+- **Installation PASS:** approved plan `b2cc61dc685262d9684cd4c5bc8d89ddc94643b5ced408719860de52d8153227`, 7 selected modules, 9 created files; approve/apply exit 0. PRD copy reported byte-identical. Plan, approval, journal/receipt and the reviewed generator checkout retained in persistent external storage. Recovery itself was not exercised in this native trial.
+- **Integrity PASS:** 9 file hash checks passed; installed `python3 .adaptive-harness/validate.py` returned `Harness integrity: PASS`, exit 0.
+- **Discovery PASS in the follow-up session:** `adh-implement` and `adh-verify` listed as project Skills.
+- **Native invocation PASS:** Skill tool loaded `adh-verify` instructions into context; the agent ran the integrity check and inspected project instructions without modifying files. This was not a substitute invocation by manually reading SKILL.md.
+- **Initial-session limitation:** before the follow-up session, the native invocation returned `Unknown skill: adh-verify`. Successful discovery in the later session does not establish hot reload support or the precise cause of the initial failure.
+- **Not tested:** native invocation of `adh-implement`, application implementation, application tests, UI acceptance checks, or native reviewer invocation. The reviewer was not selected for this small task. Formal Engineering Gates were not run. A discovery result does not prove invocation of both Skills or unconditional instruction adherence.
+
+The original generator `validate` report remained `not-verified` for application tests, native discovery and independent review. The later native observations above supplement that historical report; they do not rewrite it or establish full end-to-end application delivery. Earlier no-native-evidence statements below describe prior checkpoints and are superseded only within this trial's scope.
+
 ## Durable bootstrap artifacts after Claude trial
 
 BOOTSTRAP and the user/assessment guidance now specify persistent original PRD storage, separate retained plan runs, a durable shared recovery state-dir and the original reviewed generator checkout. Source copies require applicable write authorization and byte comparison; changed sources require regenerated plans. Installation permission is distinct from application work; native Skill invocation is distinct from manually following a file. Historical comparisons without retained artifacts remain unverified.
