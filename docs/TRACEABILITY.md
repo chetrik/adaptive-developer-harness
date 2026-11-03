@@ -1,5 +1,7 @@
 # Requirements traceability matrix
 
+0.5.1 increment: SW-01/02 → tests/test_workflow.py (quick handoff policy, preserved risk checks); UP-01/02 and GN-08 → tests/test_patch_upgrade.py (0.5.0 Codex/Cursor/Claude migration, conflicts, stale approval, recovery/retry/no-op, original-checkout recovery). UX-04, AS-05, SC-05 → updated assess-project, implement/verify and feature/ui-check guidance; native behavioral effectiveness remains not-verified.
+
 Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
 
 **Purpose:** make omissions visible. Canonical requirement definitions are in [PRD.md](PRD.md), and test definitions in [ACCEPTANCE.md](ACCEPTANCE.md). Rows distinguish design intent from bounded executable evidence. A tested core does not mark the entire broad requirement complete.

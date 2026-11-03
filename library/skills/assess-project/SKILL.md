@@ -18,7 +18,7 @@ PRD or rough project description; optional existing repository; user preferences
 3. Record approximate project class, feature scope, surfaces, external interfaces, integrations, data and likely deployment. Consider the XS–XL feature scale as a heuristic, not a guaranteed estimate.
 4. Identify risk triggers: secrets, real users, auth, customer data, regulated/sensitive categories, payments, external API, migrations, irreversible actions, public availability.
 5. Verify, do not assume, host support for network, subagents, Skills, hooks, permission gates, file writes and test execution.
-6. Ask only blocking questions not answerable from supplied materials. Explain why the answer matters.
+6. Ask only blocking questions not answerable from supplied materials. Explain why the answer matters, offer understandable options and recommend one with its trade-off. Resolve routine technical choices within the authorized scope; do not ask beginners to design the architecture or invent critical business requirements for them.
 7. Return `ProjectAssessment` summary with evidence, uncertainties, risk escalation, and next recommended action. Do not write to target repo or install anything.
 
 ## Stop conditions

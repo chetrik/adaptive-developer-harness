@@ -1,5 +1,7 @@
 # Платформи та готовність до роботи — 0.5.0
 
+0.5.1 patch: clearer lightweight workflow, bounded task context and UI/test guidance. Platform formats and support boundaries below are unchanged. Existing 0.5.0 assets update through inventory/preview/approval/recovery; managed-file conflicts block. No new native invocation evidence is claimed.
+
 Один Selection Engine, один Harness Plan, один Apply. Поточні результати нижче розрізняють створення файлів, нативне виявлення та фактичну роботу агента.
 
 | Середовище | Що реалізовано | Що ще потребує підтвердження |

@@ -122,7 +122,7 @@ class UpdateTests(IntegrityTests):
     def test_inventory_versions(self):
         from adaptive_harness.inventory import inspect_inventory
         r=inspect_inventory(self.root)
-        self.assertEqual(r['status'],'installed');self.assertEqual(r['versions']['generator'],'0.5.0')
+        self.assertEqual(r['status'],'installed');self.assertEqual(r['versions']['generator'],'0.5.1')
         self.assertTrue(r['components']);self.assertTrue(all(c['revision'] for c in r['components'].values()))
 
     def test_every_delete_boundary_recovers(self):

@@ -1,5 +1,7 @@
 # Architecture — executable MVP and remaining boundaries
 
+0.5.1 retains the same Selection Engine, Plan, Apply and manifest 2.0. Quick-route handoff is required only when transferring unfinished work; verification and risk checks remain mandatory. Updated target instructions use bounded task context, criterion-based checks and concrete UI journeys. These are agent instructions, not new host enforcement. Migration from 0.5.0 uses recorded component hashes and the existing conflict/approval/recovery path; old plans must be regenerated.
+
 Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
 
 ## Current state

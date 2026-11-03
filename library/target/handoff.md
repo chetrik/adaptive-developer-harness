@@ -1,6 +1,8 @@
 # Session Handoff
 
-Після явного завершення сесії/етапу запиши: session_id, phase (Specification/Implementation/Verification), task, decisions, completed, unfinished, changed_files, tests, risks, next_step.
+Для передачі незавершеної роботи або завершення великого етапу запиши: session_id, phase (Specification/Implementation/Verification), task, decisions, completed, unfinished, changed_files, tests, risks, next_step.
+
+Для завершеної XS/S задачі достатньо короткого звіту в поточному чаті: результат, фактичні перевірки й обмеження. Не створюй checkpoint або нову сесію лише заради процедури. Якщо роботу справді передаєш іншій сесії чи агенту, використовуй структурований handoff нижче.
 
 Масив tests має містити фактичні command/status/exit_code/detail. Якщо тест не виконувався — status not-verified або skipped, exit_code null; не вигадуй PASS. Рішення й завершені дії можуть посилатися на специфікацію та документацію. Не копіюй секрети, приватні логи чи повний чат.
 
