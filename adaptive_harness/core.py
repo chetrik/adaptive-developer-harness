@@ -325,9 +325,10 @@ def make_plan(assessment, target, *, remove_obsolete=False, handoff=None, engine
         if before==digest(content): continue
         operations.append({'action':'patch' if before else 'create','path':name,'before':before,'after':digest(content),'content':content,'modules':sorted(owners[name])})
     if handoff is not None:
-        from .handoff import build_record, record_path
+        from .handoff import build_record, normalize_input, record_path
         if operations or remove_obsolete or not previous:
             blockers.append('Спочатку окремо погодьте й завершіть оновлення Harness; handoff фіксує стабільний стан.')
+        handoff=normalize_input(handoff,root)
         record=build_record(handoff,root)
         if readiness is not None:record['readiness']=readiness
         name=record_path(handoff['session_id']);path=safe_path(root,name)
