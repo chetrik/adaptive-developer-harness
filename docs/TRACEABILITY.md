@@ -1,5 +1,7 @@
 # Requirements traceability matrix
 
+0.5.2 increment: AS-05/GN-08/SC-04 → `tests/test_snapshot_generated_dirs.py` verifies generated-directory exclusion, byte bounds and handoff freshness; `tests/test_apply.py` preserves root-symlink rejection while physical temporary paths cover the macOS `/var` alias; `tests/test_handoff.py` covers strict raw/wrapped input and path-only protected-reference diagnostics. Automated Linux tests do not claim a native macOS run.
+
 0.5.1 increment: SW-01/02 → tests/test_workflow.py (quick handoff policy, preserved risk checks); UP-01/02 and GN-08 → tests/test_patch_upgrade.py (0.5.0 Codex/Cursor/Claude migration, conflicts, stale approval, recovery/retry/no-op, original-checkout recovery). UX-04, AS-05, SC-05 → updated assess-project, implement/verify and feature/ui-check guidance; native behavioral effectiveness remains not-verified.
 
 Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.

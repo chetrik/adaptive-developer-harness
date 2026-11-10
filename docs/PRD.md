@@ -1,6 +1,6 @@
 # Product Requirements Document — Adaptive Developer Harness Generator
 
-Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
+Current 0.5.2 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
 
 **Version:** 2.0 MVP · **Date:** 2026-11-03 · **Status:** architecture and M0–M2 approved; implementation evidence is in TRACEABILITY and VERIFICATION.
 **Canonical product intent:** this document.  

@@ -45,7 +45,7 @@ def load_inventory(root, catalog):
                     raise HarnessError('Unrecognized legacy component: '+name)
         else:
             v=old['versions']
-            if v['generator'] not in ('0.3.0','0.4.0','0.5.0',VERSION) or v['policy']!=POLICY or v['catalog']!=catalog['catalog_version']:
+            if v['generator'] not in ('0.3.0','0.4.0','0.5.0','0.5.1',VERSION) or v['policy']!=POLICY or v['catalog']!=catalog['catalog_version']:
                 raise HarnessError('Unsupported installed versions; migration required')
             from .adapters import ADAPTERS
             adapter=ADAPTERS.get(v['adapter'])

@@ -18,7 +18,7 @@ def validate_input(data, root):
         if not path.parts or path.is_absolute() or path.as_posix()!=name or '\\' in name or '\x00' in name:
             raise HarnessError('Unsafe handoff file reference')
         if any(p in ('..','.git','.ssh','.aws','.credentials') or p.startswith('.env') for p in path.parts):
-            raise HarnessError('Protected handoff file reference')
+            raise HarnessError('Protected handoff file reference: '+name)
         current=root
         for part in path.parts:
             current=current/part
@@ -35,8 +35,15 @@ def validate_input(data, root):
     return data
 
 
+def normalize_input(data, root):
+    if isinstance(data,dict) and ('schema_version' in data or 'handoff' in data):
+        record=validate('session-handoff',data)
+        return validate_input(record['handoff'],root)
+    return validate_input(data,root)
+
+
 def build_record(data, target):
-    root=root_path(target);validate_input(data,root)
+    root=root_path(target);data=normalize_input(data,root)
     return validate('session-handoff',{'schema_version':'1.0','handoff':data,
         'workspace_snapshot':snapshot(root,exclude_sessions=True),
         'evidence_source':'agent-reported; commands not executed by recorder'})

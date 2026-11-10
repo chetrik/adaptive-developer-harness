@@ -1,5 +1,7 @@
 # Architecture — executable MVP and remaining boundaries
 
+0.5.2 keeps the existing Plan/Apply and manifest 2.0 contracts while excluding reproducible dependency/build directories from workspace fingerprints at every depth. Source, dependency manifests/lockfiles and configuration remain fingerprinted. Engine identity changes, so older plans require regeneration and approval; older interrupted operations retain their original-checkout recovery boundary.
+
 0.5.1 retains the same Selection Engine, Plan, Apply and manifest 2.0. Quick-route handoff is required only when transferring unfinished work; verification and risk checks remain mandatory. Updated target instructions use bounded task context, criterion-based checks and concrete UI journeys. These are agent instructions, not new host enforcement. Migration from 0.5.0 uses recorded component hashes and the existing conflict/approval/recovery path; old plans must be regenerated.
 
 Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
@@ -34,7 +36,7 @@ Existing AGENTS.md text outside the managed block is preserved byte-for-byte in 
 ## Scope and limitations
 
 - Run from a reviewed repository checkout on Python 3.11+ / POSIX. No standalone wheel, SaaS or LLM API dependency.
-- Target scan is bounded to 10,000 entries and 64 MiB of regular-file content, excluding .git. Credential paths use metadata only; their values are not read. Larger targets require a future scoped-snapshot design, not bypassing checks.
+- Target scan is bounded to 10,000 included entries and 64 MiB of included regular-file content, excluding `.git` and the shared reproducible-directory set (`node_modules`, `.next`, `.venv`, `venv`, `__pycache__`, `dist`, `build`) at every depth. Credential paths use metadata only; their values are not read. Larger included targets require a future scoped-snapshot design, not bypassing checks.
 - All file operations require human approval. A local receipt is not a cryptographic proof of consent. The trusted coding agent/host must only record approval after a real human response.
 - Advisory locks coordinate generator writers; prohibit concurrent non-cooperating writers during Apply. No claim of multi-file transactional atomicity. Journals permit recovery and preserve conflicting user edits.
 - Codex CLI 0.163.0 has discovered generated baseline Skills. This does not prove subagent invocation, model compliance or cloud-wide registration. The optional reviewer definition is conditional and its execution remains separately verifiable.

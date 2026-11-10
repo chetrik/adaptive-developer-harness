@@ -1,5 +1,7 @@
 # Платформи та готовність до роботи — 0.5.0
 
+0.5.2 patch: workspace snapshots share the project-inspection generated-directory exclusions, macOS test fixtures use physical paths, and controlled symlink rejection remains tested. This checkout was not run natively on macOS.
+
 0.5.1 patch: clearer lightweight workflow, bounded task context and UI/test guidance. Platform formats and support boundaries below are unchanged. Existing 0.5.0 assets update through inventory/preview/approval/recovery; managed-file conflicts block. Native evidence from the subsequent owner-reported Claude/macOS trial is recorded below and in VERIFICATION.md.
 
 Один Selection Engine, один Harness Plan, один Apply. Поточні результати нижче розрізняють створення файлів, нативне виявлення та фактичну роботу агента.

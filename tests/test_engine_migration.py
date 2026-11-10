@@ -28,7 +28,7 @@ class EngineMigrationTests(unittest.TestCase):
         self.assertEqual(p['update']['migration'],'engine-0.3-to-0.5')
         apply_plan(p,approve(p,self.root,'Synthetic migration consent'),self.root,self.state)
         m=json.loads((self.root/'.adaptive-harness/manifest.json').read_text())
-        self.assertEqual(m['schema_version'],'2.0');self.assertEqual(m['versions']['generator'],'0.5.1')
+        self.assertEqual(m['schema_version'],'2.0');self.assertEqual(m['versions']['generator'],'0.5.2')
         self.assertEqual(make_plan(self.a,self.root)['operations'],[])
     def test_conflict_and_stale_plan(self):
         p=make_plan(self.a,self.root);a=approve(p,self.root,'Synthetic consent')

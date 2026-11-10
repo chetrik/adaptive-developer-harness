@@ -6,10 +6,10 @@ import stat
 import zipfile
 from pathlib import Path,PurePosixPath
 from .contracts import HarnessError,digest,fingerprint
-from .filesystem import root_path,read_regular,MAX_BYTES,MAX_FILES
+from .filesystem import GENERATED_DIRS,root_path,read_regular,MAX_BYTES,MAX_FILES
 from .evidence import source_path
 
-SKIP={'.git','node_modules','.venv','venv','__pycache__','.next','dist','build'}
+SKIP={'.git',*GENERATED_DIRS}
 SECRET=re.compile(rb'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,}|AKIA[0-9A-Z]{16}|sk-(?:proj-)?[A-Za-z0-9_-]{30,}')
 ENV=re.compile(r'(?:process\.env\.|import\.meta\.env\.|os\.environ\[\s*[\"\x27]|(?:os\.getenv|os\.environ\.get)\(\s*[\"\x27])([A-Z][A-Z0-9_]*)')
 

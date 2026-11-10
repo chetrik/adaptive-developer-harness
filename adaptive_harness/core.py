@@ -310,7 +310,7 @@ def make_plan(assessment, target, *, remove_obsolete=False, handoff=None, engine
     old_components=previous.get('components',{})
     old_modules=set(previous.get('modules',[]))|set(old_components)
     update={'intent':'update' if previous else 'install','remove_obsolete':remove_obsolete,
-            'migration':'manifest-1-to-2' if previous.get('schema_version')=='1.0' else 'engine-'+previous.get('versions',{}).get('generator','')[:3]+'-to-0.5' if previous.get('versions',{}).get('generator') in ('0.3.0','0.4.0') else 'engine-0.5.0-to-0.5.1' if previous.get('versions',{}).get('generator')=='0.5.0' else 'none',
+            'migration':'manifest-1-to-2' if previous.get('schema_version')=='1.0' else 'engine-'+previous.get('versions',{}).get('generator','')[:3]+'-to-0.5' if previous.get('versions',{}).get('generator') in ('0.3.0','0.4.0') else 'engine-0.5.0-to-0.5.2' if previous.get('versions',{}).get('generator')=='0.5.0' else 'engine-0.5.1-to-0.5.2' if previous.get('versions',{}).get('generator')=='0.5.1' else 'none',
             'installed_versions':previous.get('versions',{'generator':'unknown','manifest':previous.get('schema_version','none')}),
             'desired_versions':manifest['versions'],
             'added':sorted(selected-old_modules),'removed':sorted(old_modules-selected),
@@ -325,9 +325,10 @@ def make_plan(assessment, target, *, remove_obsolete=False, handoff=None, engine
         if before==digest(content): continue
         operations.append({'action':'patch' if before else 'create','path':name,'before':before,'after':digest(content),'content':content,'modules':sorted(owners[name])})
     if handoff is not None:
-        from .handoff import build_record, record_path
+        from .handoff import build_record, normalize_input, record_path
         if operations or remove_obsolete or not previous:
             blockers.append('Спочатку окремо погодьте й завершіть оновлення Harness; handoff фіксує стабільний стан.')
+        handoff=normalize_input(handoff,root)
         record=build_record(handoff,root)
         if readiness is not None:record['readiness']=readiness
         name=record_path(handoff['session_id']);path=safe_path(root,name)

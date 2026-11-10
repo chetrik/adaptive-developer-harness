@@ -7,7 +7,7 @@ from unittest.mock import patch
 from adaptive_harness.contracts import HarnessError
 from adaptive_harness.core import make_plan
 from adaptive_harness.apply import approve, apply_plan
-from adaptive_harness.handoff import resume, record_path
+from adaptive_harness.handoff import build_record, resume, record_path
 from test_selection import fixture
 
 
@@ -20,7 +20,7 @@ def record():
 
 class HandoffTests(unittest.TestCase):
     def setUp(self):
-        self.temp=tempfile.TemporaryDirectory();self.base=Path(self.temp.name)
+        self.temp=tempfile.TemporaryDirectory();self.base=Path(self.temp.name).resolve()
         self.root=self.base/'target';self.root.mkdir();self.state=self.base/'state'
         (self.root/'app.py').write_text('original app')
         self.a=fixture();p=make_plan(self.a,self.root)
@@ -71,9 +71,25 @@ class HandoffTests(unittest.TestCase):
         r=record();r['session_id']='../escape';records.append(r)
         for r in records:
             with self.subTest(record=r),self.assertRaises(HarnessError):make_plan(self.a,self.root,handoff=r)
+    def test_protected_reference_error_names_path_without_file_content(self):
+        r=record();r['changed_files']=['.env.example']
+        with self.assertRaisesRegex(HarnessError,r'^Protected handoff file reference: \.env\.example$'):
+            make_plan(self.a,self.root,handoff=r)
     def test_cannot_mix_update_with_handoff(self):
         a=fixture();a['feature_size']='M'
         self.assertEqual(make_plan(a,self.root,handoff=record())['status'],'blocked')
+    def test_handoff_plan_accepts_strict_record_wrapper(self):
+        wrapped=build_record(record(),self.root)
+        raw_plan=make_plan(self.a,self.root,handoff=record())
+        wrapped_plan=make_plan(self.a,self.root,handoff=wrapped)
+        self.assertEqual(wrapped_plan,raw_plan)
+
+        for invalid in (
+            {**wrapped,'schema_version':'2.0'},
+            {**wrapped,'unexpected':'field'},
+        ):
+            with self.subTest(invalid=invalid),self.assertRaises(HarnessError):
+                make_plan(self.a,self.root,handoff=invalid)
     def test_interrupted_checkpoint_recovers_with_same_writer(self):
         from adaptive_harness import apply as module
         p=make_plan(self.a,self.root,handoff=record());a=approve(p,self.root,'Synthetic consent')
@@ -101,6 +117,9 @@ class HandoffTests(unittest.TestCase):
             return result.stdout
         self.assertEqual(json.loads(run('inventory','--target',str(self.root)))['status'],'installed')
         plan=self.base/'plan.json';plan.write_text(run('handoff-plan','--assessment',str(assessment),'--record',str(data),'--target',str(self.root)))
+        wrapped=self.base/'wrapped-handoff.json';wrapped.write_text(json.dumps(build_record(record(),self.root)))
+        wrapped_plan=json.loads(run('handoff-plan','--assessment',str(assessment),'--record',str(wrapped),'--target',str(self.root)))
+        self.assertEqual(wrapped_plan,json.loads(plan.read_text()))
         self.assertIn('step-1.json',run('preview','--plan',str(plan),'--target',str(self.root)))
         approval=self.base/'approval.json';approval.write_text(run('approve','--plan',str(plan),'--target',str(self.root),'--confirmation','Synthetic CLI consent'))
         run('apply','--plan',str(plan),'--approval',str(approval),'--target',str(self.root),'--state-dir',str(self.state))
