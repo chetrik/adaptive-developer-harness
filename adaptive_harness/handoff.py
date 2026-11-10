@@ -18,7 +18,7 @@ def validate_input(data, root):
         if not path.parts or path.is_absolute() or path.as_posix()!=name or '\\' in name or '\x00' in name:
             raise HarnessError('Unsafe handoff file reference')
         if any(p in ('..','.git','.ssh','.aws','.credentials') or p.startswith('.env') for p in path.parts):
-            raise HarnessError('Protected handoff file reference')
+            raise HarnessError('Protected handoff file reference: '+name)
         current=root
         for part in path.parts:
             current=current/part

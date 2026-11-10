@@ -71,6 +71,10 @@ class HandoffTests(unittest.TestCase):
         r=record();r['session_id']='../escape';records.append(r)
         for r in records:
             with self.subTest(record=r),self.assertRaises(HarnessError):make_plan(self.a,self.root,handoff=r)
+    def test_protected_reference_error_names_path_without_file_content(self):
+        r=record();r['changed_files']=['.env.example']
+        with self.assertRaisesRegex(HarnessError,r'^Protected handoff file reference: \.env\.example$'):
+            make_plan(self.a,self.root,handoff=r)
     def test_cannot_mix_update_with_handoff(self):
         a=fixture();a['feature_size']='M'
         self.assertEqual(make_plan(a,self.root,handoff=record())['status'],'blocked')
