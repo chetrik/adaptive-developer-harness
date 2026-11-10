@@ -14,7 +14,7 @@ from test_selection import fixture, researched
 
 class ApplyTests(unittest.TestCase):
     def setUp(self):
-        self.tmp=tempfile.TemporaryDirectory();self.base=Path(self.tmp.name)
+        self.tmp=tempfile.TemporaryDirectory();self.base=Path(self.tmp.name).resolve()
         self.root=self.base/'target';self.root.mkdir();self.state=self.base/'state'
     def tearDown(self): self.tmp.cleanup()
     def prepare(self,a=None):
@@ -36,7 +36,7 @@ class ApplyTests(unittest.TestCase):
     def test_all_four_scenarios_install_exact_selection(self):
         for name in ('calculator','crm','sensitive-saas','existing-app'):
             with self.subTest(name=name),tempfile.TemporaryDirectory() as temp:
-                root=Path(temp)/'target';root.mkdir();state=Path(temp)/'state'
+                base=Path(temp).resolve();root=base/'target';root.mkdir();state=base/'state'
                 a=fixture(name)
                 if name in ('crm','sensitive-saas'): a=researched(a)
                 p=make_plan(a,root);approval=approve(p,root,'Synthetic test consent')
@@ -75,6 +75,12 @@ class ApplyTests(unittest.TestCase):
         (self.root/'AGENTS.md').symlink_to(outside/'agents')
         with self.assertRaises(HarnessError):self.prepare()
         self.assertEqual(list(outside.iterdir()),[])
+    def test_target_root_symlink_rejected(self):
+        from adaptive_harness.filesystem import root_path
+        linked=self.base/'linked-target'
+        linked.symlink_to(self.root,target_is_directory=True)
+        with self.assertRaisesRegex(HarnessError,'Target root contains a symlink'):
+            root_path(linked)
     def test_existing_agents_and_dirty_files_preserved(self):
         old='User rules\n\n\n'; (self.root/'AGENTS.md').write_text(old)
         (self.root/'user.py').write_text('unfinished work\n')

@@ -21,7 +21,7 @@ class EntrypointTests(unittest.TestCase):
     def test_bad_generator_url_and_secret_file_refused(self):
         with self.assertRaises(HarnessError):intake(ROOT/'examples/PRD_CALCULATOR.md','https://example.org/install.sh')
         with tempfile.TemporaryDirectory() as tmp:
-            secret=Path(tmp)/'.env';secret.write_text('fake synthetic secret')
+            secret=Path(tmp).resolve()/'.env';secret.write_text('fake synthetic secret')
             with self.assertRaises(HarnessError):intake(secret,GENERATOR_URL)
     def test_research_failure_is_explicit(self):
         with patch('adaptive_harness.research.git',side_effect=HarnessError('GitHub unavailable')):
@@ -44,7 +44,7 @@ class EntrypointTests(unittest.TestCase):
         self.assertTrue(all(c[0] in ('clone','rev-parse','ls-tree','show') for c in calls))
     def test_cli_end_to_end_agent_operated(self):
         with tempfile.TemporaryDirectory() as tmp:
-            base=Path(tmp);target=base/'target';target.mkdir()
+            base=Path(tmp).resolve();target=base/'target';target.mkdir()
             def run(*args,good=True):
                 r=subprocess.run([sys.executable,'-m','adaptive_harness',*args],cwd=ROOT,capture_output=True,text=True)
                 if good:self.assertEqual(r.returncode,0,r.stderr)

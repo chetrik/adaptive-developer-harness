@@ -12,7 +12,7 @@ from test_selection import fixture
 
 class DeliveryTests(unittest.TestCase):
     def setUp(self):
-        self.tmp=tempfile.TemporaryDirectory();self.base=Path(self.tmp.name);self.root=self.base/'app';self.root.mkdir()
+        self.tmp=tempfile.TemporaryDirectory();self.base=Path(self.tmp.name).resolve();self.root=self.base/'app';self.root.mkdir()
     def tearDown(self):self.tmp.cleanup()
     def install(self,a):
         p=make_plan(a,self.root)

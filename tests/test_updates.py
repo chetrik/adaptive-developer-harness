@@ -9,7 +9,7 @@ from test_selection import fixture
 
 class IntegrityTests(unittest.TestCase):
     def setUp(self):
-        self.temp=tempfile.TemporaryDirectory();self.base=Path(self.temp.name)
+        self.temp=tempfile.TemporaryDirectory();self.base=Path(self.temp.name).resolve()
         self.root=self.base/'target';self.root.mkdir();self.state=self.base/'state'
         self.a=fixture();self.a['feature_size']='M'
         p=make_plan(self.a,self.root)
@@ -168,7 +168,7 @@ class MigrationTests(unittest.TestCase):
     def test_actual_v1_output_migrates_and_repeats(self):
         from adaptive_harness.contracts import ROOT
         with tempfile.TemporaryDirectory() as temp:
-            root=Path(temp)/'target';root.mkdir()
+            base=Path(temp).resolve();root=base/'target';root.mkdir()
             files=json.loads((ROOT/'tests/fixtures/manifest-v1-output.json').read_text())
             for name,content in files.items():
                 path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(content)
@@ -176,13 +176,13 @@ class MigrationTests(unittest.TestCase):
             self.assertEqual(p['status'],'ready-for-approval',p['blockers'])
             self.assertEqual(p['update']['migration'],'manifest-1-to-2')
             self.assertEqual(p['update']['installed_versions']['generator'],'unknown')
-            apply_plan(p,approve(p,root,'Synthetic migration consent'),root,Path(temp)/'state')
+            apply_plan(p,approve(p,root,'Synthetic migration consent'),root,base/'state')
             self.assertEqual(json.loads((root/'.adaptive-harness/manifest.json').read_text())['schema_version'],'2.0')
             self.assertEqual(make_plan(a,root)['operations'],[])
     def test_legacy_customization_not_overwritten(self):
         from adaptive_harness.contracts import ROOT
         with tempfile.TemporaryDirectory() as temp:
-            root=Path(temp)
+            root=Path(temp).resolve()
             files=json.loads((ROOT/'tests/fixtures/manifest-v1-output.json').read_text())
             for name,content in files.items():
                 path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(content)
@@ -197,7 +197,7 @@ class MigrationTests(unittest.TestCase):
         from adaptive_harness.contracts import ROOT,digest
         from adaptive_harness.filesystem import snapshot
         with tempfile.TemporaryDirectory() as temp:
-            base=Path(temp);root=base/'target';root.mkdir();state=base/'state'
+            base=Path(temp).resolve();root=base/'target';root.mkdir();state=base/'state'
             files=json.loads((ROOT/'tests/fixtures/manifest-v1-output.json').read_text())
             for name,content in files.items():
                 path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(content)

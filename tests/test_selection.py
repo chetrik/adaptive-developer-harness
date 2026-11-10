@@ -23,7 +23,7 @@ def researched(a):
 
 class SelectionTests(unittest.TestCase):
     def setUp(self):
-        self.tmp=tempfile.TemporaryDirectory(); self.root=Path(self.tmp.name)
+        self.tmp=tempfile.TemporaryDirectory(); self.root=Path(self.tmp.name).resolve()
     def tearDown(self): self.tmp.cleanup()
     def test_four_scenarios_and_minimality(self):
         for name in ('calculator','crm','sensitive-saas','existing-app'):
@@ -119,25 +119,28 @@ if __name__=='__main__': unittest.main()
 class AdditionalPolicyTests(unittest.TestCase):
     def test_modes_keep_identical_safety(self):
         with tempfile.TemporaryDirectory() as tmp:
+            tmp=Path(tmp).resolve()
             a=researched(fixture('crm'));b=copy.deepcopy(a);b['user_mode']='developer'
             p=make_plan(a,tmp);q=make_plan(b,tmp)
             safety=lambda plan: [d for d in plan['decisions'] if d['id'].startswith('security.')]
             self.assertEqual(safety(p),safety(q));self.assertIn('Технічні деталі',explain(q))
     def test_route_does_not_disable_risk(self):
         with tempfile.TemporaryDirectory() as tmp:
+            tmp=Path(tmp).resolve()
             a=researched(fixture('sensitive-saas'));a['feature_size']='XS'
             p=make_plan(a,tmp);self.assertEqual(p['route'],'quick')
             self.assertTrue(any(d['id']=='security.release-gate' and d['status']=='selected' for d in p['decisions']))
     def test_incomplete_collector_evidence_blocks_final_plan(self):
         with tempfile.TemporaryDirectory() as tmp:
+            tmp=Path(tmp).resolve()
             a=researched(fixture('crm'));a['reuse']['candidates'][0]['fit']='Не оцінено: потрібно прочитати PRD'
             self.assertEqual(make_plan(a,tmp)['status'],'blocked')
     def test_secrets_not_copied_from_target(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp);(root/'.env').write_text('SYNTHETIC_PRIVATE_VALUE=not-a-real-secret')
+            root=Path(tmp).resolve();(root/'.env').write_text('SYNTHETIC_PRIVATE_VALUE=not-a-real-secret')
             p=make_plan(fixture(),root)
             self.assertNotIn('SYNTHETIC_PRIVATE_VALUE',json.dumps(p))
     def test_malformed_manifest_blocks_overwrite(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp);(root/'.adaptive-harness').mkdir();(root/'.adaptive-harness/manifest.json').write_text('{}')
+            root=Path(tmp).resolve();(root/'.adaptive-harness').mkdir();(root/'.adaptive-harness/manifest.json').write_text('{}')
             self.assertEqual(make_plan(fixture(),root)['status'],'blocked')

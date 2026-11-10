@@ -14,7 +14,7 @@ class AdapterTests(unittest.TestCase):
     def test_cursor_four_scenarios_apply_and_idempotency(self):
         for scenario in ('calculator','crm','sensitive-saas','existing-app'):
             with self.subTest(scenario=scenario), tempfile.TemporaryDirectory() as tmp:
-                target=Path(tmp)/'target'; target.mkdir()
+                base=Path(tmp).resolve();target=base/'target'; target.mkdir()
                 (target/'.cursor').mkdir(); config=target/'.cursor'/'user.txt'; config.write_text('User-owned configuration')
                 a=fixture(scenario)
                 if scenario in ('crm','sensitive-saas'): a=researched(a)
@@ -27,13 +27,14 @@ class AdapterTests(unittest.TestCase):
                 self.assertTrue(any(o['path']=='.cursor/rules/adh.mdc' for o in p['operations']))
                 self.assertFalse((target/'AGENTS.md').exists())
                 receipt=approve(p,target,'Synthetic consent')
-                self.assertEqual(apply_plan(p,receipt,target,Path(tmp)/'state')['status'],'applied')
+                self.assertEqual(apply_plan(p,receipt,target,base/'state')['status'],'applied')
                 self.assertEqual(config.read_text(),'User-owned configuration')
                 self.assertEqual(verify(p,target)['status'],'not-verified')
                 self.assertEqual(make_plan(a,target)['operations'],[])
 
     def test_single_selector_same_effective_capabilities(self):
         with tempfile.TemporaryDirectory() as tmp:
+            tmp=Path(tmp).resolve()
             a=researched(fixture('crm')); a['host']['capabilities']['subagents']['value']=False
             baseline=make_plan(a,tmp)
             a['host']['name']='cursor'; cursor=make_plan(a,tmp)
@@ -43,6 +44,7 @@ class AdapterTests(unittest.TestCase):
 
     def test_explicit_executor_target_and_unknown_gate(self):
         with tempfile.TemporaryDirectory() as tmp:
+            tmp=Path(tmp).resolve()
             a=fixture(); executor,target=profiles(a)
             a['execution_host']=executor; a['target_platform']=target
             executor['name']='local-python'; target['name']='cursor'
@@ -54,18 +56,21 @@ class AdapterTests(unittest.TestCase):
 
     def test_adapter_tampering_invalidates_plan(self):
         with tempfile.TemporaryDirectory() as tmp:
+            tmp=Path(tmp).resolve()
             a=fixture(); a['host']['name']='cursor'; p=make_plan(a,tmp)
             p['adapter']['version']='999'
             with self.assertRaises(HarnessError):check_plan(p,tmp)
 
     def test_cursor_unconfirmed_discovery_blocks(self):
         with tempfile.TemporaryDirectory() as tmp:
+            tmp=Path(tmp).resolve()
             a=fixture();a['host']['name']='cursor'
             a['host']['capabilities']['native_skills']['basis']='inferred'
             self.assertEqual(make_plan(a,tmp)['status'],'blocked')
 
     def test_bootstrap_original_formats_and_separate_profiles(self):
         with tempfile.TemporaryDirectory() as tmp:
+            tmp=Path(tmp).resolve()
             for suffix,raw in (('.md',b'# Synthetic PRD'),('.pdf',b'%PDF-synthetic'),('.docx',b'PK synthetic')):
                 path=Path(tmp)/('prd'+suffix);path.write_bytes(raw)
                 a=intake(path,GENERATOR_URL,target_platform='cursor')['assessment']
@@ -78,9 +83,9 @@ class AdapterTests(unittest.TestCase):
     def test_binary_reading_and_original_change_gate(self):
         # Bytes are synthetic: these tests validate provenance contracts, not PDF/DOCX readers.
         with tempfile.TemporaryDirectory() as tmp:
-            target=Path(tmp)/'target';target.mkdir()
+            base=Path(tmp).resolve();target=base/'target';target.mkdir()
             for extension in ('pdf','docx'):
-                path=Path(tmp)/('prd.'+extension);path.write_bytes(b'synthetic document')
+                path=base/('prd.'+extension);path.write_bytes(b'synthetic document')
                 a=fixture(); a['prd']={'source':str(path),'sha256':digest(path.read_bytes()),'format':extension}
                 self.assertEqual(make_plan(a,target)['status'],'blocked')
                 a['prd']['reading']={'status':'complete','reader':'synthetic fixture','locators':['page 1 / section requirements'],'notes':[]}

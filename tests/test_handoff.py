@@ -20,7 +20,7 @@ def record():
 
 class HandoffTests(unittest.TestCase):
     def setUp(self):
-        self.temp=tempfile.TemporaryDirectory();self.base=Path(self.temp.name)
+        self.temp=tempfile.TemporaryDirectory();self.base=Path(self.temp.name).resolve()
         self.root=self.base/'target';self.root.mkdir();self.state=self.base/'state'
         (self.root/'app.py').write_text('original app')
         self.a=fixture();p=make_plan(self.a,self.root)
