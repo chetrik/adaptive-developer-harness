@@ -1,5 +1,7 @@
 # Decision register
 
+0.5.2: treat dependency/build directories as reproducible workspace noise for snapshot and project inspection through one shared constant. This changes fingerprint semantics, not writer scope or managed-file protection. Preserve strict root symlink checks; normalize macOS test fixture paths instead of weakening runtime checks. Accept both raw handoff input and the existing strictly validated stored wrapper.
+
 0.5.1: align generated templates with the existing lightweight workflow. No mandatory formal gate receipts or checkpoints for ordinary completed XS/S tasks. Preserve critical scope/risk checks. Add task-specific context, understandable decision options and meaningful UI/test guidance to existing assets, without adding another workflow, task tracker or document type. All wording is project-original; workshop practices informed the changes without copying implementation.
 
 Legend: **Aligned** = user-stated direction in discussion; **Proposal** = proposed implementation subject to review; **Open** = decision not made.

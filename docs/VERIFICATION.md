@@ -1,5 +1,14 @@
 # Verification evidence — 2026-11-03
 
+## 0.5.2 snapshot and handoff compatibility patch — 2026-11-10
+
+- RED on the unchanged snapshot implementation: `python3 -m unittest discover -s tests -p 'test_snapshot_generated_dirs.py' -v` ran 3 tests and exited 1 with 2 failures and 1 error. Generated directories changed the snapshot, consumed the patched 1 KiB budget, and made handoff resume stale.
+- GREEN after the shared exclusion: the same command ran 3 tests and exited 0. It also confirms an ordinary source-file change still changes the fingerprint and makes resume stale.
+- Final `python3 -m unittest discover -s tests -v`: **143 tests passed**, exit 0 (32.953 s).
+- `python3 tools/validate_package.py`: exit 0; 35 required files, 67 requirements, 64 acceptance tests, local links and plan schema checked. `git diff --check`: exit 0.
+- Controlled Linux/POSIX symlink coverage confirms a symlinked target root is still rejected. Temporary test roots are resolved to physical paths for the macOS `/var` alias, but no native macOS run was performed for this patch.
+- 0.5.1 manifests update to 0.5.2 by patching only the manifest when components are unchanged. Older plans require regeneration and approval because engine identity/fingerprint semantics changed. Older handoffs remain readable but must be checked with `resume`; a prior snapshot containing newly excluded generated trees can report stale and needs a new checkpoint. Interrupted older operations still require their original reviewed checkout for recovery.
+
 ## Claude Code macOS native test 2026-11-03
 
 Documentation update checks: full regression **136 tests passed** (34.604 s, exit 0); structural/local-link validation and `git diff --check` passed. These automated checks are separate from the owner-reported native trial below.

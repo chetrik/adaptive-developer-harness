@@ -33,14 +33,14 @@ class PatchUpgradeTests(unittest.TestCase):
                 agents.write_text('User-owned preface\n' + agents.read_text())
                 p = make_plan(a, root)
                 self.assertEqual(p['status'], 'ready-for-approval', p['blockers'])
-                self.assertEqual(p['update']['migration'], 'engine-0.5.0-to-0.5.1')
+                self.assertEqual(p['update']['migration'], 'engine-0.5.0-to-0.5.2')
                 self.assertFalse(any(o['action'] == 'delete' for o in p['operations']))
                 apply_plan(p, approve(p, root, 'Synthetic upgrade consent'), root, base / 'state')
                 self.assertEqual((root / 'user.txt').read_text(), 'Keep this')
                 self.assertTrue(agents.read_text().startswith('User-owned preface'))
                 self.assertEqual(make_plan(a, root)['operations'], [])
                 manifest = json.loads((root / '.adaptive-harness/manifest.json').read_text())
-                self.assertEqual(manifest['versions']['generator'], '0.5.1')
+                self.assertEqual(manifest['versions']['generator'], '0.5.2')
                 self.assertEqual(manifest['schema_version'], '2.0')
 
     def test_customized_component_blocks_upgrade_and_approved_stale_plan(self):
@@ -85,3 +85,21 @@ class PatchUpgradeTests(unittest.TestCase):
                 case.test_previous_engine_recovery_is_retained_and_migration_waits()
         finally:
             case.tearDown()
+
+    def test_051_manifest_updates_to_052_without_rewriting_components(self):
+        with tempfile.TemporaryDirectory() as temp:
+            base = Path(temp).resolve(); root = base / 'app'; root.mkdir()
+            assessment = fixture()
+            install = make_plan(assessment, root)
+            apply_plan(install, approve(install, root, 'Synthetic install consent'), root, base / 'state')
+            manifest_path = root / '.adaptive-harness/manifest.json'
+            manifest = json.loads(manifest_path.read_text())
+            manifest['versions']['generator'] = '0.5.1'
+            manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + '\n')
+
+            plan = make_plan(assessment, root)
+            self.assertEqual(plan['update']['migration'], 'engine-0.5.1-to-0.5.2')
+            self.assertEqual([op['path'] for op in plan['operations']], ['.adaptive-harness/manifest.json'])
+            apply_plan(plan, approve(plan, root, 'Synthetic patch update consent'), root, base / 'state')
+            updated = json.loads(manifest_path.read_text())
+            self.assertEqual(updated['versions']['generator'], '0.5.2')

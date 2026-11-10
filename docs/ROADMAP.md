@@ -1,5 +1,7 @@
 # Roadmap — approved executable MVP
 
+0.5.2 bounded fix: keep snapshots and handoff freshness stable across dependency installation/build output, retain strict filesystem boundaries, and align handoff input/diagnostics. Native macOS execution is still a separate evidence gate.
+
 0.5.1 bounded improvement: align lightweight instructions, improve task context and UI/acceptance checks, and preserve installed 0.5.0 configurations through the existing update path. Native user-scenario testing is being performed by the owner; no native success is inferred from automated generator tests. Use concrete findings from those trials to prioritize further work.
 
 Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.

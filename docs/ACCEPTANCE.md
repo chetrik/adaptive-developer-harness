@@ -1,5 +1,7 @@
 # Acceptance test plan — functional, minimality, security and beginner UX
 
+0.5.2: workspace fingerprints exclude the shared generated-directory set at every depth without weakening managed-write or path protections. Regression evidence covers unchanged/generated vs changed/source fingerprints, byte limits, handoff current/stale behavior, strict handoff wrapper compatibility, protected-path diagnostics and a controlled root symlink. Native macOS execution remains not run in this change.
+
 0.5.1: XS/S plans request handoff only for an actual transfer of unfinished work; risky small tasks retain security verification. Upgrading 0.5.0 Codex/Cursor/Claude assets preserves user-owned content, blocks modified managed files and stale approvals, recovers interrupted writes and produces no operations on an unchanged repeat. UI guidance covers relevant user journeys, states, component reuse and unavailable browser checks as not-verified. Automated checks validate generation/migration; instruction comprehension and real UI execution require native trials.
 
 Current 0.5.0 delivery and verified platform boundaries: [PLATFORM_DELIVERY.md](PLATFORM_DELIVERY.md). Earlier version checkpoints below are historical where superseded.
