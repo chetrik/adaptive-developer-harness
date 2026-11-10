@@ -6,6 +6,10 @@ from .contracts import HarnessError, digest, fingerprint
 
 MAX_FILES = 10000
 MAX_BYTES = 64 * 1024 * 1024
+GENERATED_DIRS = frozenset({
+    'node_modules', '.next', '.venv', 'venv',
+    '__pycache__', 'dist', 'build',
+})
 
 
 def root_path(target):
@@ -60,9 +64,14 @@ def snapshot(target, *, exclude_sessions=False):
     for base, dirs, files in os.walk(root, followlinks=False):
         if exclude_sessions and Path(base)==root/'.adaptive-harness':
             dirs[:]=[n for n in dirs if n!='sessions']
+        # This only omits reproducible trees from the consistency fingerprint;
+        # managed writes still require allowlisted paths, an approved plan, and
+        # managed-file hash checks, so the omission cannot bypass their protection.
+        dirs[:] = [
+            n for n in dirs
+            if n != '.git' and n not in GENERATED_DIRS
+        ]
         dirs.sort(); files.sort()
-        if '.git' in dirs:
-            dirs.remove('.git')
         for name in dirs + files:
             p = Path(base) / name
             rel = p.relative_to(root).as_posix()
